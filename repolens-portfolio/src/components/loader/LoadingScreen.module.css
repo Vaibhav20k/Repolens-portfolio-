@@ -1,0 +1,188 @@
+.loaderScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--color-bg);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.centerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Procedural Mascot Loader Style */
+.mascotIndicator {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1rem;
+}
+
+.catFace {
+  width: 60px;
+  height: 50px;
+  background-color: #1a1a1a;
+  border: 1px solid var(--color-accent);
+  border-radius: 50% 50% 45% 45%;
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.catEarLeft, .catEarRight {
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 22px solid #1a1a1a;
+  position: absolute;
+  top: 10px;
+}
+
+.catEarLeft {
+  left: 10px;
+  transform: rotate(-25deg);
+}
+
+.catEarRight {
+  right: 10px;
+  transform: rotate(25deg);
+}
+
+.catEyeLeft, .catEyeRight {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  transition: transform 0.1s ease;
+}
+
+.catNose {
+  width: 4px;
+  height: 4px;
+  background-color: var(--color-text-primary);
+  border-radius: 50%;
+  position: absolute;
+  bottom: 12px;
+  left: calc(50% - 2px);
+}
+
+.orangeDot {
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  left: calc(50% - 5px);
+  box-shadow: 0 0 8px var(--color-accent);
+  animation: glowPulse 1.5s infinite alternate;
+}
+
+@keyframes glowPulse {
+  from { opacity: 0.6; box-shadow: 0 0 4px var(--color-accent); }
+  to { opacity: 1; box-shadow: 0 0 12px var(--color-accent); }
+}
+
+/* Circular Progress Style */
+.circularProgressContainer {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.svgCircle {
+  transform: rotate(-90deg);
+}
+
+.track {
+  fill: none;
+  stroke: #161616;
+  stroke-width: 3;
+}
+
+.fill {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 3;
+  stroke-dasharray: 314;
+  stroke-dashoffset: 314;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.1s ease;
+  filter: drop-shadow(0 0 4px var(--color-accent));
+}
+
+.percentageText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-primary);
+  color: var(--color-text-primary);
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+/* Console logs */
+.terminalLogs {
+  font-family: var(--font-terminal);
+  font-size: var(--text-label);
+  color: var(--color-text-secondary);
+  height: 120px;
+  overflow-y: hidden;
+  width: 100%;
+  padding: 10px;
+  border-left: 2px solid var(--color-accent);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.logLine {
+  white-space: nowrap;
+  animation: typeLine 0.1s steps(20, end);
+}
+
+@keyframes typeLine {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Start Button */
+.startButton {
+  font-family: var(--font-primary);
+  font-size: var(--text-body);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-accent);
+  padding: 0.75rem 2.5rem;
+  border-radius: 4px;
+  cursor: none;
+  background-color: transparent;
+  transition: var(--transition-smooth);
+  box-shadow: 0 0 10px rgba(232, 71, 42, 0.2);
+  letter-spacing: 4px;
+  margin-top: 1rem;
+}
+
+.startButton:hover {
+  background-color: var(--color-accent);
+  color: #000;
+  box-shadow: 0 0 20px rgba(232, 71, 42, 0.6);
+  transform: scale(1.05);
+}

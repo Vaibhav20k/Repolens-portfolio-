@@ -1,0 +1,190 @@
+.terminalWindow {
+  background-color: var(--color-terminal-bg);
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8),
+              0 0 15px rgba(0, 255, 65, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.titleBar {
+  background-color: #0b0b0b;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 10px 16px;
+  cursor: grab;
+  user-select: none;
+}
+
+.titleBar:active {
+  cursor: grabbing;
+}
+
+.windowControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.controlBtn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: none; /* Let CustomCursor handle it */
+}
+
+.closeBtn {
+  background-color: #ff5f56;
+}
+
+.closeBtn:hover {
+  background-color: #ff3b30;
+}
+
+.minimizeBtn {
+  background-color: #ffbd2e;
+}
+
+.minimizeBtn:hover {
+  background-color: #ff9500;
+}
+
+.terminalTitle {
+  font-family: var(--font-primary);
+  font-size: var(--text-label);
+  color: var(--color-text-secondary);
+  letter-spacing: 1px;
+  margin-left: 12px;
+  text-transform: uppercase;
+}
+
+/* Screen */
+.terminalScreen {
+  flex-grow: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.welcomeBanner {
+  font-family: var(--font-terminal);
+  color: var(--color-terminal-text);
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+.asciiArt {
+  font-family: var(--font-terminal);
+  font-weight: bold;
+  white-space: pre;
+  margin-bottom: 1rem;
+}
+
+.historyLogs {
+  font-family: var(--font-terminal);
+  color: var(--color-terminal-text);
+  font-size: var(--text-terminal);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  white-space: pre-wrap; /* Preserve newlines */
+}
+
+.inputLog {
+  display: flex;
+  gap: 8px;
+}
+
+.outputLog {
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding-left: 10px;
+  border-left: 1px solid rgba(0, 255, 65, 0.15);
+}
+
+.prompt {
+  font-weight: bold;
+  color: var(--color-terminal-text);
+}
+
+.commandText {
+  color: #fff;
+}
+
+.typingIndicator {
+  display: flex;
+  gap: 8px;
+  color: var(--color-terminal-text);
+  opacity: 0.8;
+}
+
+/* Form input */
+.inputForm {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-terminal);
+  margin-top: auto;
+}
+
+.inputField {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: var(--font-terminal);
+  font-size: var(--text-terminal);
+  outline: none;
+  caret-color: var(--color-terminal-text);
+}
+
+/* Minimized Tab Button */
+.minimizedTab {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 1000;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid rgba(0, 255, 65, 0.2);
+  border-radius: 20px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-terminal-text);
+  font-family: var(--font-primary);
+  font-size: var(--text-label);
+  letter-spacing: 2px;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  cursor: none; /* Let CustomCursor take over */
+  transition: var(--transition-smooth);
+}
+
+.minimizedTab:hover {
+  background-color: var(--color-terminal-bg);
+  border-color: var(--color-terminal-text);
+  box-shadow: 0 4px 20px rgba(0, 255, 65, 0.15);
+  transform: translateY(-2px);
+}
+
+.pulseDot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-terminal-text);
+  border-radius: 50%;
+  animation: pulseDotAnim 1.2s infinite alternate;
+}
+
+@keyframes pulseDotAnim {
+  from { opacity: 0.4; box-shadow: 0 0 2px var(--color-terminal-text); }
+  to { opacity: 1; box-shadow: 0 0 8px var(--color-terminal-text); }
+}
+
+.tabText {
+  text-transform: uppercase;
+}

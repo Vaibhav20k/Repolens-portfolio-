@@ -1,0 +1,159 @@
+.mascotContainer {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 70px;
+  height: 70px;
+  z-index: 900;
+  cursor: none; /* Let CustomCursor take over */
+  perspective: 400px;
+  user-select: none;
+}
+
+.floater {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  animation: floatMascot 4s ease-in-out infinite alternate;
+}
+
+@keyframes floatMascot {
+  from {
+    transform: translateY(0px) rotate(0deg);
+  }
+  to {
+    transform: translateY(-8px) rotate(2deg);
+  }
+}
+
+.head {
+  width: 50px;
+  height: 42px;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50% 50% 45% 45%;
+  position: absolute;
+  bottom: 8px;
+  left: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.earLeft, .earRight {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 18px solid var(--color-bg-secondary);
+  position: absolute;
+  top: 14px;
+}
+
+.earLeft {
+  left: 10px;
+  transform: rotate(-22deg);
+}
+
+.earRight {
+  right: 10px;
+  transform: rotate(22deg);
+}
+
+.eyeContainer {
+  width: 12px;
+  height: 12px;
+  background-color: #0d0d0d;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.eye {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  background-color: transparent;
+}
+
+.pupil {
+  width: 4px;
+  height: 4px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  position: absolute;
+  top: calc(50% - 2px);
+  left: calc(50% - 2px);
+  box-shadow: 0 0 4px var(--color-accent);
+  transition: transform 0.05s linear;
+}
+
+.nose {
+  width: 4px;
+  height: 3px;
+  background-color: var(--color-text-secondary);
+  border-radius: 50%;
+  position: absolute;
+  bottom: 12px;
+  left: calc(50% - 2px);
+}
+
+/* Glowing dot on head */
+.antennaGlow {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: calc(50% - 4px);
+  box-shadow: 0 0 10px var(--color-accent);
+  animation: antennaPulse 1.5s infinite alternate;
+}
+
+@keyframes antennaPulse {
+  from {
+    transform: scale(0.9);
+    box-shadow: 0 0 6px var(--color-accent);
+  }
+  to {
+    transform: scale(1.25);
+    box-shadow: 0 0 15px var(--color-accent);
+  }
+}
+
+/* Whiskers */
+.whiskerLeft1, .whiskerLeft2, .whiskerRight1, .whiskerRight2 {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.15);
+  height: 1px;
+  width: 10px;
+}
+
+.whiskerLeft1 {
+  bottom: 15px;
+  left: -4px;
+  transform: rotate(10deg);
+}
+
+.whiskerLeft2 {
+  bottom: 11px;
+  left: -4px;
+  transform: rotate(-5deg);
+}
+
+.whiskerRight1 {
+  bottom: 15px;
+  right: -4px;
+  transform: rotate(-10deg);
+}
+
+.whiskerRight2 {
+  bottom: 11px;
+  right: -4px;
+  transform: rotate(5deg);
+}
