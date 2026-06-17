@@ -45,12 +45,16 @@ jobs:
         run: npm ci
 
       - name: Report Missing Vercel Credentials
-        if: ${{ secrets.VERCEL_TOKEN == '' }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        if: ${{ env.VERCEL_TOKEN == '' }}
         run: |
           echo "::warning::VERCEL_TOKEN is not configured in GitHub Secrets. Programmatic deployment to Vercel is skipped. Please add VERCEL_TOKEN, VERCEL_ORG_ID, and VERCEL_PROJECT_ID to GitHub Secrets to enable deployment."
 
       - name: Build and Deploy
-        if: ${{ secrets.VERCEL_TOKEN != '' }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        if: ${{ env.VERCEL_TOKEN != '' }}
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
