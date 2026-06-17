@@ -19,8 +19,7 @@ jobs:
           
           # Check if OpenRouter API Key is set
           if [ -z "${{ secrets.VITE_OPENROUTER_API_KEY }}" ]; then
-            echo "::error::Critical deployment error: VITE_OPENROUTER_API_KEY secret is missing!"
-            exit 1
+            echo "::warning::VITE_OPENROUTER_API_KEY secret is missing in GitHub Secrets. Ensure it is configured in Vercel!"
           fi
           
           # Check if GitHub username env variable is set (or fallback exists)
@@ -39,7 +38,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
       - name: Install dependencies
