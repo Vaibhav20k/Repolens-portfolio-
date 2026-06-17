@@ -1,0 +1,279 @@
+.aboutSection {
+  padding: 80px 0;
+  position: relative;
+  overflow: visible;
+  margin-bottom: 8rem;
+}
+
+.sectionHeader {
+  margin-bottom: 3rem;
+}
+
+.aboutContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 5rem;
+}
+
+/* Overlapping Decorative Circle */
+.decorativeCircle {
+  position: absolute;
+  top: -60px;
+  left: 5%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--color-accent) 0%, rgba(232, 71, 42, 0) 70%);
+  filter: blur(60px);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.textBlock {
+  position: relative;
+  z-index: 2;
+  max-width: 1000px;
+}
+
+.oversizedTitle {
+  font-family: var(--font-primary);
+  font-size: var(--text-display);
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--color-text-primary);
+  margin-bottom: 2rem;
+  letter-spacing: -1px;
+}
+
+.bodyText {
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  max-width: 750px;
+  font-weight: 300;
+}
+
+/* Core skills, experience, and milestones grids */
+.detailsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 1024px) {
+  .detailsGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.gridColumn {
+  background: rgba(17, 17, 17, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  padding: 32px;
+  transition: all 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+.gridColumn:hover {
+  background: rgba(17, 17, 17, 0.65);
+  border-color: rgba(232, 71, 42, 0.25);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 35px rgba(232, 71, 42, 0.08);
+}
+
+.columnHeader {
+  font-family: var(--font-primary);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.skillsList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.skillCategory {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  color: var(--color-accent);
+  display: block;
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+}
+
+.skillValues {
+  font-family: var(--font-body);
+  color: var(--color-text-secondary);
+  font-size: 0.98rem;
+  line-height: 1.5;
+  display: block;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.timelineItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.timelineIndicator {
+  width: 7px;
+  height: 7px;
+  background-color: var(--color-text-muted);
+  border-radius: 50%;
+  margin-top: 7px;
+  flex-shrink: 0;
+  transition: var(--transition-smooth);
+}
+
+.timelineItem:hover .timelineIndicator {
+  background-color: var(--color-accent);
+  box-shadow: 0 0 8px var(--color-accent);
+  transform: scale(1.4);
+}
+
+.timelineContent {
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+/* Stacked Rotation Ticker styling */
+.stackedRotationContainer {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.stackedRotationLabel {
+  font-family: var(--font-primary);
+  font-size: var(--text-label);
+  color: var(--color-text-secondary);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.stackedRotationViewport {
+  height: 180px; /* Fits exactly 3 items */
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stackedRotationViewport::before,
+.stackedRotationViewport::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.stackedRotationViewport::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--color-bg) 0%, rgba(10, 10, 10, 0) 100%);
+}
+
+.stackedRotationViewport::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--color-bg) 0%, rgba(10, 10, 10, 0) 100%);
+}
+
+.stackedRotationList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 60px; /* Offset to center the active item */
+}
+
+.stackedRotationItem {
+  height: 60px;
+  line-height: 60px;
+  font-family: var(--font-primary);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -1.5px;
+  text-transform: uppercase;
+  transform-origin: left center;
+  white-space: nowrap;
+}
+
+.activeItem {
+  color: var(--color-accent);
+  text-shadow: 0 0 30px rgba(232, 71, 42, 0.35);
+}
+
+/* Experience styling */
+.experienceList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.experienceItem {
+  border-left: 2px solid rgba(255, 255, 255, 0.05);
+  padding-left: 15px;
+  transition: var(--transition-smooth);
+}
+
+.experienceItem:hover {
+  border-left-color: var(--color-accent);
+}
+
+.expRole {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: 1.12rem;
+  color: var(--color-text-primary);
+}
+
+.expOrg {
+  font-family: var(--font-primary);
+  font-size: 0.9rem;
+  color: var(--color-accent);
+  margin-top: 4px;
+}
+
+.expDuration {
+  color: var(--color-text-secondary);
+}
+
+.expDesc {
+  font-family: var(--font-body);
+  font-size: 0.96rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-top: 8px;
+}

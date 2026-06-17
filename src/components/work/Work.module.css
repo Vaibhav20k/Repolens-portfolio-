@@ -1,0 +1,149 @@
+.workSection {
+  padding: 80px 0;
+  position: relative;
+  margin-bottom: 8rem;
+}
+
+.sectionHeader {
+  margin-bottom: 4rem;
+}
+
+.workGrid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 5rem;
+  align-items: start;
+  min-height: 550px;
+}
+
+@media (max-width: 900px) {
+  .workGrid {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    min-height: auto;
+  }
+}
+
+.infoColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardsColumn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 400px;
+}
+
+/* ProjectInfo Styles */
+.infoWrapper {
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.4s ease;
+}
+
+.projectType {
+  font-family: var(--font-terminal);
+  font-size: var(--text-label);
+  color: var(--color-accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.projectTitle {
+  font-family: var(--font-primary);
+  font-size: var(--text-display);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+}
+
+.ownershipText {
+  font-family: var(--font-primary);
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.ownershipText span {
+  font-weight: bold;
+  color: var(--color-text-primary);
+}
+
+.projectDescription {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.highlightsList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 2rem;
+}
+
+.highlightLine {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
+  display: flex;
+  gap: 8px;
+}
+
+.bullet {
+  color: var(--color-accent);
+}
+
+.badgeContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 2.5rem;
+}
+
+.techBadge {
+  font-family: var(--font-primary);
+  font-size: var(--text-label);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 4px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.askButton {
+  font-family: var(--font-primary);
+  font-size: var(--text-body);
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: #000;
+  background-color: var(--color-accent);
+  padding: 0.8rem 2rem;
+  border-radius: 4px;
+  width: fit-content;
+  cursor: none; /* Let CustomCursor take over */
+  box-shadow: 0 0 15px rgba(232, 71, 42, 0.2);
+  transition: var(--transition-smooth);
+}
+
+.askButton:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(232, 71, 42, 0.5);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

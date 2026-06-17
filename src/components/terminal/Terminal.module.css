@@ -1,0 +1,412 @@
+.terminalWindow {
+  background-color: var(--color-terminal-bg);
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8),
+              0 0 15px rgba(0, 255, 65, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.titleBar {
+  background-color: #0b0b0b;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 10px 16px;
+  cursor: grab;
+  user-select: none;
+}
+
+.titleBar:active {
+  cursor: grabbing;
+}
+
+.windowControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.controlBtn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: none; /* Let CustomCursor handle it */
+}
+
+.closeBtn {
+  background-color: #ff5f56;
+}
+
+.closeBtn:hover {
+  background-color: #ff3b30;
+}
+
+.minimizeBtn {
+  background-color: #ffbd2e;
+}
+
+.minimizeBtn:hover {
+  background-color: #ff9500;
+}
+
+.terminalTitle {
+  font-family: var(--font-primary);
+  font-size: var(--text-label);
+  color: var(--color-text-secondary);
+  letter-spacing: 1px;
+  margin-left: 12px;
+  text-transform: uppercase;
+}
+
+/* Screen */
+.terminalScreen {
+  flex-grow: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.welcomeBanner {
+  font-family: var(--font-terminal);
+  color: var(--color-terminal-text);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.asciiArt {
+  font-family: var(--font-terminal);
+  font-weight: bold;
+  white-space: pre;
+  margin-bottom: 1rem;
+}
+
+.historyLogs {
+  font-family: var(--font-terminal);
+  color: var(--color-terminal-text);
+  font-size: var(--text-terminal);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  line-height: 1.6;
+  white-space: pre-wrap; /* Preserve newlines */
+}
+
+.inputLog {
+  display: flex;
+  gap: 8px;
+}
+
+.outputLog {
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding-left: 10px;
+  border-left: 1px solid rgba(0, 255, 65, 0.15);
+}
+
+.prompt {
+  font-weight: bold;
+  color: var(--color-terminal-text);
+}
+
+.commandText {
+  color: #fff;
+}
+
+.typingIndicator {
+  display: flex;
+  gap: 8px;
+  color: var(--color-terminal-text);
+  opacity: 0.8;
+}
+
+/* Form input */
+.inputForm {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-terminal);
+  font-size: var(--text-terminal);
+  margin-top: auto;
+}
+
+.inputField {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: var(--font-terminal);
+  font-size: var(--text-terminal);
+  outline: none;
+  caret-color: var(--color-terminal-text);
+}
+
+/* Minimized Tab Button */
+.minimizedTab {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 1000;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid rgba(0, 255, 65, 0.2);
+  border-radius: 20px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-terminal-text);
+  font-family: var(--font-primary);
+  font-size: var(--text-label);
+  letter-spacing: 2px;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  cursor: none; /* Let CustomCursor take over */
+  transition: var(--transition-smooth);
+}
+
+.minimizedTab:hover {
+  background-color: var(--color-terminal-bg);
+  border-color: var(--color-terminal-text);
+  box-shadow: 0 4px 20px rgba(0, 255, 65, 0.15);
+  transform: translateY(-2px);
+}
+
+.pulseDot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-terminal-text);
+  border-radius: 50%;
+  animation: pulseDotAnim 1.2s infinite alternate;
+}
+
+@keyframes pulseDotAnim {
+  from { opacity: 0.4; box-shadow: 0 0 2px var(--color-terminal-text); }
+  to { opacity: 1; box-shadow: 0 0 8px var(--color-terminal-text); }
+}
+
+.tabText {
+  text-transform: uppercase;
+}
+
+/* Split Pane Layout & Content Area */
+.windowContent {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+  height: calc(100% - 37px); /* Subtract approximate height of title bar */
+}
+
+/* Copilot Panel */
+.copilotPanel {
+  width: 260px;
+  min-width: 220px;
+  border-left: 1px solid rgba(0, 255, 65, 0.2);
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 16px;
+  overflow-y: auto;
+  font-family: var(--font-primary);
+  color: var(--color-text-primary);
+}
+
+.panelHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.panelTitle {
+  font-family: var(--font-terminal);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: var(--color-terminal-text);
+  text-transform: uppercase;
+}
+
+.statusIndicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-terminal);
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.statusReady {
+  background-color: var(--color-terminal-text);
+  box-shadow: 0 0 8px var(--color-terminal-text);
+}
+
+.statusThinking {
+  background-color: var(--color-accent);
+  box-shadow: 0 0 8px var(--color-accent);
+  animation: blink 0.8s infinite alternate;
+}
+
+@keyframes blink {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}
+
+.panelSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sectionLabel {
+  font-family: var(--font-terminal);
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+}
+
+.intentBadge {
+  font-family: var(--font-terminal);
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 6px 10px;
+  border-radius: 4px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  letter-spacing: 1px;
+}
+
+.intentGENERAL {
+  background: rgba(147, 51, 234, 0.1);
+  color: #c084fc;
+  border-color: rgba(147, 51, 234, 0.3);
+}
+
+.intentPORTFOLIO {
+  background: rgba(232, 71, 42, 0.1);
+  color: var(--color-accent);
+  border-color: rgba(232, 71, 42, 0.3);
+}
+
+.intentREPOSITORY {
+  background: rgba(59, 130, 246, 0.1);
+  color: #60a5fa;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.intentNone {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--color-text-muted);
+}
+
+.suggestionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.suggestionBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  cursor: none !important; /* Let CustomCursor blend */
+  transition: all 0.2s ease;
+}
+
+.suggestionBtn:hover {
+  background: rgba(0, 255, 65, 0.04);
+  border-color: rgba(0, 255, 65, 0.2);
+}
+
+.suggestionBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+
+.suggestionCmd {
+  font-family: var(--font-terminal);
+  font-size: 0.72rem;
+  color: var(--color-terminal-text);
+  margin-bottom: 2px;
+}
+
+.suggestionLabel {
+  font-size: 0.82rem;
+  color: var(--color-text-primary);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* Panel toggle button in title bar */
+.panelToggleBtn {
+  font-family: var(--font-terminal);
+  font-size: 0.65rem;
+  color: var(--color-text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 2px 6px;
+  cursor: none !important;
+  margin-left: auto; /* Push to the right */
+  transition: all 0.2s ease;
+}
+
+.panelToggleBtn:hover {
+  color: var(--color-terminal-text);
+  border-color: var(--color-terminal-text);
+}
+
+/* Resize handles and cursor styles */
+.resizeHandle {
+  position: absolute;
+  z-index: 1100; /* above contents */
+  background: transparent;
+  transition: background 0.2s ease;
+}
+
+.resizeHandle:hover {
+  background: rgba(0, 255, 65, 0.05);
+}
+
+.resizeE {
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 100%;
+  cursor: ew-resize !important;
+}
+
+.resizeS {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  cursor: ns-resize !important;
+}
+
+.resizeSE {
+  bottom: 0;
+  right: 0;
+  width: 14px;
+  height: 14px;
+  cursor: nwse-resize !important;
+  border-bottom-right-radius: 8px;
+  background: linear-gradient(135deg, transparent 40%, rgba(0, 255, 65, 0.3) 100%);
+}
+

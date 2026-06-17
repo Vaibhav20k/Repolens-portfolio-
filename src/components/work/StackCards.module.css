@@ -1,0 +1,177 @@
+.deckWrapper {
+  position: relative;
+  width: 340px;
+  height: 420px;
+  perspective: 1000px;
+}
+
+.projectCard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg-secondary);
+  border: var(--border-primary);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  cursor: none; /* Let CustomCursor take over */
+  transform-origin: center bottom;
+}
+
+.topCard {
+  border-color: rgba(232, 71, 42, 0.4);
+  box-shadow: 0 15px 40px rgba(232, 71, 42, 0.1),
+              0 5px 15px rgba(0, 0, 0, 0.6);
+}
+
+.topCard::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: var(--color-accent);
+  box-shadow: 0 0 10px var(--color-accent);
+}
+
+/* Procedural grid overlay mapping */
+.gridOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 15px 15px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-terminal);
+  font-size: var(--text-label);
+  color: var(--color-text-secondary);
+  z-index: 2;
+}
+
+.cardNo {
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+.cardTitle {
+  font-family: var(--font-primary);
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-text-primary);
+  z-index: 2;
+  margin-top: 2rem;
+  margin-bottom: auto;
+  letter-spacing: -0.5px;
+  position: relative;
+  transition: text-shadow 0.2s ease;
+}
+
+.projectCard:hover .cardTitle {
+  color: var(--color-text-primary);
+  text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+              -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+              0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+  animation: titleGlitch 500ms infinite;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 1rem;
+  z-index: 2;
+}
+
+.techText {
+  font-family: var(--font-terminal);
+  font-size: 0.7rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+}
+
+.dragHint {
+  font-family: var(--font-primary);
+  font-size: 0.65rem;
+  color: var(--color-accent);
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.projectCard:hover .gridOverlay {
+  background-image: 
+    linear-gradient(rgba(232, 71, 42, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 71, 42, 0.05) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+.projectCard:hover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(232, 71, 42, 0.05) 10%,
+    rgba(255, 255, 255, 0) 20%
+  );
+  background-size: 100% 200%;
+  animation: scanline 1.8s linear infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+
+@keyframes scanline {
+  0% {
+    background-position: 0 -100%;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+@keyframes titleGlitch {
+  0% {
+    text-shadow: 0.05em 0 0 rgba(255,0,0,.75), -0.05em -0.025em 0 rgba(0,255,0,.75), 0.025em 0.05em 0 rgba(0,0,255,.75);
+  }
+  14% {
+    text-shadow: 0.05em 0 0 rgba(255,0,0,.75), -0.05em -0.025em 0 rgba(0,255,0,.75), 0.025em 0.05em 0 rgba(0,0,255,.75);
+  }
+  15% {
+    text-shadow: -0.05em -0.025em 0 rgba(255,0,0,.75), 0.025em 0.025em 0 rgba(0,255,0,.75), -0.05em -0.05em 0 rgba(0,0,255,.75);
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 rgba(255,0,0,.75), 0.025em 0.025em 0 rgba(0,255,0,.75), -0.05em -0.05em 0 rgba(0,0,255,.75);
+  }
+  50% {
+    text-shadow: 0.025em 0.05em 0 rgba(255,0,0,.75), 0.05em 0 0 rgba(0,255,0,.75), 0 -0.05em 0 rgba(0,0,255,.75);
+  }
+  99% {
+    text-shadow: 0.025em 0.05em 0 rgba(255,0,0,.75), 0.05em 0 0 rgba(0,255,0,.75), 0 -0.05em 0 rgba(0,0,255,.75);
+  }
+  100% {
+    text-shadow: -0.025em 0 0 rgba(255,0,0,.75), -0.025em -0.025em 0 rgba(0,255,0,.75), -0.025em -0.05em 0 rgba(0,0,255,.75);
+  }
+}

@@ -1,0 +1,35 @@
+.socialSidebar {
+  position: fixed;
+  top: 50%;
+  left: 40px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  z-index: 800;
+  pointer-events: auto;
+  opacity: 0.6;
+  transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Translucent state when 3D coffee cup passes behind it */
+.translucent {
+  opacity: 0.12;
+}
+
+.socialIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  cursor: none; /* Let CustomCursor hover expand */
+  padding: 6px;
+  border-radius: 50%;
+  transition: color 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.socialIcon:hover {
+  color: var(--color-accent);
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 8px rgba(232, 71, 42, 0.5));
+}
