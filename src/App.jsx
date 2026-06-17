@@ -15,6 +15,7 @@ import AchievementStrip from './components/achievements/AchievementStrip'
 import About from './components/about/About'
 import Work from './components/work/Work'
 import Contact from './components/contact/Contact'
+import EngineeringSection from './components/engineering/EngineeringSection'
 import TerminalWindow from './components/terminal/TerminalWindow'
 import TerminalMinimized from './components/terminal/TerminalMinimized'
 import SceneContainer from './components/three/SceneContainer'
@@ -97,6 +98,9 @@ function App() {
 
             {/* Work Section with Draggable Cards */}
             <Work repos={repos} reposLoading={reposLoading} openTerminal={terminal.openTerminal} />
+
+            {/* Engineering Practices Section */}
+            <EngineeringSection />
 
             {/* Contact details */}
             <Contact />

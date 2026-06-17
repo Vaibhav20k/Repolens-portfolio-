@@ -1,0 +1,55 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: Deploy to Vercel
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate AI Configuration & Credentials
+        run: |
+          echo "Verifying deployment requirements..."
+          
+          # Check if OpenRouter API Key is set
+          if [ -z "${{ secrets.VITE_OPENROUTER_API_KEY }}" ]; then
+            echo "::error::Critical deployment error: VITE_OPENROUTER_API_KEY secret is missing!"
+            exit 1
+          fi
+          
+          # Check if GitHub username env variable is set (or fallback exists)
+          if [ -z "${{ secrets.VITE_GITHUB_USERNAME }}" ] && [ -z "${{ vars.VITE_GITHUB_USERNAME }}" ]; then
+            echo "::warning::VITE_GITHUB_USERNAME is not explicitly set; defaulting to Vaibhav20k"
+          fi
+
+          # Verify AI configuration file exists
+          if [ ! -f "src/services/aiConfig.js" ]; then
+            echo "::error::Critical deployment error: src/services/aiConfig.js not found!"
+            exit 1
+          fi
+          
+          echo "All validation gates passed successfully."
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build and Deploy
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+          working-directory: ./

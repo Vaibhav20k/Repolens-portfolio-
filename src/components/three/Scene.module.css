@@ -11,39 +11,113 @@
 
 .ambientItem {
   position: absolute;
-  opacity: 0.45; /* Increased opacity from 0.15 for better contrast */
+  opacity: 0.65; /* Increased opacity from 0.15 for high visibility */
   transition: transform 0.1s ease-out;
-  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.08)) 
-          drop-shadow(0 0 20px rgba(232, 71, 42, 0.08)); /* Added orange accent tint glow */
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.12)) 
+          drop-shadow(0 0 30px rgba(232, 71, 42, 0.15)); /* Enhanced glowing drop shadow */
   transform-style: preserve-3d;
   perspective: 1000px;
 }
 
-/* Coffee Cup styling */
+/* Procedural Coffee Cup styling */
 .coffeeCup {
   left: 0;
-  width: 160px;
-  height: 160px;
+  width: 200px; /* Increased from 120px */
+  height: 160px; /* Increased from 100px */
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 
-/* Mouse Device styling */
+.cupBody {
+  width: 130px; /* Increased from 80px */
+  height: 110px; /* Increased from 70px */
+  background-color: #1a1a1a;
+  border: 1.5px solid rgba(255, 255, 255, 0.25); /* High visibility border */
+  border-radius: 0 0 65px 65px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cupStripe {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  height: 4px; /* Thicker stripe */
+  background-color: var(--color-accent);
+  opacity: 0.9;
+  box-shadow: 0 0 10px var(--color-accent); /* Glow effect */
+}
+
+.cupHandle {
+  width: 45px; /* Increased from 30px */
+  height: 60px; /* Increased from 40px */
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-left: none;
+  border-radius: 0 25px 25px 0;
+  background-color: transparent;
+}
+
+.steamLines {
+  position: absolute;
+  top: -30px; /* Adjusted position */
+  left: 30%;
+  display: flex;
+  gap: 20px;
+}
+
+.steam {
+  width: 3px;
+  height: 22px;
+  background-color: var(--color-text-primary);
+  opacity: 0.6;
+  border-radius: 20%;
+  animation: riseSteam 2s infinite linear;
+}
+
+.steam:nth-child(2) {
+  animation-delay: 1s;
+}
+
+@keyframes riseSteam {
+  0% { transform: translateY(5px) scaleY(0.5); opacity: 0; }
+  50% { opacity: 0.7; }
+  100% { transform: translateY(-25px) scaleY(1.3); opacity: 0; }
+}
+
+/* Procedural Mouse Device styling */
 .mouseDevice {
   right: 0;
-  width: 130px;
-  height: 195px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 150px; /* Increased from 90px */
+  height: 230px; /* Increased from 140px */
 }
 
-.sceneImg {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  user-select: none;
-  -webkit-user-drag: none;
+.mouseBody {
+  width: 110px; /* Increased from 70px */
+  height: 180px; /* Increased from 110px */
+  background-color: #1a1a1a;
+  border: 1.5px solid rgba(255, 255, 255, 0.25); /* High visibility border */
+  border-radius: 55px;
+  position: relative;
+  margin-left: 20px;
 }
 
+.mouseWheel {
+  width: 8px;
+  height: 20px;
+  background-color: var(--color-accent);
+  border-radius: 4px;
+  position: absolute;
+  top: 30px;
+  left: calc(50% - 4px);
+  box-shadow: 0 0 12px var(--color-accent), 0 0 24px var(--color-accent); /* Double glow */
+}
+
+.mouseLine {
+  width: 1.5px;
+  height: 55px;
+  background-color: rgba(255, 255, 255, 0.25);
+  position: absolute;
+  top: 0;
+  left: 50%;
+}

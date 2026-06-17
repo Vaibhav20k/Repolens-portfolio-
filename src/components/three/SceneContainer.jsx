@@ -39,34 +39,34 @@ export default function SceneContainer() {
 
   return (
     <div className={styles.ambientScene}>
-      {/* Coffee Cup on left edge */}
+      {/* Procedural Coffee Cup on left edge */}
       <div 
         className={`${styles.ambientItem} ${styles.coffeeCup}`}
         style={{
           transform: `translate3d(-20px, calc(30vh + ${leftTranslateY}px), 0) rotate(${scrollY * 0.05}deg) rotateX(${cupRotateX}deg) rotateY(${cupRotateY}deg)`
         }}
       >
-        <img 
-          src="/cup element.png" 
-          alt="Coffee Cup" 
-          className={styles.sceneImg} 
-          draggable="false"
-        />
+        <div className={styles.cupBody}>
+          <div className={styles.cupStripe}></div>
+          <div className={styles.steamLines}>
+            <span className={styles.steam}></span>
+            <span className={styles.steam}></span>
+          </div>
+        </div>
+        <div className={styles.cupHandle}></div>
       </div>
 
-      {/* Mouse Device on right edge */}
+      {/* Procedural Mouse Device on right edge */}
       <div 
         className={`${styles.ambientItem} ${styles.mouseDevice}`}
         style={{
           transform: `translate3d(20px, calc(60vh + ${rightTranslateY}px), 0) rotate(${scrollY * -0.03}deg) rotateX(${mouseRotateX}deg) rotateY(${mouseRotateY}deg)`
         }}
       >
-        <img 
-          src="/mouse element.png" 
-          alt="Mouse Device" 
-          className={styles.sceneImg} 
-          draggable="false"
-        />
+        <div className={styles.mouseBody}>
+          <div className={styles.mouseWheel}></div>
+          <div className={styles.mouseLine}></div>
+        </div>
       </div>
     </div>
   )

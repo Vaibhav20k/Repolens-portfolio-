@@ -1,0 +1,656 @@
+.section {
+  padding: 80px 0;
+  position: relative;
+  overflow: visible;
+  margin-bottom: 8rem;
+}
+
+.header {
+  margin-bottom: 3.5rem;
+  max-width: 800px;
+}
+
+.title {
+  font-family: var(--font-primary);
+  font-size: var(--text-heading);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Tabs */
+.tabNav {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 1px;
+  overflow-x: auto;
+}
+
+.tabBtn {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 12px 24px;
+  color: var(--color-text-secondary);
+  font-family: var(--font-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tabBtn:hover {
+  color: var(--color-text-primary);
+}
+
+.activeTab {
+  color: var(--color-accent) !important;
+  border-bottom-color: var(--color-accent);
+}
+
+/* Display Panel */
+.panel {
+  background: rgba(17, 17, 17, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  min-height: 400px;
+}
+
+.panelTitle {
+  font-family: var(--font-primary);
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.panelDesc {
+  font-family: var(--font-body);
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* Tab 1: CI/CD Pipeline layout */
+.pipelineGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 1.8fr;
+  gap: 3rem;
+}
+
+@media (max-width: 1024px) {
+  .pipelineGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.pipelineDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.pipelineTimeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.timelineNode {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.nodeStatus {
+  background: rgba(232, 71, 42, 0.1);
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: var(--font-primary);
+  font-size: 0.95rem;
+  font-weight: bold;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.timelineNode h4 {
+  font-family: var(--font-primary);
+  font-size: 1.1rem;
+  color: var(--color-text-primary);
+  margin: 0 0 4px 0;
+}
+
+.timelineNode p {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Console Simulation */
+.consoleWrapper {
+  background: var(--color-terminal-bg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.consoleHeader {
+  background: #181818;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.consoleDots {
+  display: flex;
+  gap: 6px;
+}
+
+.consoleDots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dotRed { background: #FF5F56; }
+.dotYellow { background: #FFBD2E; }
+.dotGreen { background: #27C93F; }
+
+.consoleTitle {
+  font-family: var(--font-terminal);
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.5px;
+}
+
+.consoleBody {
+  padding: 18px;
+  height: 320px;
+  overflow: hidden;
+}
+
+.consoleScroll {
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--font-terminal);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #c5c5c5;
+}
+
+/* Log lines coloring */
+.cmd {
+  color: #38bdf8; /* light blue */
+}
+.info {
+  color: #a3a3a3; /* neutral */
+}
+.success {
+  color: #4ade80; /* green */
+}
+.metric {
+  color: #facc15; /* gold/yellow */
+  padding-left: 10px;
+}
+
+/* Tab 2: Lighthouse Dials layout */
+.lhGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 1.8fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .lhGrid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+.lhDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.featureBox {
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  padding: 24px;
+  border-radius: 10px;
+  margin-top: 1rem;
+}
+
+.featureBox h4 {
+  font-family: var(--font-primary);
+  font-size: 1.05rem;
+  color: var(--color-text-primary);
+  margin: 0 0 12px 0;
+}
+
+.featureBox ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.featureBox li {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--color-text-secondary);
+}
+
+.lhDials {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .lhDials {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.dialItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.dialCircle {
+  position: relative;
+  width: 110px;
+  height: 110px;
+}
+
+.dialCircle svg {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+}
+
+.circleBg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.03);
+  stroke-width: 6px;
+}
+
+.circleFg {
+  fill: none;
+  stroke: #4ade80; /* green for good scores */
+  stroke-width: 6px;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s ease-out;
+}
+
+.dialScore {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.dialLabel {
+  font-family: var(--font-primary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+/* Tab 3: Security Scan Panel */
+.secGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 1.8fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .secGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.secDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.secDashboard {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.secStat {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.secStat:hover {
+  border-color: rgba(232, 71, 42, 0.15);
+}
+
+.secStatNum {
+  font-family: var(--font-primary);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #4ade80; /* Safe green status */
+}
+
+.secStatLabel {
+  font-family: var(--font-primary);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.5px;
+  margin-top: 6px;
+}
+
+.scanTerminal {
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 24px;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.scanTerminalTitle {
+  font-family: var(--font-primary);
+  font-size: 1.05rem;
+  color: var(--color-text-primary);
+  margin: 0 0 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 8px;
+}
+
+.scanIdle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.scanIdle p {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.scanBtn {
+  background: var(--color-accent);
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  padding: 10px 20px;
+  font-family: var(--font-primary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: background 0.2s ease;
+}
+
+.scanBtn:hover {
+  background: var(--color-accent-hover);
+}
+
+.scanningContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.loaderPulse {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+}
+
+.scanningText {
+  font-family: var(--font-terminal);
+  font-size: 0.88rem;
+  color: var(--color-accent);
+  margin: 0;
+}
+
+.scanningLog {
+  font-family: var(--font-terminal);
+  font-size: 0.74rem;
+  color: #666;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.01);
+  padding: 10px;
+  border-radius: 6px;
+  width: 100%;
+  white-space: pre-wrap;
+}
+
+.scanComplete {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.successHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.successShield {
+  font-size: 1.5rem;
+}
+
+.successHeader h4 {
+  font-family: var(--font-primary);
+  font-size: 1.1rem;
+  color: #4ade80;
+  margin: 0;
+}
+
+.scanTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+}
+
+.scanTable th {
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 0;
+  color: var(--color-text-secondary);
+}
+
+.scanTable td {
+  padding: 8px 0;
+  color: var(--color-text-primary);
+}
+
+.resetScanBtn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--color-text-secondary);
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-family: var(--font-primary);
+  font-size: 0.78rem;
+  align-self: flex-start;
+  transition: all 0.2s ease;
+}
+
+.resetScanBtn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-text-primary);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Tab 4: AI & RAG Architecture */
+.aiGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 1.8fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .aiGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.aiDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.aiSpecList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+.specItem {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  padding-bottom: 8px;
+}
+
+.specLabel {
+  font-family: var(--font-primary);
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.specValue {
+  font-family: var(--font-terminal);
+  font-size: 0.88rem;
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.diagramWrapper {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.diaNode {
+  background: rgba(17, 17, 17, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 12px 20px;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-primary);
+  font-size: 0.92rem;
+  color: var(--color-text-secondary);
+}
+
+.diaNodeActive {
+  background: rgba(232, 71, 42, 0.06);
+  border: 1px solid var(--color-accent);
+  border-radius: 8px;
+  padding: 12px 20px;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-primary);
+  font-size: 0.92rem;
+  color: var(--color-text-primary);
+  box-shadow: 0 0 15px rgba(232, 71, 42, 0.1);
+}
+
+.diaNodeIcon {
+  font-size: 1.2rem;
+}
+
+.diaArrow {
+  font-family: var(--font-terminal);
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.15);
+}

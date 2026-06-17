@@ -1,0 +1,40 @@
+name: Performance Audit
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lighthouse:
+    name: Lighthouse Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
+        env:
+          VITE_OPENROUTER_API_KEY: ${{ secrets.VITE_OPENROUTER_API_KEY || 'dummy_key' }}
+          VITE_OPENROUTER_MODEL: ${{ secrets.VITE_OPENROUTER_MODEL || 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free' }}
+          VITE_RESUME_URL: ${{ secrets.VITE_RESUME_URL || '#' }}
+          VITE_GITHUB_USERNAME: ${{ secrets.VITE_GITHUB_USERNAME || 'Vaibhav20k' }}
+
+      - name: Run Lighthouse Audits
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          configPath: ./.lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true
