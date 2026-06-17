@@ -160,18 +160,25 @@
   line-height: 1.5;
 }
 
-/* Stacked Rotation Ticker styling */
-.stackedRotationContainer {
+/* Ticker Container styling */
+.tickerContainer {
   margin-top: 5rem;
   margin-bottom: 5rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  overflow: hidden;
   z-index: 2;
 }
 
-.stackedRotationLabel {
+.tickerLabel {
+  padding-left: var(--spacing-md);
   font-family: var(--font-primary);
   font-size: var(--text-label);
   color: var(--color-text-secondary);
@@ -179,59 +186,44 @@
   text-transform: uppercase;
 }
 
-.stackedRotationViewport {
-  height: 180px; /* Fits exactly 3 items */
+.tickerViewport {
+  display: flex;
   overflow: hidden;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.stackedRotationViewport::before,
-.stackedRotationViewport::after {
-  content: '';
-  position: absolute;
-  left: 0;
   width: 100%;
-  height: 50px;
-  z-index: 10;
-  pointer-events: none;
+  background: rgba(255, 255, 255, 0.01);
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  padding: 24px 0;
 }
 
-.stackedRotationViewport::before {
-  top: 0;
-  background: linear-gradient(to bottom, var(--color-bg) 0%, rgba(10, 10, 10, 0) 100%);
-}
-
-.stackedRotationViewport::after {
-  bottom: 0;
-  background: linear-gradient(to top, var(--color-bg) 0%, rgba(10, 10, 10, 0) 100%);
-}
-
-.stackedRotationList {
+.tickerTrack {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-top: 60px; /* Offset to center the active item */
+  width: max-content;
+  animation: marqueeAnim 28s linear infinite;
 }
 
-.stackedRotationItem {
-  height: 60px;
-  line-height: 60px;
+.tickerItem {
   font-family: var(--font-primary);
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
   font-weight: 700;
   color: var(--color-text-primary);
-  letter-spacing: -1.5px;
   text-transform: uppercase;
-  transform-origin: left center;
+  padding: 0 3.5rem;
+  letter-spacing: -1px;
+  position: relative;
   white-space: nowrap;
 }
 
-.activeItem {
+.tickerItem::after {
+  content: '•';
+  position: absolute;
+  right: -0.5rem;
   color: var(--color-accent);
-  text-shadow: 0 0 30px rgba(232, 71, 42, 0.35);
+}
+
+@keyframes marqueeAnim {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-33.333%, 0, 0); }
 }
 
 /* Experience styling */
@@ -276,4 +268,218 @@
   color: var(--color-text-secondary);
   line-height: 1.6;
   margin-top: 8px;
+}
+
+/* Focus Mode Styles */
+.focusOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(5, 5, 5, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 9999;
+}
+
+.focusModalContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none; /* Let overlay catch clicks outside container */
+  z-index: 10000;
+}
+
+.focusedCard {
+  width: 90%;
+  max-width: 750px;
+  max-height: 80vh;
+  background: var(--color-bg-secondary);
+  border: 1px solid rgba(232, 71, 42, 0.3);
+  border-radius: 16px;
+  padding: 40px;
+  overflow-y: auto;
+  pointer-events: auto; /* Re-enable pointer events inside card */
+  position: relative;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8),
+              0 0 20px rgba(232, 71, 42, 0.1);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 1.5rem;
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  cursor: none !important; /* Let CustomCursor take over */
+  transition: color 0.2s ease;
+  z-index: 100;
+}
+
+.closeBtn:hover {
+  color: var(--color-accent);
+}
+
+.focusedCardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.focusedColumnHeader {
+  font-family: var(--font-primary);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+/* Expanded Skills Sizing */
+.skillsExpandedList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.skillsCategoryGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skillsSubHeader {
+  font-family: var(--font-primary);
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  letter-spacing: 1.5px;
+}
+
+.skillsPillsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skillPill {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 6px 14px;
+  border-radius: 20px;
+  color: var(--color-text-primary);
+  transition: all 0.2s ease;
+}
+
+.skillPill:hover {
+  border-color: var(--color-accent);
+  background: rgba(232, 71, 42, 0.05);
+}
+
+/* Expanded Experience Details */
+.richContentList {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.expExpandedItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  padding-bottom: 24px;
+}
+
+.expExpandedItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.expHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expExpandedRole {
+  font-family: var(--font-primary);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.expExpandedDuration {
+  font-family: var(--font-terminal);
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.expExpandedOrg {
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.expExpandedDesc {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* Expanded Milestones Sizing */
+.milestoneExpandedItem {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.milestoneExpandedItem:hover {
+  border-color: rgba(232, 71, 42, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.milestoneRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.milestoneIcon {
+  font-size: 1.5rem;
+}
+
+.milestoneText {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+.clickPrompt {
+  font-family: var(--font-terminal);
+  font-size: 0.72rem;
+  color: var(--color-text-secondary);
+  margin-top: 1.5rem;
+  letter-spacing: 1.5px;
+  text-align: center;
+  transition: color 0.2s ease;
+}
+
+.gridColumn:hover .clickPrompt {
+  color: var(--color-accent);
 }

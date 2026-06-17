@@ -1,0 +1,48 @@
+.pixelContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: none; /* Let CustomCursor take over */
+}
+
+.contentFrame {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+/* Overlaying Pixel Grid styles */
+.pixelGrid {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  z-index: 10;
+  pointer-events: none;
+  gap: 0;
+}
+
+.pixelUnit {
+  width: 100%;
+  height: 100%;
+  transform: scale(0);
+  opacity: 0;
+}

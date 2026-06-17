@@ -11,111 +11,39 @@
 
 .ambientItem {
   position: absolute;
-  opacity: 0.15;
+  opacity: 0.45; /* Increased opacity from 0.15 for better contrast */
   transition: transform 0.1s ease-out;
-  filter: drop-shadow(0 0 10px rgba(252, 252, 252, 0.05));
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.08)) 
+          drop-shadow(0 0 20px rgba(232, 71, 42, 0.08)); /* Added orange accent tint glow */
   transform-style: preserve-3d;
   perspective: 1000px;
 }
 
-/* Procedural Coffee Cup styling */
+/* Coffee Cup styling */
 .coffeeCup {
   left: 0;
-  width: 120px;
-  height: 100px;
+  width: 160px;
+  height: 160px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-.cupBody {
-  width: 80px;
-  height: 70px;
-  background-color: #161616;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0 0 40px 40px;
-  position: relative;
-  overflow: hidden;
-}
-
-.cupStripe {
-  position: absolute;
-  bottom: 12px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: var(--color-accent);
-  opacity: 0.5;
-}
-
-.cupHandle {
-  width: 30px;
-  height: 40px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-left: none;
-  border-radius: 0 15px 15px 0;
-  background-color: transparent;
-}
-
-.steamLines {
-  position: absolute;
-  top: -20px;
-  left: 30%;
-  display: flex;
-  gap: 15px;
-}
-
-.steam {
-  width: 2px;
-  height: 15px;
-  background-color: var(--color-text-secondary);
-  opacity: 0.3;
-  border-radius: 20%;
-  animation: riseSteam 2s infinite linear;
-}
-
-.steam:nth-child(2) {
-  animation-delay: 1s;
-}
-
-@keyframes riseSteam {
-  0% { transform: translateY(5px) scaleY(0.5); opacity: 0; }
-  50% { opacity: 0.4; }
-  100% { transform: translateY(-15px) scaleY(1.2); opacity: 0; }
-}
-
-/* Procedural Mouse Device styling */
+/* Mouse Device styling */
 .mouseDevice {
   right: 0;
-  width: 90px;
-  height: 140px;
+  width: 130px;
+  height: 195px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.mouseBody {
-  width: 70px;
-  height: 110px;
-  background-color: #161616;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 35px;
-  position: relative;
-  margin-left: 20px;
+.sceneImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-.mouseWheel {
-  width: 6px;
-  height: 14px;
-  background-color: var(--color-accent);
-  border-radius: 3px;
-  position: absolute;
-  top: 20px;
-  left: calc(50% - 3px);
-  box-shadow: 0 0 6px var(--color-accent);
-}
-
-.mouseLine {
-  width: 1px;
-  height: 35px;
-  background-color: rgba(255, 255, 255, 0.08);
-  position: absolute;
-  top: 0;
-  left: 50%;
-}

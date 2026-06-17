@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d0d12"/>
+      <stop offset="100%" stop-color="#181824"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff4e20"/>
+      <stop offset="100%" stop-color="#ff7f50"/>
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ff4e20" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#ff4e20" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="250" rx="8" fill="url(#bgGrad)"/>
+  
+  <!-- Window Border & Shadow -->
+  <rect x="15" y="15" width="370" height="220" rx="6" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1.5"/>
+  
+  <!-- IDE Title Bar -->
+  <rect x="15" y="15" width="370" height="28" fill="rgba(255, 255, 255, 0.03)" rx="6"/>
+  <!-- Window Dots -->
+  <circle cx="35" cy="29" r="4" fill="#ff5f56"/>
+  <circle cx="49" cy="29" r="4" fill="#ffbd2e"/>
+  <circle cx="63" cy="29" r="4" fill="#27c93f"/>
+  
+  <!-- Title text -->
+  <text x="200" y="33" fill="rgba(255, 255, 255, 0.4)" font-family="monospace" font-size="10" text-anchor="middle">repolens-ai-workspace.json</text>
+  
+  <!-- Grid overlay -->
+  <path d="M 15 80 L 385 80 M 15 130 L 385 130 M 15 180 L 385 180 M 100 43 L 100 235 M 200 43 L 200 235 M 300 43 L 300 235" stroke="rgba(255, 255, 255, 0.02)" stroke-width="1"/>
+  
+  <!-- Code lines mock -->
+  <rect x="25" y="60" width="80" height="8" rx="2" fill="rgba(255, 255, 255, 0.15)"/>
+  <rect x="25" y="75" width="140" height="6" rx="2" fill="rgba(255, 255, 255, 0.07)"/>
+  <rect x="40" y="88" width="100" height="6" rx="2" fill="url(#accentGrad)" opacity="0.85"/>
+  <rect x="40" y="101" width="120" height="6" rx="2" fill="rgba(255, 255, 255, 0.05)"/>
+  
+  <!-- Chat AI Prompt Bubble -->
+  <rect x="210" y="130" width="160" height="50" rx="8" fill="rgba(255, 78, 32, 0.08)" stroke="url(#accentGrad)" stroke-width="1"/>
+  <text x="220" y="148" fill="#ff8c69" font-family="monospace" font-size="9" font-weight="bold">> repolens --chat</text>
+  <text x="220" y="162" fill="rgba(255, 255, 255, 0.85)" font-family="sans-serif" font-size="9">Classifying repository metadata...</text>
+  
+  <!-- Connective Nodes / Git Tree Visual -->
+  <circle cx="280" cy="80" r="5" fill="#ff4e20" filter="drop-shadow(0px 0px 4px #ff4e20)"/>
+  <circle cx="310" cy="70" r="4" fill="rgba(255, 255, 255, 0.3)"/>
+  <circle cx="340" cy="90" r="4" fill="rgba(255, 255, 255, 0.3)"/>
+  <path d="M 285 80 L 306 72 M 314 70 L 336 88 M 285 80 L 336 90" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5"/>
+  
+  <!-- Wave Graph -->
+  <path d="M 25 180 Q 75 120, 125 190 T 225 140 T 325 210 L 375 160" fill="none" stroke="url(#accentGrad)" stroke-width="2" opacity="0.4"/>
+  <path d="M 25 180 Q 75 120, 125 190 T 225 140 T 325 210 L 375 160 L 375 235 L 25 235 Z" fill="url(#glowGrad)"/>
+</svg>

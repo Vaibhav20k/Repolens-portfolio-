@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080e14"/>
+      <stop offset="100%" stop-color="#0f1924"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00d2ff"/>
+      <stop offset="100%" stop-color="#0066ff"/>
+    </linearGradient>
+    <linearGradient id="barGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0066ff"/>
+      <stop offset="70%" stop-color="#00d2ff"/>
+      <stop offset="100%" stop-color="#ff0055"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="250" rx="8" fill="url(#bgGrad)"/>
+  
+  <!-- Outer Frame -->
+  <rect x="15" y="15" width="370" height="220" rx="6" fill="none" stroke="rgba(0, 210, 255, 0.12)" stroke-width="1.5"/>
+
+  <!-- Dock Title -->
+  <text x="25" y="38" fill="#00d2ff" font-family="monospace" font-size="9" font-weight="bold">SYSTEM HEALTH MONITOR</text>
+  <rect x="25" y="45" width="120" height="2" fill="#00d2ff" opacity="0.6"/>
+
+  <!-- Docker Container Layout Box (Left) -->
+  <rect x="25" y="65" width="140" height="155" rx="4" fill="rgba(255, 255, 255, 0.02)" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1"/>
+  <text x="35" y="80" fill="rgba(255, 255, 255, 0.6)" font-family="monospace" font-size="8" font-weight="bold">CONTAINERS (ACTIVE)</text>
+  
+  <!-- Docker container row mocks -->
+  <rect x="35" y="90" width="120" height="18" rx="2" fill="rgba(0, 210, 255, 0.06)" stroke="rgba(0, 210, 255, 0.2)" stroke-width="0.75"/>
+  <circle cx="45" cy="99" r="3" fill="#00ff66"/>
+  <text x="55" y="102" fill="rgba(255, 255, 255, 0.8)" font-family="monospace" font-size="7">api_gateway:8080</text>
+
+  <rect x="35" y="113" width="120" height="18" rx="2" fill="rgba(0, 210, 255, 0.06)" stroke="rgba(0, 210, 255, 0.2)" stroke-width="0.75"/>
+  <circle cx="45" cy="122" r="3" fill="#00ff66"/>
+  <text x="55" y="125" fill="rgba(255, 255, 255, 0.8)" font-family="monospace" font-size="7">redis_pubsub:6379</text>
+
+  <rect x="35" y="136" width="120" height="18" rx="2" fill="rgba(0, 210, 255, 0.06)" stroke="rgba(0, 210, 255, 0.2)" stroke-width="0.75"/>
+  <circle cx="45" cy="145" r="3" fill="#00ff66"/>
+  <text x="55" y="148" fill="rgba(255, 255, 255, 0.8)" font-family="monospace" font-size="7">telemetry_db:5432</text>
+
+  <!-- Metric Charts (Right) -->
+  <rect x="180" y="65" width="190" height="70" rx="4" fill="rgba(255, 255, 255, 0.02)" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1"/>
+  <text x="190" y="78" fill="rgba(255, 255, 255, 0.6)" font-family="monospace" font-size="8">WS TRAFFIC (kb/s)</text>
+  
+  <path d="M 190 120 L 210 110 L 230 115 L 250 90 L 270 95 L 290 80 L 310 105 L 330 75 L 350 110 L 360 85" fill="none" stroke="url(#accentGrad)" stroke-width="2" filter="drop-shadow(0 0 3px rgba(0, 210, 255, 0.4))"/>
+
+  <!-- RAM & CPU Progress Bars -->
+  <rect x="180" y="150" width="190" height="70" rx="4" fill="rgba(255, 255, 255, 0.02)" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1"/>
+  
+  <text x="190" y="167" fill="rgba(255, 255, 255, 0.6)" font-family="monospace" font-size="8">CPU LOAD</text>
+  <rect x="250" y="161" width="110" height="8" rx="2" fill="rgba(255,255,255,0.05)"/>
+  <rect x="250" y="161" width="75" height="8" rx="2" fill="url(#accentGrad)"/>
+  <text x="362" y="167" fill="#00d2ff" font-family="monospace" font-size="7">68%</text>
+
+  <text x="190" y="187" fill="rgba(255, 255, 255, 0.6)" font-family="monospace" font-size="8">RAM LOAD</text>
+  <rect x="250" y="181" width="110" height="8" rx="2" fill="rgba(255,255,255,0.05)"/>
+  <rect x="250" y="181" width="95" height="8" rx="2" fill="url(#barGrad)"/>
+  <text x="362" y="187" fill="#ff0055" font-family="monospace" font-size="7">86%</text>
+
+  <text x="190" y="207" fill="rgba(255, 255, 255, 0.6)" font-family="monospace" font-size="8">NET INPUT</text>
+  <text x="250" y="207" fill="rgba(255,255,255,0.7)" font-family="monospace" font-size="8">18.42 Mbps</text>
+</svg>

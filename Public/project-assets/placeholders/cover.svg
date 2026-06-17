@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111116"/>
+      <stop offset="100%" stop-color="#1e1e28"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7928ca"/>
+      <stop offset="100%" stop-color="#ff0080"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="250" rx="8" fill="url(#bgGrad)"/>
+  
+  <!-- Frame -->
+  <rect x="15" y="15" width="370" height="220" rx="6" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1.5"/>
+
+  <!-- Glowing core -->
+  <circle cx="200" cy="125" r="50" fill="url(#accentGrad)" opacity="0.15" filter="blur(20px)"/>
+
+  <!-- Wireframe layout -->
+  <rect x="50" y="50" width="300" height="150" rx="4" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1" stroke-dasharray="5, 5"/>
+  <line x1="50" y1="50" x2="350" y2="200" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1"/>
+  <line x1="50" y1="200" x2="350" y2="50" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1"/>
+
+  <!-- Logo text -->
+  <text x="200" y="130" fill="rgba(255, 255, 255, 0.3)" font-family="monospace" font-size="14" font-weight="bold" text-anchor="middle" letter-spacing="3">SECURE ASSET</text>
+  <text x="200" y="148" fill="url(#accentGrad)" font-family="monospace" font-size="8" text-anchor="middle" letter-spacing="1">LOADING TELEMETRY...</text>
+</svg>
