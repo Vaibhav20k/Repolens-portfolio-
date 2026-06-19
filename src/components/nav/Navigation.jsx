@@ -7,7 +7,7 @@ export default function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['about', 'work', 'engineering', 'contact']
+      const sections = ['about', 'work', 'contact']
       let currentSection = 'hero'
 
       const scrollPosition = window.scrollY + window.innerHeight * 0.45
@@ -66,13 +66,6 @@ export default function Navigation() {
         <span className={styles.dot}></span>
         <span className={styles.text}>RESUME</span>
       </a>
-      <button
-        onClick={() => handleNavClick('engineering')}
-        className={`${styles.navItem} ${activeSection === 'engineering' ? styles.active : ''} clickable`}
-      >
-        <span className={styles.dot}></span>
-        <span className={styles.text}>CI/CD</span>
-      </button>
       <button
         onClick={() => handleNavClick('contact')}
         className={`${styles.navItem} ${activeSection === 'contact' ? styles.active : ''} clickable`}
