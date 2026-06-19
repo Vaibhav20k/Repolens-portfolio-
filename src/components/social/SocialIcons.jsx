@@ -36,7 +36,7 @@ export default function SocialIcons() {
     <div className={`${styles.socialSidebar} ${isOverlapped ? styles.translucent : ''}`}>
       <a 
         href={contact.github} 
-        target="_blank" 
+        target="https://github.com/Vaibhav20k"
         rel="noopener noreferrer" 
         className={`${styles.socialIcon} clickable`}
         title="GitHub"
