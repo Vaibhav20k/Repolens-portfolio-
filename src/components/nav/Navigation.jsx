@@ -58,7 +58,7 @@ export default function Navigation() {
         <span className={styles.text}>WORK</span>
       </button>
       <a
-        href="Public/My_Resume.pdf"
+        href="/My_Resume.pdf"
         target="_blank"
         rel="noopener noreferrer"
         className={`${styles.navItem} clickable`}
