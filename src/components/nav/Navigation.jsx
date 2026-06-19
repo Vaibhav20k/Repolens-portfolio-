@@ -43,38 +43,38 @@ export default function Navigation() {
 
   return (
     <nav className={styles.verticalNav}>
-      <button 
-        onClick={() => handleNavClick('about')} 
+      <button
+        onClick={() => handleNavClick('about')}
         className={`${styles.navItem} ${activeSection === 'about' ? styles.active : ''} clickable`}
       >
         <span className={styles.dot}></span>
         <span className={styles.text}>ABOUT</span>
       </button>
-      <button 
-        onClick={() => handleNavClick('work')} 
+      <button
+        onClick={() => handleNavClick('work')}
         className={`${styles.navItem} ${activeSection === 'work' ? styles.active : ''} clickable`}
       >
         <span className={styles.dot}></span>
         <span className={styles.text}>WORK</span>
       </button>
-      <a 
-        href={resumeUrl} 
-        target="_blank" 
-        rel="noopener noreferrer" 
+      <a
+        href="Public/My_Resume.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
         className={`${styles.navItem} clickable`}
       >
         <span className={styles.dot}></span>
         <span className={styles.text}>RESUME</span>
       </a>
-      <button 
-        onClick={() => handleNavClick('engineering')} 
+      <button
+        onClick={() => handleNavClick('engineering')}
         className={`${styles.navItem} ${activeSection === 'engineering' ? styles.active : ''} clickable`}
       >
         <span className={styles.dot}></span>
         <span className={styles.text}>CI/CD</span>
       </button>
-      <button 
-        onClick={() => handleNavClick('contact')} 
+      <button
+        onClick={() => handleNavClick('contact')}
         className={`${styles.navItem} ${activeSection === 'contact' ? styles.active : ''} clickable`}
       >
         <span className={styles.dot}></span>

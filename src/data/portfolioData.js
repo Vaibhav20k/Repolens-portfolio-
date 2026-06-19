@@ -98,11 +98,11 @@ export const portfolioData = {
   ],
 
   contact: {
-    email: "vaibhav.dev.20k@gmail.com",
-    phone: "+91 98765 43210",
-    linkedin: "https://linkedin.com/in/vaibhav20k",
+    email: "vkpal2006@gmail.com",
+    phone: "+91 8800870653",
+    linkedin: "https://www.linkedin.com/in/vaibhav-kandpal/",
     github: "https://github.com/Vaibhav20k",
-    instagram: "https://instagram.com/vaibhav_20k",
+    instagram: "https://www.instagram.com/vaibhavv.o_o/",
     location: "Delhi, India"
   }
 }
