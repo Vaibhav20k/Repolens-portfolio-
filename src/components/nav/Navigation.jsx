@@ -58,7 +58,7 @@ export default function Navigation() {
         <span className={styles.text}>WORK</span>
       </button>
       <a
-        href="/My_Resume.pdf"
+        href="https://repolens-git-main-vaibhav-kandpals-projects.vercel.app/My_Resume.pdf"
         target="_blank"
         rel="noopener noreferrer"
         className={`${styles.navItem} clickable`}
