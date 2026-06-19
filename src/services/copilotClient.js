@@ -108,9 +108,9 @@ ${readme}
       role: 'system',
       content: SYSTEM_PROMPT_BASE + (domainContext ? `\n${domainContext}` : '')
     },
-    ...chatHistory.map(h => ({
-      role: h.role,
-      content: h.content
+    ...chatHistory.filter(Boolean).map(h => ({
+      role: h?.role,
+      content: h?.content
     })),
     {
       role: 'user',

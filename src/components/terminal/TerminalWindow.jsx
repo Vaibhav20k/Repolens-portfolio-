@@ -295,14 +295,15 @@ export default function TerminalWindow({ terminal, repos }) {
       const historyMessages = []
       for (let i = 0; i < terminal.history.length; i++) {
         const entry = terminal.history[i]
-        if (entry.type === 'input' && entry.text.startsWith('ask ')) {
+        if (!entry) continue
+        if (entry.type === 'input' && entry.text && entry.text.startsWith('ask ')) {
           historyMessages.push({
             role: 'user',
             content: entry.text.replace(/^ask\s+/i, '')
           })
         } else if (entry.type === 'output' && historyMessages.length > 0) {
           const prevEntry = terminal.history[i - 1]
-          if (prevEntry && prevEntry.type === 'input' && prevEntry.text.startsWith('ask ')) {
+          if (prevEntry && prevEntry.type === 'input' && prevEntry.text && prevEntry.text.startsWith('ask ')) {
             historyMessages.push({
               role: 'assistant',
               content: entry.text
@@ -542,18 +543,21 @@ export default function TerminalWindow({ terminal, repos }) {
 
           {/* History Logs */}
           <div className={styles.historyLogs}>
-            {terminal.history.map((log, index) => (
-              <div key={index} className={styles.historyLine}>
-                {log.type === 'input' ? (
-                  <div className={styles.inputLog}>
-                    <span className={styles.prompt}>vaibhav@repolens:~$</span>
-                    <span className={styles.commandText}>{log.text}</span>
-                  </div>
-                ) : (
-                  <div className={styles.outputLog}>{log.text}</div>
-                )}
-              </div>
-            ))}
+            {terminal.history.filter(Boolean).map((log, index) => {
+              if (!log || !log.type) return null
+              return (
+                <div key={index} className={styles.historyLine}>
+                  {log.type === 'input' ? (
+                    <div className={styles.inputLog}>
+                      <span className={styles.prompt}>vaibhav@repolens:~$</span>
+                      <span className={styles.commandText}>{log.text}</span>
+                    </div>
+                  ) : (
+                    <div className={styles.outputLog}>{log.text}</div>
+                  )}
+                </div>
+              )
+            })}
 
             {/* Typing Indicator */}
             {isTyping && (

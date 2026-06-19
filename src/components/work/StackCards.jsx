@@ -128,7 +128,8 @@ export default function StackCards({ projects, activeIndex, onSelectCard }) {
 
   return (
     <div className={styles.deckWrapper}>
-      {projects.map((project, idx) => {
+      {projects.filter(Boolean).map((project, idx) => {
+        if (!project) return null
         const cardStyle = getCardStyles(idx)
         const isTop = idx === activeIndex
 

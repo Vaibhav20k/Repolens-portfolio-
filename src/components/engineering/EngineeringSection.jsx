@@ -41,7 +41,10 @@ export default function EngineeringSection() {
     let index = 0
     const interval = setInterval(() => {
       if (index < logLines.length) {
-        setCiLogs((prev) => [...prev, logLines[index]])
+        const line = logLines[index]
+        if (line) {
+          setCiLogs((prev) => [...prev, line])
+        }
         index++
       } else {
         clearInterval(interval)
@@ -158,14 +161,17 @@ export default function EngineeringSection() {
                   </div>
                   <div className={styles.consoleBody}>
                     <div className={styles.consoleScroll}>
-                      {ciLogs.map((log, index) => (
-                        <div
-                          key={index}
-                          className={`${styles.consoleLine} ${styles[log.type]}`}
-                        >
-                          {log.text}
-                        </div>
-                      ))}
+                      {ciLogs.filter(Boolean).map((log, index) => {
+                        if (!log) return null
+                        return (
+                          <div
+                            key={index}
+                            className={`${styles.consoleLine} ${styles[log.type || 'info']}`}
+                          >
+                            {log.text}
+                          </div>
+                        )
+                      })}
                     </div>
                   </div>
                 </div>
