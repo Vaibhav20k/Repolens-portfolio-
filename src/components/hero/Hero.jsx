@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import ScrollHighlightText from './ScrollHighlightText'
+import HeroRobot from './HeroRobot'
 import styles from './Hero.module.css'
 
 export default function Hero({ openTerminal }) {
@@ -43,20 +44,20 @@ export default function Hero({ openTerminal }) {
 
   return (
     <section className={styles.heroSection}>
-      <motion.div 
+      <motion.div
         className={styles.titleContainer}
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
         <motion.div className={styles.label} variants={itemVariants}>
-          PORTFOLIO EXPERIMENT v1.0
+          PORTFOLIO
         </motion.div>
-        
+
         {/* Cinematic Name Reveal Layout */}
         <h1 className={styles.mainTitle}>
           <div className={styles.maskContainer}>
-            <motion.span 
+            <motion.span
               className={styles.wordBlock}
               variants={titleWordVariants}
             >
@@ -64,7 +65,7 @@ export default function Hero({ openTerminal }) {
             </motion.span>
           </div>
           <div className={styles.maskContainer}>
-            <motion.span 
+            <motion.span
               className={`${styles.wordBlock} ${styles.accentWord}`}
               variants={titleWordVariants}
             >
@@ -74,14 +75,14 @@ export default function Hero({ openTerminal }) {
         </h1>
 
         <motion.p className={styles.tagline} variants={itemVariants}>
-          <ScrollHighlightText 
+          <ScrollHighlightText
             text="Building intelligent systems at the intersection of AI & Full Stack."
             enableProximity={false}
           />
         </motion.p>
 
         {/* Green Blinking Monospace terminal trigger */}
-        <motion.div 
+        <motion.div
           className={styles.terminalTrigger}
           onClick={openTerminal}
           variants={itemVariants}
@@ -91,6 +92,9 @@ export default function Hero({ openTerminal }) {
           <span className={styles.blinker}></span>
         </motion.div>
       </motion.div>
+
+      {/* Interactive 3D Spline Robot */}
+      <HeroRobot />
     </section>
   )
 }

@@ -1,10 +1,27 @@
 .heroSection {
   min-height: 90vh;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   position: relative;
   padding-top: 100px;
-  overflow: hidden;
+  overflow: visible; /* Prevent clipping of radial glow or floating animation */
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .heroSection {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroSection {
+    gap: 4rem;
+  }
 }
 
 .titleContainer {
@@ -12,7 +29,14 @@
   flex-direction: column;
   position: relative;
   z-index: 10;
-  max-width: 900px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .titleContainer {
+    max-width: 45%;
+    flex: 0 0 45%;
+  }
 }
 
 .label {
