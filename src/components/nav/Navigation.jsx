@@ -73,6 +73,16 @@ export default function Navigation() {
         <span className={styles.dot}></span>
         <span className={styles.text}>CONTACT</span>
       </button>
+
+      <a
+        href="https://repolens-git-main-vaibhav-kandpals-projects.vercel.app/My_Resume.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`${styles.navItem} clickable`}
+      >
+        <span className={styles.dot}></span>
+        <span className={styles.text}>BLOG</span>
+      </a>
     </nav>
   )
 }
