@@ -1,0 +1,148 @@
+/* CORRECTED: Robot was shrinking with min-height - Using fixed heights instead */
+
+.robotWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  background: transparent;
+  width: 100%;
+  z-index: 5;
+  pointer-events: auto;
+}
+
+/* Desktop Sizing - KEEP FIXED HEIGHT, INCREASE VALUE */
+@media (min-width: 1024px) {
+  .robotWrapper {
+    flex: 0 0 80%;
+    height: 1200px;
+    /* FIXED: Increased from 600px to 750px */
+  }
+}
+
+/* Tablet Sizing - KEEP FIXED HEIGHT, INCREASE VALUE */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .robotWrapper {
+    flex: 0 0 50%;
+    height: 620px;
+    /* FIXED: Increased from 460px to 580px */
+  }
+}
+
+/* Mobile Sizing - KEEP FIXED HEIGHT, INCREASE VALUE */
+@media (max-width: 767px) {
+  .robotWrapper {
+    height: 520px;
+    /* FIXED: Increased from 340px to 480px */
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(232, 71, 42, 0.1) 0%, rgba(232, 71, 42, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(40px);
+}
+
+@media (max-width: 1024px) {
+  .glow {
+    width: 320px;
+    height: 320px;
+  }
+}
+
+@media (max-width: 768px) {
+  .glow {
+    width: 240px;
+    height: 240px;
+  }
+}
+
+.floatingContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  animation: float 6s ease-in-out infinite;
+}
+
+/* FIXED: Ensure container fills the wrapper height */
+.splineContainer {
+  width: 100%;
+  height: 100%;
+  /* Make it fill parent container */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* FIXED: Ensure iframe fills container */
+.splineCanvas {
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent !important;
+  display: block !important;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(0.4deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+/* Loading Placeholder */
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--color-text-secondary);
+  font-family: var(--font-terminal);
+  font-size: var(--text-label);
+  letter-spacing: 2px;
+  gap: 15px;
+}
+
+.pulseRing {
+  width: 32px;
+  height: 32px;
+  border: 2px solid rgba(232, 71, 42, 0.15);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loaderText {
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
