@@ -4,9 +4,8 @@ import styles from './AchievementStrip.module.css'
 export default function AchievementStrip() {
   const items = [
     "NASA SPACE APPS CHALLENGE — GLOBAL TOP 5 FINISH",
+    "PAYTM HACKATHON - FIRST PLACE",
     "SMART INDIA HACKATHON PARTICIPANT",
-    "IIT ROORKEE DATA SCIENCE & AI PROGRAMME",
-    "DELOITTE AUSTRALIA DATA ANALYTICS CERTIFICATION",
   ]
 
   // Double the list for infinite looping marquee
