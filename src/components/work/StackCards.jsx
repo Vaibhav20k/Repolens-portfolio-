@@ -7,6 +7,8 @@ const getCoverPath = (id) => {
   if (id === 'repolens-ai') return '/project-assets/repolens/cover.svg'
   if (id === 'orbitair') return '/project-assets/orbitair/cover.svg'
   if (id === 'orbit-ops') return '/project-assets/orbit-ops/cover.svg'
+  if (id === 'DualSentry') return '/project-assets/DualSentry/cover.svg'
+  if (id === 'jarvis') return '/project-assets/jarvis/cover.svg'
   return '/project-assets/placeholders/cover.svg'
 }
 

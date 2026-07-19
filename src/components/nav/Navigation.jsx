@@ -58,7 +58,7 @@ export default function Navigation() {
         <span className={styles.text}>WORK</span>
       </button>
       <a
-        href="https://repolens-git-main-vaibhav-kandpals-projects.vercel.app/My_Resume.pdf"
+        href="https://drive.google.com/file/d/1AcspKX_Xe14130mJODU9jd5R04xHHkDY/view?usp=sharing"
         target="_blank"
         rel="noopener noreferrer"
         className={`${styles.navItem} clickable`}
@@ -75,7 +75,7 @@ export default function Navigation() {
       </button>
 
       <a
-        href="https://repolens-git-main-vaibhav-kandpals-projects.vercel.app/My_Resume.pdf"
+        href="https://drive.google.com/file/d/1AcspKX_Xe14130mJODU9jd5R04xHHkDY/view?usp=sharing"
         target="_blank"
         rel="noopener noreferrer"
         className={`${styles.navItem} clickable`}

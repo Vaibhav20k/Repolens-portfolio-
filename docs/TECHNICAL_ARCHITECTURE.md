@@ -185,7 +185,7 @@ const USERNAME = import.meta.env.VITE_GITHUB_USERNAME
 ```env
 # .env
 VITE_OPENROUTER_API_KEY=paste_your_key_here
-VITE_RESUME_URL=paste_your_resume_pdf_link_here
+VITE_RESUME_URL=https://drive.google.com/file/d/1AcspKX_Xe14130mJODU9jd5R04xHHkDY/view?usp=sharing
 VITE_GITHUB_USERNAME=Vaibhav20k
 ```
 

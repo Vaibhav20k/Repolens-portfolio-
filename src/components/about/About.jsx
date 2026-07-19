@@ -6,11 +6,14 @@ import ScrollHighlightText from '../hero/ScrollHighlightText'
 
 function TechTicker() {
   const disciplines = [
-    "AI ENGINEERING",
-    "FULL STACK",
+    "MACHINE LEARNING",
+    "DEEP LEARNING",
     "DATA SCIENCE",
-    "RAG SYSTEMS",
-    "API DESIGN"
+    "GENERATIVE AI",
+    "LLM SYSTEMS",
+    "COMPUTER VISION",
+    "NATURAL LANGUAGE PROCESSING",
+    "MLOPS"
   ]
 
   // Triple items for seamless continuous looping in marquee
@@ -83,16 +86,31 @@ export default function About() {
           <h3 className={styles.columnHeader}>CORE SKILLS</h3>
           <ul className={styles.skillsList}>
             <li>
-              <span className={styles.skillCategory}>AI Engineering:</span>
-              <span className={styles.skillValues}>{skills.ai.slice(0, 4).join(', ')}...</span>
+              <span className={styles.skillCategory}>Machine Learning:</span>
+              <span className={styles.skillValues}>
+                {(skills.machineLearning || []).slice(0, 4).join(", ")}...
+              </span>
             </li>
+
             <li>
-              <span className={styles.skillCategory}>Full Stack:</span>
-              <span className={styles.skillValues}>{skills.frameworks.slice(0, 4).join(', ')}...</span>
+              <span className={styles.skillCategory}>Deep Learning:</span>
+              <span className={styles.skillValues}>
+                {(skills.deepLearning || []).slice(0, 4).join(", ")}...
+              </span>
             </li>
+
+            <li>
+              <span className={styles.skillCategory}>AI & LLMs:</span>
+              <span className={styles.skillValues}>
+                {(skills.ai || []).slice(0, 4).join(", ")}...
+              </span>
+            </li>
+
             <li>
               <span className={styles.skillCategory}>Languages:</span>
-              <span className={styles.skillValues}>{skills.languages.slice(0, 4).join(', ')}...</span>
+              <span className={styles.skillValues}>
+                {(skills.languages || []).slice(0, 4).join(", ")}...
+              </span>
             </li>
           </ul>
           <div className={styles.clickPrompt}>[ CLICK TO EXPAND ]</div>
@@ -172,7 +190,19 @@ export default function About() {
                     <div className={styles.skillsExpandedList}>
                       {Object.entries(skills).map(([category, list]) => (
                         <div key={category} className={styles.skillsCategoryGroup}>
-                          <h4 className={styles.skillsSubHeader}>{category.toUpperCase()}</h4>
+                          <h4 className={styles.skillsSubHeader}>
+                            {{
+                              languages: "Languages",
+                              machineLearning: "Machine Learning",
+                              deepLearning: "Deep Learning",
+                              ai: "AI & LLMs",
+                              dataScience: "Data Science",
+                              dataEngineering: "Data Engineering",
+                              backend: "Backend Development",
+                              databases: "Databases",
+                              devops: "DevOps & Cloud"
+                            }[category] || category}
+                          </h4>
                           <div className={styles.skillsPillsContainer}>
                             {list.map(skill => (
                               <span key={skill} className={styles.skillPill}>{skill}</span>

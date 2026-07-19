@@ -16,37 +16,62 @@ export const portfolioData = {
   },
 
   skills: {
-    languages: ["Python", "JavaScript", "TypeScript", "SQL", "C++", "HTML", "CSS"],
-    frameworks: ["React", "FastAPI", "Node.js", "Express", "Vite", "Flask"],
-    ai: ["LangChain", "OpenRouter API", "Embeddings", "RAG", "Ollama", "ChromaDB", "LLMs"],
-    data: ["Pandas", "NumPy", "Matplotlib", "Scikit-Learn", "Jupyter"],
-    devops: ["Git", "GitHub Actions", "Docker", "Vercel", "Linux"],
-    databases: ["PostgreSQL", "SQLite", "MongoDB", "ChromaDB"]
-  },
+  languages: ["Python","SQL","C++","JavaScript","TypeScript"],
+  machineLearning: ["Scikit-Learn","XGBoost","TensorFlow","PyTorch","CatBoost","LightGBM","Feature Engineering","Model Evaluation","Hyperparameter Tuning"],
+  deepLearning: ["Neural Networks","CNNs","RNNs","LSTMs","Transformers","Transfer Learning","Computer Vision","NLP"],
+  ai: ["LLMs","LangChain","RAG","Embeddings","Vector Databases","Prompt Engineering","Agentic AI","OpenRouter API","Ollama","ChromaDB","FAISS"],
+  dataScience: ["Pandas","NumPy","SciPy","Matplotlib","Plotly","Seaborn","Jupyter Notebook","Statistical Analysis","Data Visualization","Exploratory Data Analysis"],
+  dataEngineering: ["Apache Kafka","ETL Pipelines","Data Preprocessing","Data Cleaning","Feature Pipelines","Redis"],
+  backend: ["FastAPI","Flask","Node.js","REST APIs"],
+  databases: ["PostgreSQL","MongoDB","SQLite","ChromaDB"],
+  devops: ["Docker","Git","GitHub Actions","Linux","Vercel"]
+},
 
   projects: [
     {
-      id: "repolens-ai",
-      name: "RepoLens AI Portfolio",
-      type: "Solo Project",
-      ownership: "100% Owner (Full System Architecture & Implementation)",
-      description: "An interactive, dark-themed portfolio featuring a fully draggable and resizable Terminal Window housing the Portfolio Copilot. The AI Copilot parses CLI commands and natural language requests, routing queries through a client-side intent classifier to deliver contextual responses based on live GitHub repository data and static experience definitions.",
-      tech: ["React", "Framer Motion", "GSAP", "OpenRouter API", "GitHub API", "CSS Modules", "Lenis"],
-      github: "https://github.com/Vaibhav20k/repolens-portfolio",
-      live: "https://vaibhav-repolens.vercel.app",
+      id: "DualSentry",
+      name: "DualSentry",
+      type: "Personal Project",
+      ownership: " Full-Stack & Machine Learning Engineer (Designed and developed the complete architecture, backend, ML pipeline, database, and infrastructure)",
+      description: " An enterprise-grade real-time financial transaction anomaly detection platform built to identify fraudulent payment behavior using machine learning and behavioral analytics. The system leverages an event-driven microservice architecture to ingest transaction streams, engineer user behavioral features, execute low-latency anomaly inference, persist audit trails, and expose scalable REST APIs for fraud investigation, analytics, and operational monitoring.",
+      tech: ["Go","Python","FastAPI","PostgreSQL","Redis","Apache Kafka","Docker","Prometheus","Grafana","Scikit-learn","XGBoost","GitHub Actions"],
+      github: "https://github.com/Vaibhav20k/DualSentry-model.git",
       highlights: [
-        "Interactive 3-Domain Intent Classifier: GENERAL, PORTFOLIO, and REPOSITORY classification routing.",
-        "Custom terminal prompt interface featuring complete command history and drag/resize layout memory.",
-        "Secure client-side integration caching GitHub repository metadata using custom LocalStorage hook wrappers.",
-        "Cinematic page transitions, scroll text highlights, and fluid custom cursors."
+        "Architected and developed a distributed event-driven backend using Apache Kafka to decouple transaction ingestion, feature engineering, anomaly inference, and alert generation.",
+        "Engineered behavioral feature pipelines using transaction velocity, spending deviation, merchant patterns, temporal activity, device fingerprints, IP intelligence, and historical user baselines for anomaly detection.",
+        "Implemented machine learning-based fraud detection with configurable risk thresholds and hybrid rule-based validation to improve detection precision while minimizing false positives.",
+        "Designed a normalized PostgreSQL database with optimized indexing, audit logging, and relational data models for scalable financial transaction processing.",
+        "Built high-performance FastAPI services exposing secure REST endpoints for transaction ingestion, anomaly scoring, fraud investigation, and analytics dashboards.",
+        "Integrated Redis caching to accelerate feature retrieval and reduce inference latency for real-time fraud analysis.",
+        "Containerized the complete platform using Docker Compose and implemented observability with Prometheus and Grafana for monitoring service health and system performance.",
+        "Automated code quality and deployment validation through GitHub Actions CI/CD pipelines with linting, testing, and build verification."
+      ]
+    },
+    {
+      id: "jarvis",
+      name: "JARVIS",
+      type: "Personal Project",
+      ownership: " AI Systems Engineer (Designed and developed the complete architecture, voice pipeline, multimodal intelligence, and desktop automation framework)",
+      description: "A  Cross-platform multimodal AI assistant engineered to provide real-time voice interaction, desktop automation, visual understanding, and persistent contextual memory across Windows, macOS, and Linux. The system integrates large language models, speech recognition, computer vision, web intelligence, and system telemetry to execute natural language commands, automate complex workflows, monitor hardware resources, and deliver personalized contextual assistance through an adaptive real-time interface.",
+      tech: ["Python","Gemini API","Playwright","OpenCV","SpeechRecognition","PyAutoGUI","psutil","SQLite","AsyncIO","Docker"],
+      github: "https://github.com/Vaibhav20k/Personalized-Jarvis-",
+      highlights: [
+        "Engineered a low-latency multimodal AI pipeline combining speech recognition, LLM reasoning, computer vision, and desktop automation for real-time conversational assistance.",
+        "Developed cross-platform system automation capable of launching applications, executing terminal commands, managing files, controlling browsers, and orchestrating multi-step workflows using natural language.",
+        "Implemented persistent contextual memory to retain user preferences, projects, language settings, and conversation history, enabling personalized long-term interactions.",
+        "Built a real-time hardware telemetry engine monitoring CPU, GPU, memory utilization, and system temperatures with intelligent threshold detection and proactive voice alerts.",
+        "Integrated advanced web intelligence using Gemini Grounded Search with automatic fallback mechanisms for news retrieval, research, product comparison, and real-time information aggregation.",
+        "Designed a dynamic adaptive HUD supporting voice interactions, multimodal content rendering, live search visualization, and contextual response streaming.",
+        "Implemented multimodal perception by combining screen understanding, webcam-based visual processing, and voice input to enable context-aware task execution.",
+        "Optimized asynchronous task orchestration using Python AsyncIO to support concurrent speech processing, web search, system monitoring, and AI inference with minimal response latency."
       ]
     },
     {
       id: "orbitair",
       name: "OrbitAir",
       type: "Group Project",
-      ownership: "Core Developer (Owned data scraping, backend, frontend, and database design)",
-      description: "An automated real-time aviation telemetry tracker developed for analyzing flight routes, mapping density grids, and predicting airspace occupancy patterns. The system schedules data ingestion scripts to pull transponder feeds, parses them into a spatial database, and streams real-time maps via a responsive React web dashboard.",
+      ownership: " Core Developer (Owned data scraping, backend, frontend, and database design)",
+      description: " An automated real-time aviation telemetry tracker developed for  analyzing flight routes, mapping density grids, and predicting airspace occupancy patterns. The system schedules data ingestion scripts to pull transponder feeds, parses them into a spatial database , and streams real-time maps via a responsive React web dashboard.",
       tech: ["Python", "FastAPI", "React", "PostgreSQL", "TailwindCSS", "Mapbox GL", "Docker"],
       github: "https://github.com/Vaibhav20k/OrbitAir",
       live: "https://orbitair-telemetry.vercel.app",
@@ -61,8 +86,8 @@ export const portfolioData = {
       id: "orbit-ops",
       name: "ORBIT-OPS",
       type: "Group Project",
-      ownership: "Lead Architect (Owned server administration scripts, system metrics, and UI components)",
-      description: "A centralized cloud infrastructure monitoring dashboard tailored for containerized architectures and microservices. Orchestrates server status reporting, indexes system logs, aggregates error metrics, and provides real-time alerts through WebSockets. Features shell command triggers directly from the web console.",
+      ownership: " Lead Architect (Owned server administration scripts, system metrics, and UI components)",
+      description: " A centralized cloud  infrastructure  monitoring dashboard tailored for containerized  architectures and microservices. Orchestrates server status reporting , indexes system logs , aggregates error metrics , and provides real-time alerts through WebSockets. Features shell command triggers directly from the web console.",
       tech: ["Node.js", "Express", "React", "Redis", "Docker", "WebSockets", "Chart.js"],
       github: "https://github.com/Vaibhav20k/ORBIT-OPS",
       live: "",
@@ -77,8 +102,15 @@ export const portfolioData = {
 
   experience: [
     {
+      role: "SWD intern",
+      org: "Cimplifie",
+      duration: "Jun 2026 — July 2026",
+      description: "Shipped 4 client-facing React dashboards consuming internal REST APIs, reducing average client reporting turnaround from 3 days to same-day by replacing manual Excel exports with live data views."
+              
+    },         
+    {
       role: "Lead Software Architect",
-      org: "Aviation Telemetry Hackathon Group",
+      org: "SpaceOPS Hackathon Group",
       duration: "Oct 2024 — Present",
       description: "Spearheaded the backend routing layout and real-time data ingestion scripts for space apps telemetry trackers. Managed PostgreSQL database configuration and map integrations."
     },
@@ -88,13 +120,13 @@ export const portfolioData = {
       duration: "Jun 2024 — Present",
       description: "Contributing python scraper extensions, API hooks, and local LLM fine-tuning scripts to developer tool chains and RAG frameworks."
     }
+    
   ],
 
   achievements: [
-    "NASA Space Apps Challenge — Finished in Top 5 (out of hundreds of teams globally) for aerospace tracking.",
-    "Smart India Hackathon — Selected Participant representing ADGIPS, Delhi.",
-    "IIT Roorkee Data Science & AI Programme — Professional certification and coursework (In Progress).",
-    "Deloitte Australia Data Analytics Simulation via Forage — Completed data cleaning, mapping, and dashboards."
+    "PAYTM AGENT{A}THON WINNER - Grabbed FIRST place in paytm office build CommunityOS - Adaptive AI Community Platform",
+    "NASA Space Apps Challenge - Finished in Top 5 (out of hundreds of teams globally) for aerospace tracking.",
+    "Smart India Hackathon 2025 - Selected Participant represented ADGIPS, Delhi.",
   ],
 
   contact: {

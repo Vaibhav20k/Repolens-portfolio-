@@ -73,6 +73,8 @@ export async function queryCopilot(
 
   // 1. Classify user intent
   const intent = await classifyIntent(query, apiKey)
+  console.log("Intent:", intent)
+
 
   console.log(
     `Query: "${query}" | Classified Intent: ${intent} | Model: ${AI_CONFIG.model}`
@@ -196,14 +198,30 @@ ${portfolioData.contact.location}
     let matchedRepo = 'repolens-portfolio'
     const queryLower = query.toLowerCase()
 
-    if (queryLower.includes('orbitair')) {
-      matchedRepo = 'OrbitAir'
-    } else if (
-      queryLower.includes('orbit-ops') ||
-      queryLower.includes('orbit ops')
-    ) {
-      matchedRepo = 'ORBIT-OPS'
+    const matchedProject = portfolioData.projects.find((project) => {
+      const projectName = project.name.toLowerCase()
+
+      const repoName = project.github
+        ?.split('/')
+        .pop()
+        ?.replace('.git', '')
+        .toLowerCase()
+
+      return (
+        queryLower.includes(projectName) ||
+        (repoName && queryLower.includes(repoName)) ||
+        (repoName && queryLower.includes(repoName.replace(/-/g, ' ')))
+      )
+    })
+
+    if (matchedProject) {
+      matchedRepo = matchedProject.github
+        .split('/')
+        .pop()
+        .replace('.git', '')
     }
+    console.log("Matched Project:", matchedProject)
+    console.log("Matched Repo:", matchedRepo)
 
     console.log(`Detected repository match: ${matchedRepo}`)
 
