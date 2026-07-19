@@ -107,14 +107,23 @@ Skills
 Languages:
 ${portfolioData.skills.languages.join(', ')}
 
-Frameworks:
-${portfolioData.skills.frameworks.join(', ')}
+Backend:
+${portfolioData.skills.backend.join(', ')}
 
-AI / ML:
+Machine Learning:
+${portfolioData.skills.machineLearning.join(', ')}
+
+Deep Learning:
+${portfolioData.skills.deepLearning.join(', ')}
+
+AI:
 ${portfolioData.skills.ai.join(', ')}
 
 Data Science:
-${portfolioData.skills.data.join(', ')}
+${portfolioData.skills.dataScience.join(', ')}
+
+Data Engineering:
+${portfolioData.skills.dataEngineering.join(', ')}
 
 Databases:
 ${portfolioData.skills.databases.join(', ')}
