@@ -14,117 +14,309 @@ Your personality:
 - Precise and technical
 - Confident but not arrogant
 - Helpful and clear
-- Speaks as if Vaibhav himself is explaining his work (e.g. use "I" instead of "Vaibhav" when explaining his decisions or background)
+- Speaks as if Vaibhav himself is explaining his work (use "I" instead of "Vaibhav" when referring to yourself)
 - Never robotic or corporate
 
 Rules:
-1. For general tech questions: answer from your knowledge directly.
-2. For portfolio questions: answer ONLY from the portfolio context provided. Do not hallucinate projects, skills, or experience not in the context.
-3. For repository questions: answer ONLY from the GitHub repository context provided. Always mention which repository your answer comes from.
-4. Keep responses concise — this is a terminal window, not a document editor. Keep answers under 150-200 words.
-5. Use plain text — do not output markdown headers (no #), no markdown bold (no **), no underline, and no bullet symbols that render poorly in a text console. Use simple dashes (-) for lists.
-6. Never say you are ChatGPT, Claude, or any other AI. You are Portfolio Copilot.
-7. If you genuinely cannot answer from the context, say:
-   "I don't have enough context for that. Try asking something about Vaibhav's projects, skills, or a general tech concept."
+1. For general tech questions, answer from your own technical knowledge.
 
+2. For portfolio questions, answer ONLY from the portfolio context provided. Never invent projects, skills, achievements, or experience.
+
+3. If the portfolio context contains contact information and the user asks how to contact, connect, hire, email, message, reach, or collaborate with me, provide the available contact details directly.
+
+4. For repository questions, answer ONLY from the repository context provided. Always mention which repository your answer comes from.
+
+5. Keep responses concise. This is a terminal window, not a document editor. Aim for under 150–200 words.
+
+6. Use plain text only.
+- No markdown headers
+- No bold
+- No tables
+- Use simple "-" for bullet points.
+
+7. Never say you are ChatGPT, Claude, Gemini, or another AI assistant. You are Portfolio Copilot.
+
+8. If the answer genuinely cannot be determined from the supplied context, reply:
+
+"I don't have enough context for that. Try asking something about my projects, skills, repositories, or a general technical concept."
 `
 
-// Clean markdown characters from responses to preserve terminal text look
+// Clean markdown characters from responses to preserve terminal appearance
 function cleanTerminalOutput(text) {
   if (!text) return ''
+
   return text
-    .replace(/[#*`]/g, '')            // Strip #, *, and ` symbols
-    .replace(/__+/g, '')             // Strip underscores used for formatting
+    .replace(/[#*`]/g, '')
+    .replace(/__+/g, '')
 }
 
-export async function queryCopilot(query, chatHistory = [], cachedRepos = [], onChunk) {
+export async function queryCopilot(
+  query,
+  chatHistory = [],
+  cachedRepos = [],
+  onChunk
+) {
   const apiKey = import.meta.env.VITE_OPENROUTER_API_KEY
   const username = import.meta.env.VITE_GITHUB_USERNAME || 'Vaibhav20k'
 
   if (!apiKey) {
-    const errMsg = 'Error: API key not configured. Please add VITE_OPENROUTER_API_KEY to your .env file.'
+    const errMsg =
+      'Error: API key not configured. Please add VITE_OPENROUTER_API_KEY to your .env file.'
+
     onChunk(errMsg)
-    return { intent: 'ERROR', text: errMsg }
+
+    return {
+      intent: 'ERROR',
+      text: errMsg
+    }
   }
 
-  // 1. Classify User Intent
+  // 1. Classify user intent
   const intent = await classifyIntent(query, apiKey)
-  console.log(`Query: "${query}" | Classified Intent: ${intent} | Model: ${AI_CONFIG.model}`)
+
+  console.log(
+    `Query: "${query}" | Classified Intent: ${intent} | Model: ${AI_CONFIG.model}`
+  )
 
   let domainContext = ''
   let sources = ''
 
-  // 2. Fetch/Build Grounding Context
+  // ---------------------------------------------------------------------------
+  // PORTFOLIO DOMAIN
+  // ---------------------------------------------------------------------------
+
   if (intent === 'PORTFOLIO') {
-    domainContext = `PORTFOLIO CONTEXT:
+    domainContext = `PORTFOLIO CONTEXT
+
+Basic Information
 Name: ${portfolioData.name}
 Title: ${portfolioData.title}
 Institute: ${portfolioData.institute}
 Batch: ${portfolioData.batch}
 Tagline: ${portfolioData.tagline}
-About: ${portfolioData.about.heading} ${portfolioData.about.paragraph}
-Achievements:
-${portfolioData.achievements.map(a => `- ${a}`).join('\n')}
-Skills:
-- Languages: ${portfolioData.skills.languages.join(', ')}
-- Frameworks: ${portfolioData.skills.frameworks.join(', ')}
-- AI/ML: ${portfolioData.skills.ai.join(', ')}
-- Databases: ${portfolioData.skills.databases.join(', ')}
-- DevOps/Tools: ${portfolioData.skills.devops.join(', ')}
-Projects Summarized:
-${portfolioData.projects.map(p => `- Name: ${p.name}\n  Type: ${p.type}\n  Ownership: ${p.ownership}\n  Tech: ${p.tech.join(', ')}\n  Description: ${p.description}`).join('\n\n')}
+
+About
+${portfolioData.about.heading}
+
+${portfolioData.about.paragraph}
+
+Skills
+
+Languages:
+${portfolioData.skills.languages.join(', ')}
+
+Frameworks:
+${portfolioData.skills.frameworks.join(', ')}
+
+AI / ML:
+${portfolioData.skills.ai.join(', ')}
+
+Data Science:
+${portfolioData.skills.data.join(', ')}
+
+Databases:
+${portfolioData.skills.databases.join(', ')}
+
+DevOps:
+${portfolioData.skills.devops.join(', ')}
+
+Achievements
+${portfolioData.achievements
+  .map((achievement) => `- ${achievement}`)
+  .join('\n')}
+
+Professional Experience
+
+${portfolioData.experience
+  .map(
+    (exp) => `- Role: ${exp.role}
+  Organization: ${exp.org}
+  Duration: ${exp.duration}
+  Description: ${exp.description}`
+  )
+  .join('\n\n')}
+
+Projects
+
+${portfolioData.projects
+  .map(
+    (project) => `Project: ${project.name}
+
+Type: ${project.type}
+
+Ownership:
+${project.ownership}
+
+Description:
+${project.description}
+
+Technology Stack:
+${project.tech.join(', ')}
+
+Highlights:
+${project.highlights.map((h) => `- ${h}`).join('\n')}
+
+GitHub:
+${project.github}
+
+Live:
+${project.live || 'Not deployed'}
 `
-  } else if (intent === 'REPOSITORY') {
-    // Determine which repository matches the query
-    let matchedRepo = 'repolens-portfolio' // Default fallback
+  )
+  .join('\n----------------------------------------\n')}
+
+Contact Information
+
+Email:
+${portfolioData.contact.email}
+
+Phone:
+${portfolioData.contact.phone}
+
+LinkedIn:
+${portfolioData.contact.linkedin}
+
+GitHub:
+${portfolioData.contact.github}
+
+Instagram:
+${portfolioData.contact.instagram}
+
+Location:
+${portfolioData.contact.location}
+`
+  }
+
+  // REPOSITORY BLOCK CONTINUES BELOW...
+    // ---------------------------------------------------------------------------
+  // REPOSITORY DOMAIN
+  // ---------------------------------------------------------------------------
+
+  else if (intent === 'REPOSITORY') {
+    let matchedRepo = 'repolens-portfolio'
     const queryLower = query.toLowerCase()
 
     if (queryLower.includes('orbitair')) {
       matchedRepo = 'OrbitAir'
-    } else if (queryLower.includes('orbit-ops') || queryLower.includes('orbit ops')) {
+    } else if (
+      queryLower.includes('orbit-ops') ||
+      queryLower.includes('orbit ops')
+    ) {
       matchedRepo = 'ORBIT-OPS'
     }
 
     console.log(`Detected repository match: ${matchedRepo}`)
+
+    // Fetch README from GitHub
     const readme = await fetchRepoReadme(matchedRepo, username)
 
-    // Build context with GitHub repo summary if available in local cache
-    const repoInfo = cachedRepos.find(r => r.name.toLowerCase() === matchedRepo.toLowerCase())
-    const metadataContext = repoInfo 
-      ? `Metadata: Language: ${repoInfo.language}, Stars: ${repoInfo.stars}, Topics: ${repoInfo.topics.join(', ')}`
-      : `Name: ${matchedRepo}`
+    // Cached GitHub metadata
+    const repoInfo = cachedRepos.find(
+      (repo) => repo.name.toLowerCase() === matchedRepo.toLowerCase()
+    )
 
-    domainContext = `REPOSITORY CONTEXT:
-Repo Info: ${metadataContext}
-README Content:
-${readme}
+    // Local portfolio metadata
+    const projectInfo = portfolioData.projects.find(
+      (project) =>
+        project.github &&
+        project.github.toLowerCase().includes(matchedRepo.toLowerCase())
+    )
+
+    const metadataContext = repoInfo
+      ? `
+Repository Metadata
+- Name: ${repoInfo.name}
+- Language: ${repoInfo.language}
+- Stars: ${repoInfo.stars}
+- Topics: ${
+          repoInfo.topics?.length
+            ? repoInfo.topics.join(', ')
+            : 'None'
+        }
 `
+      : `
+Repository Metadata
+- Name: ${matchedRepo}
+`
+
+    const localProjectContext = projectInfo
+      ? `
+Portfolio Project Information
+
+Project:
+${projectInfo.name}
+
+Type:
+${projectInfo.type}
+
+Ownership:
+${projectInfo.ownership}
+
+Description:
+${projectInfo.description}
+
+Technology Stack:
+${projectInfo.tech.join(', ')}
+
+Highlights:
+${projectInfo.highlights
+          .map((highlight) => `- ${highlight}`)
+          .join('\n')}
+
+Live Demo:
+${projectInfo.live || 'Not deployed'}
+
+GitHub:
+${projectInfo.github}
+`
+      : `
+No additional portfolio metadata available for this repository.
+`
+
+    domainContext = `REPOSITORY CONTEXT
+
+${metadataContext}
+
+${localProjectContext}
+
+README
+
+${readme || 'README not available.'}
+`
+
     sources = `Source: ${matchedRepo} repository — github.com/${username}/${matchedRepo}`
   }
 
-  // 3. Assemble Messages Payload
+  // ---------------------------------------------------------------------------
+  // GENERAL DOMAIN
+  // ---------------------------------------------------------------------------
+
   const formattedMessages = [
     {
       role: 'system',
-      content: SYSTEM_PROMPT_BASE + (domainContext ? `\n${domainContext}` : '')
+      content:
+        SYSTEM_PROMPT_BASE +
+        (domainContext ? `\n\n${domainContext}` : '')
     },
-    ...chatHistory.filter(Boolean).map(h => ({
-      role: h?.role,
-      content: h?.content
-    })),
+
+    ...chatHistory
+      .filter(Boolean)
+      .map((message) => ({
+        role: message.role,
+        content: message.content
+      })),
+
     {
       role: 'user',
       content: query
     }
   ]
 
-  // 4. Request OpenRouter (with stream: true)
-  console.log(`[Copilot diagnostics] Outbound request to OpenRouter:`, {
+  console.log('[Copilot diagnostics] Outbound request:', {
     endpoint: AI_CONFIG.baseUrl,
     model: AI_CONFIG.model,
-    intent: intent,
-    payloadSize: formattedMessages.length,
-    messages: formattedMessages
+    intent,
+    payloadSize: formattedMessages.length
   })
 
   try {
@@ -140,18 +332,25 @@ ${readme}
       })
     })
 
-    console.log(`[Copilot diagnostics] OpenRouter Response status: ${response.status} ${response.statusText}`)
+    console.log(
+      `[Copilot diagnostics] OpenRouter Response: ${response.status}`
+    )
 
     if (!response.ok) {
       if (response.status === 401) {
-        throw new Error('Unauthorized. Check if VITE_OPENROUTER_API_KEY is valid.')
+        throw new Error(
+          'Unauthorized. Check your OpenRouter API key.'
+        )
       }
-      throw new Error(`OpenRouter returned HTTP status ${response.status}`)
+
+      throw new Error(
+        `OpenRouter returned HTTP ${response.status}`
+      )
     }
 
-    // Read the streaming response body
     const reader = response.body.getReader()
     const decoder = new TextDecoder('utf-8')
+
     let accumulatedText = ''
     let buffer = ''
     let done = false
@@ -159,57 +358,64 @@ ${readme}
     while (!done) {
       const { value, done: doneReading } = await reader.read()
       done = doneReading
-      
+
       if (value) {
-        buffer += decoder.decode(value, { stream: !done })
+        buffer += decoder.decode(value, {
+          stream: !done
+        })
+
         const lines = buffer.split('\n')
-        
-        // Hold the last incomplete line
         buffer = lines.pop() || ''
 
         for (const line of lines) {
           const trimmed = line.trim()
+
           if (!trimmed) continue
           if (trimmed === 'data: [DONE]') continue
 
           if (trimmed.startsWith('data: ')) {
             try {
-              const jsonStr = trimmed.slice(6)
-              const parsed = JSON.parse(jsonStr)
-              const content = parsed.choices[0]?.delta?.content || ''
+              const parsed = JSON.parse(trimmed.slice(6))
+              const content =
+                parsed.choices?.[0]?.delta?.content || ''
+
               if (content) {
                 accumulatedText += content
-                // Clean the output on the fly and trigger callback
                 onChunk(cleanTerminalOutput(accumulatedText))
               }
-            } catch (e) {
-              // Ignore partial JSON parsing issues from split chunks
+            } catch {
+              // Ignore partial stream chunks
             }
           }
         }
       }
     }
 
-    // Process any trailing lines left in the buffer
-    if (buffer && buffer.trim().startsWith('data: ') && buffer.trim() !== 'data: [DONE]') {
+    if (
+      buffer &&
+      buffer.trim().startsWith('data: ') &&
+      buffer.trim() !== 'data: [DONE]'
+    ) {
       try {
-        const jsonStr = buffer.trim().slice(6)
-        const parsed = JSON.parse(jsonStr)
-        const content = parsed.choices[0]?.delta?.content || ''
-        if (content) {
-          accumulatedText += content
-        }
-      } catch (e) {}
+        const parsed = JSON.parse(buffer.trim().slice(6))
+        const content =
+          parsed.choices?.[0]?.delta?.content || ''
+
+        accumulatedText += content
+      } catch {}
     }
 
-    // Final clean
-    let cleanedOutput = cleanTerminalOutput(accumulatedText).trim()
+    let cleanedOutput = cleanTerminalOutput(
+      accumulatedText
+    ).trim()
 
-    if (sources && !cleanedOutput.toLowerCase().includes('source:')) {
+    if (
+      sources &&
+      !cleanedOutput.toLowerCase().includes('source:')
+    ) {
       cleanedOutput += `\n\n${sources}`
     }
 
-    // Final callback call to display sources
     onChunk(cleanedOutput)
 
     return {
@@ -217,9 +423,12 @@ ${readme}
       text: cleanedOutput
     }
   } catch (err) {
-    console.error('API execution failed in copilotClient:', err)
-    const errText = `Portfolio Copilot is temporarily offline. (${err.message}). Try again in a moment.`
+    console.error('API execution failed:', err)
+
+    const errText = `Portfolio Copilot is temporarily offline. (${err.message}). Please try again shortly.`
+
     onChunk(errText)
+
     return {
       intent: 'ERROR',
       text: errText

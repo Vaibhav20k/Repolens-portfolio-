@@ -341,14 +341,78 @@ export default function TerminalWindow({ terminal, repos }) {
       return
     }
 
-    // 12. Fallback
-    terminal.addHistory({
-      type: 'output',
-      text: `Command not found: ${cmd}. Type 'help' to see available commands.`
+   // ---------------------------------------------------------------------------
+// 12. Fallback
+// Any unknown command is treated as a natural language AI query.
+// ---------------------------------------------------------------------------
+
+setIsTyping(true)
+
+// Build multi-turn conversation history
+const historyMessages = []
+
+for (let i = 0; i < terminal.history.length; i++) {
+  const entry = terminal.history[i]
+
+  if (!entry) continue
+
+  if (entry.type === 'input') {
+    historyMessages.push({
+      role: 'user',
+      content: entry.text.replace(/^ask\s+/i, '')
     })
-    setLastIntent('SYSTEM')
   }
 
+  else if (
+    entry.type === 'output' &&
+    historyMessages.length > 0
+  ) {
+    historyMessages.push({
+      role: 'assistant',
+      content: entry.text
+    })
+  }
+}
+
+// Empty output entry for streaming
+terminal.addHistory({
+  type: 'output',
+  text: ''
+})
+
+let hasReceivedFirstToken = false
+
+const onChunk = (text) => {
+  if (!hasReceivedFirstToken) {
+    hasReceivedFirstToken = true
+    setIsTyping(false)
+  }
+
+  terminal.updateLastHistoryEntry(text)
+}
+
+try {
+  const response = await queryCopilot(
+    trimmed,
+    historyMessages,
+    repos,
+    onChunk
+  )
+
+  if (response?.intent) {
+    setLastIntent(response.intent)
+  }
+}
+catch (err) {
+  console.error(err)
+  setLastIntent('ERROR')
+}
+finally {
+  setIsTyping(false)
+}
+  
+return
+  }
   const handleSubmit = async (e) => {
     e.preventDefault()
     const command = input.trim()
