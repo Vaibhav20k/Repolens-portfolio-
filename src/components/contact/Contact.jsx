@@ -71,10 +71,10 @@ export default function Contact() {
       {/* Footer copyright */}
       <footer className={styles.footer}>
         <div className={styles.footerLeft}>
-          <span>VAIBHAV — 2026</span>
+          <span>Vaibhav Kandpal</span>
         </div>
         <div className={styles.footerRight}>
-          <span>REPOLENS AI EXPERIMENT</span>
+          <span>since 2025</span>
         </div>
       </footer>
     </section>
