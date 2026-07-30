@@ -75,7 +75,7 @@ export default function Navigation() {
       </button>
 
       <a
-        href="https://drive.google.com/file/d/1AcspKX_Xe14130mJODU9jd5R04xHHkDY/view?usp=sharing"
+        href="https://drive.google.com/file/d/1O3tDmx1khBc9mb6SnFSXTddC7LOBmsNs/view?usp=sharing"
         target="_blank"
         rel="noopener noreferrer"
         className={`${styles.navItem} clickable`}

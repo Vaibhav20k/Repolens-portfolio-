@@ -21,6 +21,12 @@
     "react-dom": "^18.2.0",
     "three": "^0.163.0"
   },
+  "overrides": {
+    "brace-expansion": "5.0.9",
+    "js-yaml": "^5.2.2",
+    "postcss": "8.5.25",
+    "minimatch": "10.0.3"
+  },
   "devDependencies": {
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
@@ -31,4 +37,5 @@
     "eslint-plugin-react-refresh": "^0.4.6",
     "vite": "^6.4.3"
   }
-}
+  }
+
