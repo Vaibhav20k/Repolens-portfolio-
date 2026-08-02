@@ -1,59 +1,62 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 
 export default function TextType({ text, speed = 15 }) {
-  const [displayedText, setDisplayedText] = useState('')
-  const [isTyping, setIsTyping] = useState(false)
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    setDisplayedText('')
-    setIsTyping(true)
-    
-    let index = 0
-    let intervalId
+    // Reset when text changes
+    setIndex(0);
 
-    const type = () => {
-      if (index < text.length) {
-        setDisplayedText((prev) => prev + text.charAt(index))
-        index++
-        
-        // Randomize typing speed slightly for realism
-        const nextSpeed = speed + Math.random() * 15
-        intervalId = setTimeout(type, nextSpeed)
-      } else {
-        setIsTyping(false)
-      }
-    }
+    if (!text) return;
 
-    // Start typing
-    intervalId = setTimeout(type, speed)
+    const interval = setInterval(() => {
+      setIndex((prev) => {
+        if (prev >= text.length) {
+          clearInterval(interval);
+          return prev;
+        }
+        return prev + 1;
+      });
+    }, speed);
 
-    return () => {
-      clearTimeout(intervalId)
-    }
-  }, [text, speed])
+    return () => clearInterval(interval);
+  }, [text, speed]);
+
+  const isTyping = index < text.length;
 
   return (
-    <span style={{ fontFamily: 'var(--font-body)', position: 'relative' }}>
-      {displayedText}
+    <span
+      style={{
+        fontFamily: "var(--font-body)",
+        position: "relative",
+      }}
+    >
+      {text.slice(0, index)}
+
       {isTyping && (
-        <span 
+        <span
           style={{
-            display: 'inline-block',
-            width: '6px',
-            height: '14px',
-            backgroundColor: 'var(--color-accent)',
-            marginLeft: '4px',
-            verticalAlign: 'middle',
-            animation: 'typeBlink 0.6s infinite alternate'
+            display: "inline-block",
+            width: "6px",
+            height: "1em",
+            backgroundColor: "var(--color-accent)",
+            marginLeft: "4px",
+            verticalAlign: "text-bottom",
+            animation: "typeBlink 0.7s infinite",
           }}
         />
       )}
+
       <style>{`
         @keyframes typeBlink {
-          from { opacity: 0; }
-          to { opacity: 1; }
+          0%, 50% {
+            opacity: 1;
+          }
+          51%, 100% {
+            opacity: 0;
+          }
         }
       `}</style>
     </span>
-  )
+  );
 }
