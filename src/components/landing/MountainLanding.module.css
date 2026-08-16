@@ -1,0 +1,148 @@
+/* Phase 1: Warm Cream/Ivory Paper Texture Background */
+.landingViewport {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #F8F5EE;
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255, 255, 255, 0.75) 0%, rgba(248, 245, 238, 0) 100%),
+    radial-gradient(ellipse 60% 40% at 50% 110%, rgba(235, 226, 214, 0.6) 0%, rgba(248, 245, 238, 0) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Subtle handmade-paper / fabric fiber grain overlay */
+.paperTexture {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.4  0 0 0 0 0.35  0 0 0 0 0.3  0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperNoise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* Soft ambient lighting gradient */
+.ambientGlow {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.45) 0%, rgba(248, 245, 238, 0) 70%);
+  pointer-events: none;
+  z-index: 2;
+  filter: blur(60px);
+}
+
+/* Phase 2: Himalayan Mountain Section */
+.mountainSection {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 1280px;
+  padding: 2rem 1.5rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* Mountain Container with locked aspect ratio for zero layout shift */
+.mountainContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 65vh;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: default;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mountainContainer.lensActive {
+  cursor: none;
+}
+
+/* Base Layer: Mountain Sketch (Line Art) */
+.mountainSketch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  mix-blend-mode: multiply;
+  opacity: 0.88;
+  z-index: 10;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Reveal Layer: Photorealistic Mountain */
+.mountainReal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  z-index: 20;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  will-change: clip-path;
+}
+
+/* Minimal Circular Lens Border Ring */
+.lensRing {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(190, 165, 135, 0.65);
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.45),
+    0 8px 30px rgba(0, 0, 0, 0.18),
+    inset 0 0 15px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+  z-index: 30;
+  will-change: transform;
+}
+
+/* Tablet Breakpoint */
+@media (max-width: 1024px) {
+  .mountainSection {
+    max-width: 95%;
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* Mobile Breakpoint */
+@media (max-width: 768px) {
+  .mountainSection {
+    padding: 1rem 0.75rem;
+  }
+
+  .mountainContainer {
+    max-height: 50vh;
+    border-radius: 4px;
+  }
+
+  .lensRing {
+    display: none;
+  }
+}
