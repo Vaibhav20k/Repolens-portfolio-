@@ -1,0 +1,69 @@
+/* Elegant Rectangular Welcome Button with Interactive Circular Lens */
+.welcomeButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 148px;
+  height: 40px;
+  background: #3a2d2a;
+  border: 1px solid #281e1c;
+  border-radius: 2px;
+  box-shadow: 0 4px 16px rgba(58, 45, 42, 0.22);
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  outline: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-sizing: border-box;
+}
+
+.welcomeButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(58, 45, 42, 0.28);
+}
+
+.welcomeButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(58, 45, 42, 0.2);
+}
+
+/* Base Layer: WELCOME */
+.baseLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #f4efe6;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Lens Overlay Layer: स्वागतम् (Inverted Cream BG with Dark Brown Hindi Text) */
+.lensOverlay {
+  position: absolute;
+  inset: 0;
+  background: #f4efe6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: clip-path 0.08s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.hindiLabel {
+  font-family: "Tiro Devanagari Hindi", "Noto Sans Devanagari", serif;
+  font-size: 16.5px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #3a2d2a;
+  line-height: 1;
+  transform: translateY(-0.5px);
+}

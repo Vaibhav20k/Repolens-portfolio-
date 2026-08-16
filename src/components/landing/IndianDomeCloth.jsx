@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react'
 import styles from './IndianDomeCloth.module.css'
 import ChimesControlPanel from './ChimesControlPanel'
+import WelcomeButton from './WelcomeButton'
 
 // 2D Vector Helper from Chimes source
 class Vec2 {
@@ -265,7 +266,7 @@ class IndianChimesSynth {
   }
 }
 
-export default function IndianDomeCloth() {
+export default function IndianDomeCloth({ onNavigate }) {
   const canvasRef = useRef(null)
   const containerRef = useRef(null)
   const synthRef = useRef(new IndianChimesSynth())
@@ -285,7 +286,7 @@ export default function IndianDomeCloth() {
     constraints: [],
     charCanvases: {},
     canvasW: 1332,
-    canvasH: 1308,
+    canvasH: 1360,
     originX: 420,
     originY: 420,
     dpr: 1,
@@ -616,6 +617,11 @@ export default function IndianDomeCloth() {
         >
           <div className={styles.strings}>
             <canvas ref={canvasRef} className={styles.canvas} />
+          </div>
+
+          {/* Centered Welcome / Swagatam Button Directly Below the Hanging Cloth */}
+          <div className={styles.welcomeWrapper}>
+            <WelcomeButton onNavigate={onNavigate} />
           </div>
         </div>
       </div>

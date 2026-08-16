@@ -1,9 +1,10 @@
-/* Center Stage Anchor (Fixed at Screen Center) */
+/* Center Stage Anchor (Fixed at Screen Center, Scaled Symmetrically) */
 .stage {
   position: absolute;
   left: 50%;
-  top: clamp(280px, 39.6vh, 360px);
-  transform: translateX(-50%);
+  top: clamp(210px, 28vh, 260px);
+  transform: translateX(-50%) scale(0.86);
+  transform-origin: top center;
   width: 0;
   height: 0;
   z-index: 10;
@@ -75,27 +76,37 @@
   cursor: grabbing;
 }
 
+/* Centered Welcome / Swagatam Button Container Below Cloth */
+.welcomeWrapper {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--area-h) + 24px);
+  transform: translateX(-50%);
+  z-index: 30;
+  pointer-events: auto;
+}
+
 /* Responsive Scaling */
 @media (max-width: 1024px) {
   .stage {
-    top: clamp(240px, 36vh, 320px);
-    transform: translateX(-50%) scale(0.85);
+    top: clamp(190px, 26vh, 240px);
+    transform: translateX(-50%) scale(0.78);
     transform-origin: top center;
   }
 }
 
 @media (max-width: 768px) {
   .stage {
-    top: clamp(200px, 32vh, 270px);
-    transform: translateX(-50%) scale(0.68);
+    top: clamp(160px, 22vh, 200px);
+    transform: translateX(-50%) scale(0.64);
     transform-origin: top center;
   }
 }
 
 @media (max-width: 480px) {
   .stage {
-    top: clamp(170px, 28vh, 230px);
-    transform: translateX(-50%) scale(0.58);
+    top: clamp(140px, 18vh, 170px);
+    transform: translateX(-50%) scale(0.54);
     transform-origin: top center;
   }
 }
