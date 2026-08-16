@@ -9,13 +9,14 @@
   align-items: center;
   user-select: none;
   font-family: "Times New Roman", Times, serif;
+  box-sizing: border-box;
 }
 
 /* Separate Dark Brown Rectangular Play Button Centered Above Panel */
 .playButton {
   appearance: none;
   display: block;
-  width: 104px;
+  width: 108px;
   height: 30px;
   margin-bottom: 9px;
   background: #3a2d2a;
@@ -31,6 +32,7 @@
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(58, 45, 42, 0.22);
   transition: background 0.15s ease, transform 0.1s ease;
+  box-sizing: border-box;
 }
 
 .playButton:hover {
@@ -42,15 +44,16 @@
   transform: translateY(0);
 }
 
-/* Main Parchment Control Panel */
+/* Main Parchment Control Panel (Broad Width, Zero Horizontal Overflow) */
 .panel {
-  width: 282px;
+  width: 310px;
   background: #ece4d7;
   border: 1px solid #7c6861;
   border-radius: 3px;
   box-shadow: 0 8px 24px rgba(58, 45, 42, 0.18);
   color: #3a2d2a;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 /* Header Tab */
@@ -58,10 +61,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
+  padding: 8px 14px;
   background: rgba(88, 66, 60, 0.08);
   border-bottom: 1px solid #7c6861;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .panelTitle {
@@ -88,6 +92,8 @@
   gap: 8px;
   max-height: calc(100vh - 130px);
   overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 /* Custom Scrollbar for Panel */
@@ -107,6 +113,8 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .sectionHeader {
@@ -122,20 +130,24 @@
 .divider {
   height: 1px;
   background: rgba(88, 66, 60, 0.22);
-  margin: 4px 0;
+  margin: 3px 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Clean Horizontal Control Rows */
+/* Clean Horizontal Control Rows (100% Contained) */
 .controlRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
   height: 22px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .rowLabel {
-  width: 82px;
+  width: 84px;
   flex-shrink: 0;
   font-size: 11.5px;
   color: #3a2d2a;
@@ -149,6 +161,7 @@
 /* Sliders with Thin Dark-Brown Tracks and Square Handles */
 .slider {
   flex: 1;
+  min-width: 0;
   height: 3px;
   background: #3a2d2a;
   border-radius: 0;
@@ -156,7 +169,8 @@
   appearance: none;
   -webkit-appearance: none;
   cursor: ew-resize;
-  margin: 0 4px;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .slider::-webkit-slider-thumb {
@@ -192,6 +206,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .staticValueBox {
@@ -209,6 +224,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 /* Button Row for Rebuild Cloth + Reset */
@@ -217,6 +233,7 @@
   gap: 6px;
   margin-top: 5px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .rebuildButton {
@@ -235,6 +252,7 @@
   line-height: 23px;
   cursor: pointer;
   transition: background 0.15s ease, transform 0.1s ease;
+  box-sizing: border-box;
 }
 
 .rebuildButton:hover {
@@ -248,7 +266,7 @@
 
 .resetButton {
   appearance: none;
-  width: 62px;
+  width: 66px;
   flex-shrink: 0;
   height: 25px;
   background: #4a3b37;
@@ -263,6 +281,7 @@
   line-height: 23px;
   cursor: pointer;
   transition: background 0.15s ease, transform 0.1s ease;
+  box-sizing: border-box;
 }
 
 .resetButton:hover {
@@ -280,7 +299,8 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 4px;
+  padding-right: 2px;
+  box-sizing: border-box;
 }
 
 .squareCheckbox {
@@ -295,6 +315,7 @@
   display: grid;
   place-content: center;
   outline: none;
+  box-sizing: border-box;
 }
 
 .squareCheckbox:checked {
@@ -317,16 +338,16 @@
   }
 
   .panel {
-    width: 245px;
+    width: 260px;
   }
 
   .rowLabel {
-    width: 70px;
-    font-size: 10.5px;
+    width: 74px;
+    font-size: 11px;
   }
 
   .valueBox {
-    width: 38px;
+    width: 40px;
     font-size: 10px;
   }
 }
