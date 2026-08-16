@@ -49,8 +49,10 @@
 
 .clothCanvas {
   position: absolute;
-  top: -360px;
-  left: -360px;
+  top: -420px;
+  left: -420px;
+  width: 1332px !important;
+  height: 1308px !important;
   cursor: grab;
   touch-action: none;
 }
