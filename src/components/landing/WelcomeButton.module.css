@@ -1,15 +1,15 @@
-/* Elegant Rectangular Welcome Button with Interactive Circular Lens */
+/* Elegant Rectangular Welcome Button with Interactive Circular Lens (Enlarged) */
 .welcomeButton {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 176px;
-  height: 46px;
+  width: 210px;
+  height: 52px;
   background: #3a2d2a;
   border: 1px solid #281e1c;
   border-radius: 2px;
-  box-shadow: 0 4px 18px rgba(58, 45, 42, 0.24);
+  box-shadow: 0 6px 22px rgba(58, 45, 42, 0.28);
   overflow: hidden;
   cursor: pointer;
   user-select: none;
@@ -21,12 +21,12 @@
 
 .welcomeButton:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 22px rgba(58, 45, 42, 0.3);
+  box-shadow: 0 8px 26px rgba(58, 45, 42, 0.35);
 }
 
 .welcomeButton:active {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(58, 45, 42, 0.2);
+  box-shadow: 0 3px 10px rgba(58, 45, 42, 0.2);
 }
 
 /* Base Layer: WELCOME */
@@ -38,9 +38,9 @@
   height: 100%;
   color: #f4efe6;
   font-family: "Times New Roman", Times, serif;
-  font-size: 14px;
+  font-size: 15.5px;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   line-height: 1;
 }
@@ -60,9 +60,9 @@
 
 .hindiLabel {
   font-family: "Tiro Devanagari Hindi", "Noto Sans Devanagari", serif;
-  font-size: 19px;
+  font-size: 22px;
   font-weight: 700;
-  -webkit-text-stroke: 0.5px #3a2d2a;
+  -webkit-text-stroke: 0.6px #3a2d2a;
   letter-spacing: 0.05em;
   color: #3a2d2a;
   line-height: 1;

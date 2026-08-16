@@ -44,7 +44,7 @@ export default function WelcomeButton({ onNavigate }) {
     }
   }
 
-  const lensRadius = 46
+  const lensRadius = 54
 
   return (
     <button
