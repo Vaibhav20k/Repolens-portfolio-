@@ -54,8 +54,10 @@
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  transition: clip-path 0.08s cubic-bezier(0.16, 1, 0.3, 1);
   box-sizing: border-box;
+  opacity: 0;
+  visibility: hidden;
+  will-change: clip-path, opacity;
 }
 
 .hindiLabel {
