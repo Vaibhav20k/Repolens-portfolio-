@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import styles from './IndianDomeCloth.module.css'
 
-// 2D Vector Helper
+// 2D Vector Class
 class Vec2 {
   constructor(x = 0, y = 0) {
     this.x = x
@@ -108,21 +108,24 @@ class Constraint {
   }
 }
 
-// Portfolio Devanagari Curated Wisdom Strings
+// Portfolio Devanagari Texts
 const DEVANAGARI_TEXTS = [
   "यात्रा अंत नहीं है — जो केवल मंज़िल देखता है वह राह का ज्ञान खो देता है",
-  "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन — कर्म में पूर्णता ढूँढो",
-  "वसुधैव कुटुम्बकम् — जब दृष्टि विशाल हो तो सम्पूर्ण संसार ही परिवार है",
-  "सत्यमेव जयते नानृतम् — सत्य की राह पर ही अंतिम विजय संभव होती है",
-  "ज्ञान से बड़ा कोई नेत्र नहीं और सत्य से बड़ा कोई तप नहीं है",
-  "प्रवाह ही नदी को सागर से मिलाता है — सतत प्रयास ही सिद्धि का मार्ग है",
-  "मन के हारे हार है मन के जीते जीत — संकल्प ही शक्ति का मूल स्रोत है",
-  "अंधेरे में भी एक छोटा सा दीया सम्पूर्ण तमस को पराजित कर देता है",
-  "विद्या ददाति विनयं विनयाद् याति पात्रताम् — विनय ही ज्ञान का आभूषण है",
-  "समय और धैर्य से हर कठिन पथ सुगम और सार्थक बन जाता है"
+  "अतिथि देवो भव — मेहमान में देवता देखना सिखाता है कि घर दीवार नहीं हृदय है",
+  "वसुधैव कुटुम्बकम् — दुनिया एक परिवार है जब दृष्टि भय से बड़ी हो",
+  "धर्मो रक्षति रक्षितः — जो सत्य की रक्षा करता है सत्य उसकी रक्षा करता है",
+  "कर्मण्येवाधिकारस्ते — फल की चिंता छोड़ो कर्म में पूर्णता ढूँढो",
+  "सत्यमेव जयते — झूठ तेज़ दौड़ सकता है पर अंत में सत्य ही ठहरता है",
+  "ज्ञान से बड़ा कोई धन नहीं — पर बिना यात्रा का ज्ञान अधूरा रहता है",
+  "मन के हारे हार है — रास्ता वही आसान होता है जिसे हृदय ने स्वीकार किया",
+  "नदी कभी पीछे नहीं मुड़ती — प्रवाह सिखाता है कि वापसी दिशा नहीं साहस है",
+  "एकता में बल है — अकेला दीया हवा में बुझता है दीपमाला नहीं",
+  "समय सबका इलाज है — धैर्य वह औषधि है जो जल्दी नहीं दिखती",
+  "अंधेरे में भी दीया जलाओ — भय को रोशनी से जवाब दो शब्दों से नहीं",
+  "घर वही जहाँ स्वागत हो — पत्थर कहीं भी लगा सकते हो प्रतीक्षा अर्थ बनाती है",
+  "यात्रा दृष्टि बदलती है — और बदली दृष्टि से ही घर लौटना योग्य होता है"
 ].join("　")
 
-// Grapheme Cluster Extraction (keeps combining matras intact)
 function getGraphemes(text) {
   if (typeof Intl !== 'undefined' && Intl.Segmenter) {
     const segmenter = new Intl.Segmenter(undefined, { granularity: 'grapheme' })
@@ -137,16 +140,15 @@ export default function IndianDomeCloth() {
 
   useEffect(() => {
     const canvas = canvasRef.current
-    const container = containerRef.current
-    if (!canvas || !container) return
+    if (!canvas) return
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
     const ctx = canvas.getContext('2d')
 
-    // Simulation Area Settings
+    // Exact Chimes Area Grid Config
     const AREA_W = 492
-    const AREA_H = 430
-    const STRINGS_PAD = 140
+    const AREA_H = 468
+    const STRINGS_PAD = 360
     const canvasW = AREA_W + STRINGS_PAD * 2
     const canvasH = AREA_H + STRINGS_PAD * 2
 
@@ -155,17 +157,17 @@ export default function IndianDomeCloth() {
     canvas.style.width = `${canvasW}px`
     canvas.style.height = `${canvasH}px`
 
-    const gridW = window.innerWidth < 768 ? 28 : 38
-    const gridH = window.innerWidth < 768 ? 26 : 34
+    const gridW = 40
+    const gridH = 38
     const cellWidth = AREA_W / (gridW - 1)
     const cellHeight = AREA_H / (gridH - 1)
     const fontSize = Math.max(9, Math.min(13, cellHeight * 0.95))
     const originX = STRINGS_PAD
-    const originY = STRINGS_PAD + 10
+    const originY = STRINGS_PAD
 
     const graphemes = getGraphemes(DEVANAGARI_TEXTS)
 
-    // Pre-render glyph offscreen canvases for high performance
+    // Pre-rendered offscreen character cache
     const charCanvases = {}
     const uniqueChars = new Set(graphemes)
     uniqueChars.forEach((ch) => {
@@ -179,12 +181,12 @@ export default function IndianDomeCloth() {
       octx.font = `600 ${fontSize}px "JetBrains Mono", "Noto Sans Devanagari", "Kohinoor Devanagari", serif`
       octx.textAlign = 'center'
       octx.textBaseline = 'middle'
-      octx.fillStyle = '#42322a'
+      octx.fillStyle = '#3a2d2a'
       octx.fillText(ch, size / 2, size / 2)
       charCanvases[ch] = off
     })
 
-    // Create Particles Grid
+    // Particle Grid Construction
     const particles = []
     const constraints = []
 
@@ -195,12 +197,12 @@ export default function IndianDomeCloth() {
         const id = i * gridH + j
         const pinned = j === 0
         const charIdx = (j * gridW + i) % graphemes.length
-        const char = graphemes[charIdx] || 'ॐ'
+        const char = graphemes[charIdx] || ' '
         particles.push(new Particle({ x, y, pinned, id, char }))
       }
     }
 
-    // Create Constraints (Vertical Spring + Lateral Spacers)
+    // Constraints Setup
     for (let i = 0; i < gridW; i++) {
       for (let j = 0; j < gridH; j++) {
         const id = i * gridH + j
@@ -233,11 +235,10 @@ export default function IndianDomeCloth() {
       }
     }
 
-    // Pointer Interaction State
+    // Pointer Interaction Handling
     const mousePos = new Vec2(-999, -999)
-    let isInteracting = false
-    const mouseSizeSq = 4200
-    const mouseStrength = 190
+    const mouseSizeSq = 4800
+    const mouseStrength = 220
 
     const getLocalPoint = (e) => {
       const rect = canvas.getBoundingClientRect()
@@ -245,12 +246,6 @@ export default function IndianDomeCloth() {
         x: ((e.clientX - rect.left) / rect.width) * canvasW - originX,
         y: ((e.clientY - rect.top) / rect.height) * canvasH - originY,
       }
-    }
-
-    const onPointerDown = (e) => {
-      isInteracting = true
-      const { x, y } = getLocalPoint(e)
-      mousePos.reset(x, y)
     }
 
     const onPointerMove = (e) => {
@@ -271,27 +266,20 @@ export default function IndianDomeCloth() {
       }
     }
 
-    const onPointerUp = () => {
-      isInteracting = false
-      mousePos.reset(-999, -999)
-    }
-
     const onPointerLeave = () => {
       mousePos.reset(-999, -999)
     }
 
-    canvas.addEventListener('pointerdown', onPointerDown)
     window.addEventListener('pointermove', onPointerMove)
-    window.addEventListener('pointerup', onPointerUp)
     canvas.addEventListener('pointerleave', onPointerLeave)
 
-    // Animation & Physics Loop
+    // Render & Physics Loop
     let rafId
     let lastTime = performance.now()
 
     const drawParticles = () => {
       particles.forEach((p) => {
-        if (!p.char) return
+        if (!p.char || p.char === ' ') return
         const img = charCanvases[p.char]
         if (!img) return
 
@@ -331,10 +319,8 @@ export default function IndianDomeCloth() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       ctx.clearRect(0, 0, canvasW, canvasH)
 
-      // Update particle physics
-      particles.forEach((p) => p.update(dt, 0.982, 940))
+      particles.forEach((p) => p.update(dt, 0.985, 960))
 
-      // Solve constraints iteratively
       for (let k = 0; k < 4; k++) {
         for (let i = 0; i < constraints.length; i++) {
           constraints[i].solve()
@@ -348,17 +334,15 @@ export default function IndianDomeCloth() {
 
     return () => {
       cancelAnimationFrame(rafId)
-      canvas.removeEventListener('pointerdown', onPointerDown)
       window.removeEventListener('pointermove', onPointerMove)
-      window.removeEventListener('pointerup', onPointerUp)
       canvas.removeEventListener('pointerleave', onPointerLeave)
     }
   }, [])
 
   return (
     <div ref={containerRef} className={styles.stage}>
-      {/* Indian Carved Architectural Dome / Roof */}
-      <div className={styles.roofContainer}>
+      {/* Indian Dome positioned directly above cloth */}
+      <div className={styles.roof}>
         <img
           src="/roof-india.png"
           alt="Indian Architectural Dome"
@@ -368,7 +352,7 @@ export default function IndianDomeCloth() {
       </div>
 
       {/* Physics Canvas for Hanging Devanagari Strings */}
-      <div className={styles.canvasWrapper}>
+      <div className={styles.clothWrapper}>
         <canvas ref={canvasRef} className={styles.clothCanvas} />
       </div>
     </div>
