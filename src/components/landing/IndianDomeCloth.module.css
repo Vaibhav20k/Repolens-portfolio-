@@ -2,8 +2,8 @@
 .stage {
   position: absolute;
   left: 50%;
-  top: clamp(320px, 40vh, 370px);
-  transform: translateX(-50%) scale(0.80);
+  top: clamp(280px, 35vh, 320px);
+  transform: translateX(-50%) scale(0.78);
   transform-origin: top center;
   width: 0;
   height: 0;
@@ -76,11 +76,11 @@
   cursor: grabbing;
 }
 
-/* Centered Welcome / Swagatam Button Container (Clean Spacing Below Dynamic Cloth) */
+/* Centered Welcome / Swagatam Button Container (Positioned with 140px Clear Clearance Below Dynamic Cloth) */
 .welcomeWrapper {
   position: absolute;
   left: 50%;
-  top: calc(var(--area-h) + 72px);
+  top: calc(var(--area-h) + 140px);
   transform: translateX(-50%);
   z-index: 30;
   pointer-events: auto;
@@ -89,24 +89,24 @@
 /* Responsive Scaling */
 @media (max-width: 1024px) {
   .stage {
-    top: clamp(280px, 36vh, 330px);
-    transform: translateX(-50%) scale(0.72);
+    top: clamp(250px, 32vh, 290px);
+    transform: translateX(-50%) scale(0.70);
     transform-origin: top center;
   }
 }
 
 @media (max-width: 768px) {
   .stage {
-    top: clamp(240px, 32vh, 290px);
-    transform: translateX(-50%) scale(0.60);
+    top: clamp(220px, 28vh, 260px);
+    transform: translateX(-50%) scale(0.58);
     transform-origin: top center;
   }
 }
 
 @media (max-width: 480px) {
   .stage {
-    top: clamp(210px, 28vh, 250px);
-    transform: translateX(-50%) scale(0.50);
+    top: clamp(190px, 24vh, 230px);
+    transform: translateX(-50%) scale(0.48);
     transform-origin: top center;
   }
 }
