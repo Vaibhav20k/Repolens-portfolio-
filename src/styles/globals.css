@@ -14,7 +14,12 @@ html, body {
   width: 100%;
 }
 
-
+/* Hide default cursor globally on desktop devices where the custom cursor is active */
+@media (pointer: fine) {
+  html, body, a, button, [role="button"], input, select, textarea, .clickable {
+    cursor: none !important;
+  }
+}
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {

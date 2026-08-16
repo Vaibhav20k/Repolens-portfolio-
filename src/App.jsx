@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import LandingBackground from './components/landing/LandingBackground'
+import React from 'react'
 import { useLenis } from './hooks/useLenis'
 import { useMousePosition } from './hooks/useMousePosition'
 import { useTerminalState } from './hooks/useTerminalState'
 import { useGitHubData } from './hooks/useGitHubData'
 
-// Main Portfolio Components
+// Component imports
+import CustomCursor from './components/cursor/CustomCursor'
 import Navigation from './components/nav/Navigation'
 import Mascot from './components/mascot/Mascot'
 import Hero from './components/hero/Hero'
@@ -15,83 +15,63 @@ import Work from './components/work/Work'
 import Contact from './components/contact/Contact'
 import TerminalWindow from './components/terminal/TerminalWindow'
 import TerminalMinimized from './components/terminal/TerminalMinimized'
-import SocialIcons from './components/social/SocialIcons'
 import SceneContainer from './components/three/SceneContainer'
+import SocialIcons from './components/social/SocialIcons'
 
 function App() {
+  // 1. Initialize core design hooks
   useLenis()
   const mousePos = useMousePosition()
   const terminal = useTerminalState()
   const { repos, loading: reposLoading } = useGitHubData()
 
-  // Routing / View State: Default is Landing Page with Indian Dome & Cloth
-  const [inPortfolio, setInPortfolio] = useState(() => {
-    return window.location.hash === '#portfolio'
-  })
-
-  useEffect(() => {
-    const handleHashChange = () => {
-      setInPortfolio(window.location.hash === '#portfolio')
-    }
-    window.addEventListener('hashchange', handleHashChange)
-    return () => window.removeEventListener('hashchange', handleHashChange)
-  }, [])
-
-  const handleNavigateToPortfolio = () => {
-    window.location.hash = 'portfolio'
-    setInPortfolio(true)
-  }
-
-  const handleBackToLanding = () => {
-    window.location.hash = ''
-    setInPortfolio(false)
-  }
-
-  if (!inPortfolio) {
-    return <LandingBackground onNavigate={handleNavigateToPortfolio} />
-  }
-
   return (
-    <div style={{ backgroundColor: 'var(--color-bg)', minHeight: '100vh', position: 'relative' }}>
-      {/* Mascot with capability to return to Landing */}
-      <Mascot resetExperience={handleBackToLanding} />
+    <>
+      {/* Premium Cursor Orb */}
+      <CustomCursor mousePos={mousePos} />
 
-      {/* Navigation Stack */}
-      <Navigation />
+      {/* Main Experience Layout */}
+      <div style={{ backgroundColor: 'var(--color-bg)', minHeight: '100vh', position: 'relative' }}>
+        {/* Draggable/Animated Mascot - Persistent in top-left */}
+        <Mascot />
 
-      {/* Persistent Left Sidebar */}
-      <SocialIcons />
+        {/* Navigation stack */}
+        <Navigation />
 
-      {/* 3D Scene Wrapper */}
-      <SceneContainer />
+        {/* Persistent left-side social icons sidebar */}
+        <SocialIcons />
 
-      <main className="container">
-        {/* Hero Section */}
-        <Hero openTerminal={terminal.openTerminal} mousePos={mousePos} />
+        {/* 3D Scene Wrapper - coffee cup + mouse device lazy Canvas */}
+        <SceneContainer />
 
-        {/* Achievement Strip */}
-        <AchievementStrip />
+        <main className="container">
+          {/* Hero Entry Section with Spline 3D Robot */}
+          <Hero openTerminal={terminal.openTerminal} />
 
-        {/* About Section */}
-        <About />
+          {/* Achievement Strip */}
+          <AchievementStrip />
 
-        {/* Work Section with Draggable Cards */}
-        <Work repos={repos} reposLoading={reposLoading} openTerminal={terminal.openTerminal} />
+          {/* About Section */}
+          <About />
 
-        {/* Contact Section */}
-        <Contact />
-      </main>
+          {/* Work Section with Draggable Cards */}
+          <Work repos={repos} reposLoading={reposLoading} openTerminal={terminal.openTerminal} />
 
-      {/* Terminal Console Manager */}
-      {terminal.isOpen && !terminal.isMinimized && (
-        <TerminalWindow terminal={terminal} repos={repos} />
-      )}
+          {/* Contact details */}
+          <Contact />
+        </main>
 
-      {/* Minimized Terminal Indicator */}
-      {terminal.isMinimized && (
-        <TerminalMinimized restore={terminal.restoreTerminal} />
-      )}
-    </div>
+        {/* Terminal Console Manager */}
+        {terminal.isOpen && !terminal.isMinimized && (
+          <TerminalWindow terminal={terminal} repos={repos} />
+        )}
+
+        {/* Minimized Terminal state indicator */}
+        {terminal.isMinimized && (
+          <TerminalMinimized restore={terminal.restoreTerminal} />
+        )}
+      </div>
+    </>
   )
 }
 
