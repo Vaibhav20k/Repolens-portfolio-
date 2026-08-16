@@ -4,12 +4,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 148px;
-  height: 40px;
+  width: 176px;
+  height: 46px;
   background: #3a2d2a;
   border: 1px solid #281e1c;
   border-radius: 2px;
-  box-shadow: 0 4px 16px rgba(58, 45, 42, 0.22);
+  box-shadow: 0 4px 18px rgba(58, 45, 42, 0.24);
   overflow: hidden;
   cursor: pointer;
   user-select: none;
@@ -21,7 +21,7 @@
 
 .welcomeButton:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(58, 45, 42, 0.28);
+  box-shadow: 0 6px 22px rgba(58, 45, 42, 0.3);
 }
 
 .welcomeButton:active {
@@ -38,14 +38,14 @@
   height: 100%;
   color: #f4efe6;
   font-family: "Times New Roman", Times, serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   line-height: 1;
 }
 
-/* Lens Overlay Layer: स्वागतम् (Inverted Cream BG with Dark Brown Hindi Text) */
+/* Lens Overlay Layer: स्वागतम् (Inverted Cream BG with Dark Brown Bold Hindi Text) */
 .lensOverlay {
   position: absolute;
   inset: 0;
@@ -60,9 +60,10 @@
 
 .hindiLabel {
   font-family: "Tiro Devanagari Hindi", "Noto Sans Devanagari", serif;
-  font-size: 16.5px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
+  font-size: 19px;
+  font-weight: 700;
+  -webkit-text-stroke: 0.5px #3a2d2a;
+  letter-spacing: 0.05em;
   color: #3a2d2a;
   line-height: 1;
   transform: translateY(-0.5px);

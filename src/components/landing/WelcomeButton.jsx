@@ -44,7 +44,7 @@ export default function WelcomeButton({ onNavigate }) {
     }
   }
 
-  const lensRadius = 38
+  const lensRadius = 46
 
   return (
     <button
@@ -62,7 +62,7 @@ export default function WelcomeButton({ onNavigate }) {
         WELCOME
       </span>
 
-      {/* Lens Overlay Layer: स्वागतम् (Cream Background, Dark Brown Text in Tiro Devanagari Hindi) */}
+      {/* Lens Overlay Layer: स्वागतम् (Cream Background, Dark Brown Bold Hindi Text in Tiro Devanagari Hindi) */}
       <span
         className={styles.lensOverlay}
         style={{

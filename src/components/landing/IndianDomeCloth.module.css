@@ -1,9 +1,9 @@
-/* Center Stage Anchor (Fixed at Screen Center, Scaled Symmetrically) */
+/* Center Stage Anchor (Fixed at Screen Center, Positioned Safely Below Top Viewport) */
 .stage {
   position: absolute;
   left: 50%;
-  top: clamp(210px, 28vh, 260px);
-  transform: translateX(-50%) scale(0.86);
+  top: clamp(320px, 40vh, 370px);
+  transform: translateX(-50%) scale(0.80);
   transform-origin: top center;
   width: 0;
   height: 0;
@@ -13,7 +13,7 @@
   touch-action: none;
 }
 
-/* Indian Architectural Roof / Dome (100% Fixed at Center, Never Moves on Width Changes) */
+/* Indian Architectural Roof / Dome (100% Fixed at Center, Complete Finial Headroom) */
 .roof {
   position: absolute;
   left: 50%;
@@ -76,11 +76,11 @@
   cursor: grabbing;
 }
 
-/* Centered Welcome / Swagatam Button Container Below Cloth */
+/* Centered Welcome / Swagatam Button Container (Clean Spacing Below Dynamic Cloth) */
 .welcomeWrapper {
   position: absolute;
   left: 50%;
-  top: calc(var(--area-h) + 24px);
+  top: calc(var(--area-h) + 72px);
   transform: translateX(-50%);
   z-index: 30;
   pointer-events: auto;
@@ -89,24 +89,24 @@
 /* Responsive Scaling */
 @media (max-width: 1024px) {
   .stage {
-    top: clamp(190px, 26vh, 240px);
-    transform: translateX(-50%) scale(0.78);
+    top: clamp(280px, 36vh, 330px);
+    transform: translateX(-50%) scale(0.72);
     transform-origin: top center;
   }
 }
 
 @media (max-width: 768px) {
   .stage {
-    top: clamp(160px, 22vh, 200px);
-    transform: translateX(-50%) scale(0.64);
+    top: clamp(240px, 32vh, 290px);
+    transform: translateX(-50%) scale(0.60);
     transform-origin: top center;
   }
 }
 
 @media (max-width: 480px) {
   .stage {
-    top: clamp(140px, 18vh, 170px);
-    transform: translateX(-50%) scale(0.54);
+    top: clamp(210px, 28vh, 250px);
+    transform: translateX(-50%) scale(0.50);
     transform-origin: top center;
   }
 }
