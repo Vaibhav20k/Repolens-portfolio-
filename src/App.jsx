@@ -1,9 +1,9 @@
 import React from 'react'
-import MountainLanding from './components/landing/MountainLanding'
+import LandingBackground from './components/landing/LandingBackground'
 
 function App() {
   return (
-    <MountainLanding />
+    <LandingBackground />
   )
 }
 
