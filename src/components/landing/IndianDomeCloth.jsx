@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './IndianDomeCloth.module.css'
 
-// 2D Vector Class
+// 2D Vector Helper
 class Vec2 {
   constructor(x = 0, y = 0) {
     this.x = x
@@ -108,7 +108,71 @@ class Constraint {
   }
 }
 
-// Portfolio Devanagari Texts
+// Synthesized Indian Temple Bronze Chimes (Web Audio API)
+class IndianChimesSynth {
+  constructor() {
+    this.ctx = null
+    this.lastStrikeTime = 0
+    this.minInterval = 65
+    this.profile = {
+      freqs: [220.0, 261.63, 311.13, 349.23, 392.0, 466.16, 523.25, 622.25],
+      partials: [
+        { ratio: 1.0, gain: 0.6 },
+        { ratio: 1.5, gain: 0.18 },
+        { ratio: 2.0, gain: 0.2 },
+        { ratio: 2.85, gain: 0.14 },
+        { ratio: 4.1, gain: 0.06 },
+      ],
+      duration: 1.35,
+      attack: 0.014,
+    }
+  }
+
+  init() {
+    if (!this.ctx && typeof window !== 'undefined') {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext
+      if (AudioContextClass) this.ctx = new AudioContextClass()
+    }
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume()
+    }
+  }
+
+  strike(colRatio = 0.5, intensity = 0.5) {
+    const now = performance.now()
+    if (now - this.lastStrikeTime < this.minInterval) return
+    this.lastStrikeTime = now
+
+    if (!this.ctx) this.init()
+    if (!this.ctx) return
+
+    const freqs = this.profile.freqs
+    const idx = Math.min(freqs.length - 1, Math.max(0, Math.floor(colRatio * freqs.length)))
+    const baseFreq = freqs[idx]
+    const startTime = this.ctx.currentTime
+
+    this.profile.partials.forEach((part) => {
+      const osc = this.ctx.createOscillator()
+      const gain = this.ctx.createGain()
+
+      osc.type = 'sine'
+      osc.frequency.setValueAtTime(baseFreq * part.ratio, startTime)
+
+      const peakGain = part.gain * Math.min(1, intensity) * 0.18
+      gain.gain.setValueAtTime(0.0001, startTime)
+      gain.gain.exponentialRampToValueAtTime(peakGain, startTime + this.profile.attack)
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + this.profile.duration)
+
+      osc.connect(gain)
+      gain.connect(this.ctx.destination)
+
+      osc.start(startTime)
+      osc.stop(startTime + this.profile.duration)
+    })
+  }
+}
+
+// Authentic Indian Devanagari Wisdom Text
 const DEVANAGARI_TEXTS = [
   "यात्रा अंत नहीं है — जो केवल मंज़िल देखता है वह राह का ज्ञान खो देता है",
   "अतिथि देवो भव — मेहमान में देवता देखना सिखाता है कि घर दीवार नहीं हृदय है",
@@ -137,6 +201,7 @@ function getGraphemes(text) {
 export default function IndianDomeCloth() {
   const canvasRef = useRef(null)
   const containerRef = useRef(null)
+  const synthRef = useRef(new IndianChimesSynth())
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -145,7 +210,7 @@ export default function IndianDomeCloth() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
     const ctx = canvas.getContext('2d')
 
-    // Exact Chimes Area Grid Config
+    // Standard Chimes Grid Dimensions
     const AREA_W = 492
     const AREA_H = 468
     const STRINGS_PAD = 360
@@ -167,7 +232,7 @@ export default function IndianDomeCloth() {
 
     const graphemes = getGraphemes(DEVANAGARI_TEXTS)
 
-    // Pre-rendered offscreen character cache
+    // Pre-rendered offscreen character canvases
     const charCanvases = {}
     const uniqueChars = new Set(graphemes)
     uniqueChars.forEach((ch) => {
@@ -186,14 +251,15 @@ export default function IndianDomeCloth() {
       charCanvases[ch] = off
     })
 
-    // Particle Grid Construction
+    // Particle Grid with Falling Initial State
     const particles = []
     const constraints = []
 
     for (let i = 0; i < gridW; i++) {
       for (let j = 0; j < gridH; j++) {
         const x = i * cellWidth
-        const y = j * cellHeight
+        // Start near the top so they cascade & fall naturally under gravity on mount
+        const y = j === 0 ? 0 : Math.min(j * cellHeight * 0.08, 15) + (j * 1.2) + Math.sin(i * 0.5) * 6
         const id = i * gridH + j
         const pinned = j === 0
         const charIdx = (j * gridW + i) % graphemes.length
@@ -235,10 +301,10 @@ export default function IndianDomeCloth() {
       }
     }
 
-    // Pointer Interaction Handling
+    // Pointer Interaction & Sound Triggering
     const mousePos = new Vec2(-999, -999)
-    const mouseSizeSq = 4800
-    const mouseStrength = 220
+    const mouseSizeSq = 5200
+    const mouseStrength = 240
 
     const getLocalPoint = (e) => {
       const rect = canvas.getBoundingClientRect()
@@ -252,6 +318,9 @@ export default function IndianDomeCloth() {
       const { x, y } = getLocalPoint(e)
       mousePos.reset(x, y)
 
+      let disturbed = false
+      let colHit = 0.5
+
       for (const p of particles) {
         if (p.pinned) continue
         const diff = mousePos.subtractNew(p.pos)
@@ -260,9 +329,15 @@ export default function IndianDomeCloth() {
           const angle = diff.angle - Math.PI
           const dist = Math.sqrt(ls)
           const norm = Math.max(0, 1 - dist / Math.sqrt(mouseSizeSq))
-          const strength = (norm * norm * mouseStrength) / 250
+          const strength = (norm * norm * mouseStrength) / 240
           p.applyForce(new Vec2(Math.cos(angle) * strength, Math.sin(angle) * strength))
+          disturbed = true
+          colHit = p.pos.x / AREA_W
         }
+      }
+
+      if (disturbed && synthRef.current) {
+        synthRef.current.strike(colHit, 0.6)
       }
     }
 
@@ -270,10 +345,15 @@ export default function IndianDomeCloth() {
       mousePos.reset(-999, -999)
     }
 
+    const onUserInteraction = () => {
+      if (synthRef.current) synthRef.current.init()
+    }
+
     window.addEventListener('pointermove', onPointerMove)
     canvas.addEventListener('pointerleave', onPointerLeave)
+    window.addEventListener('pointerdown', onUserInteraction, { once: true })
 
-    // Render & Physics Loop
+    // Animation & Physics Loop
     let rafId
     let lastTime = performance.now()
 
@@ -336,12 +416,13 @@ export default function IndianDomeCloth() {
       cancelAnimationFrame(rafId)
       window.removeEventListener('pointermove', onPointerMove)
       canvas.removeEventListener('pointerleave', onPointerLeave)
+      window.removeEventListener('pointerdown', onUserInteraction)
     }
   }, [])
 
   return (
-    <div ref={containerRef} className={styles.stage}>
-      {/* Indian Dome positioned directly above cloth */}
+    <div ref={containerRef} className={styles.stage} data-country="india">
+      {/* Indian Dome positioned directly above cloth with exact Chimes alignment */}
       <div className={styles.roof}>
         <img
           src="/roof-india.png"
@@ -351,7 +432,7 @@ export default function IndianDomeCloth() {
         />
       </div>
 
-      {/* Physics Canvas for Hanging Devanagari Strings */}
+      {/* Physics Canvas for Cascading & Hanging Devanagari Strings */}
       <div className={styles.clothWrapper}>
         <canvas ref={canvasRef} className={styles.clothCanvas} />
       </div>
