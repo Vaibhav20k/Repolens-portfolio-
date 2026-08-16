@@ -186,9 +186,9 @@ const INDIA_CLOTH_TEXT = [
 // Default configuration constants
 const DEFAULT_CONFIG = {
   width: 492,
-  height: 468,
+  height: 520,
   gridW: 40,
-  gridH: 40,
+  gridH: 44,
   gravity: 0.2,
   damping: 0.99,
   iterationsPerFrame: 5,

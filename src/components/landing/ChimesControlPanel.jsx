@@ -77,7 +77,7 @@ export default function ChimesControlPanel({
                   id="ctrl-height"
                   type="range"
                   min="200"
-                  max="620"
+                  max="720"
                   step="2"
                   value={config.height}
                   onChange={(e) => onConfigChange('height', parseInt(e.target.value, 10))}
