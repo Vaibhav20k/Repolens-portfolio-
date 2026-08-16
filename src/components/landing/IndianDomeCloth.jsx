@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
 import styles from './IndianDomeCloth.module.css'
+import ChimesControlPanel from './ChimesControlPanel'
 
 // 2D Vector Helper from Chimes source
 class Vec2 {
@@ -82,8 +83,19 @@ class Constraint {
     this.length = length
     this.id = id
     this.isSpacer = isSpacer
+    this.compressFactor = compressFactor
+    this.stretchFactor = stretchFactor
     this.minLength = length * (isSpacer ? 0.6 : compressFactor)
     this.maxLength = length * (isSpacer ? 4.0 : stretchFactor)
+  }
+
+  updateFactors(compressFactor, stretchFactor) {
+    if (!this.isSpacer) {
+      this.compressFactor = compressFactor
+      this.stretchFactor = stretchFactor
+      this.minLength = this.length * compressFactor
+      this.maxLength = this.length * stretchFactor
+    }
   }
 
   solve() {
@@ -201,7 +213,8 @@ class IndianChimesSynth {
     }
   }
 
-  strike(colRatio = 0.5, intensity = 0.5) {
+  strike(colRatio = 0.5, intensity = 0.5, volume = 0.28, enabled = true) {
+    if (!enabled || volume <= 0) return
     const now = performance.now()
     if (now - this.lastStrikeTime < this.minInterval) return
     this.lastStrikeTime = now
@@ -221,7 +234,7 @@ class IndianChimesSynth {
       osc.type = 'sine'
       osc.frequency.setValueAtTime(baseFreq * part.ratio, startTime)
 
-      const peakGain = part.gain * Math.min(1, intensity) * 0.15
+      const peakGain = part.gain * Math.min(1, intensity) * volume * 0.5
       gain.gain.setValueAtTime(0.0001, startTime)
       gain.gain.exponentialRampToValueAtTime(peakGain, startTime + this.profile.attack)
       gain.gain.exponentialRampToValueAtTime(0.0001, startTime + this.profile.duration)
@@ -240,31 +253,69 @@ export default function IndianDomeCloth() {
   const containerRef = useRef(null)
   const synthRef = useRef(new IndianChimesSynth())
 
-  useEffect(() => {
+  // Config State
+  const [config, setConfig] = useState({
+    width: 492,
+    height: 468,
+    gridW: 40,
+    gridH: 40,
+    gravity: 0.2,
+    damping: 0.99,
+    iterationsPerFrame: 5,
+    compressFactor: 0.02,
+    stretchFactor: 1.1,
+    mouseSize: 5000,
+    mouseStrength: 4.0,
+    chimes: true,
+    chimeVolume: 0.28,
+  })
+  const [isPlaying, setIsPlaying] = useState(true)
+
+  // Simulation references
+  const configRef = useRef(config)
+  configRef.current = config
+  const isPlayingRef = useRef(isPlaying)
+  isPlayingRef.current = isPlaying
+
+  const simRef = useRef({
+    particles: [],
+    constraints: [],
+    charCanvases: {},
+    canvasW: 1332,
+    canvasH: 1308,
+    originX: 420,
+    originY: 420,
+    dpr: 1,
+    rafId: null,
+  })
+
+  // Initialize or Rebuild Simulation
+  const initSimulation = useCallback(() => {
     const canvas = canvasRef.current
     if (!canvas) return
 
+    const curConfig = configRef.current
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
     const ctx = canvas.getContext('2d')
     ctx.imageSmoothingEnabled = true
     ctx.imageSmoothingQuality = 'high'
 
-    // Exact Chimes Area, Padding and Grid configuration for India
-    const AREA_W = 492
-    const AREA_H = 468
     const STRINGS_PAD = 420
-    const canvasW = AREA_W + STRINGS_PAD * 2
-    const canvasH = AREA_H + STRINGS_PAD * 2
+    const width = curConfig.width
+    const height = curConfig.height
+    const gridW = curConfig.gridW
+    const gridH = curConfig.gridH
+
+    const canvasW = width + STRINGS_PAD * 2
+    const canvasH = height + STRINGS_PAD * 2
 
     canvas.width = Math.round(canvasW * dpr)
     canvas.height = Math.round(canvasH * dpr)
     canvas.style.width = `${canvasW}px`
     canvas.style.height = `${canvasH}px`
 
-    const gridW = 40
-    const gridH = 40
-    const cellWidth = AREA_W / (gridW - 1)
-    const cellHeight = AREA_H / (gridH - 1)
+    const cellWidth = width / (gridW - 1)
+    const cellHeight = height / (gridH - 1)
     const fontSize = Math.max(9, Math.min(14, cellHeight * 0.95))
     const roofClearance = Math.ceil(fontSize * 0.7)
     const originX = STRINGS_PAD
@@ -274,7 +325,7 @@ export default function IndianDomeCloth() {
     const writing = 'horizontal'
     const dense = true
 
-    // Pre-rendered offscreen character canvases from Chimes source
+    // Pre-rendered offscreen character canvases
     const charCanvases = {}
     for (const ch of new Set(graphemesOf(fullCode, dense))) {
       if (ch === ' ' || ch === '　') continue
@@ -293,7 +344,7 @@ export default function IndianDomeCloth() {
       charCanvases[ch] = off
     }
 
-    // Initialize Particles Grid exactly as in Chimes
+    // Initialize Particles Grid
     const particles = []
     const constraints = []
 
@@ -308,7 +359,7 @@ export default function IndianDomeCloth() {
       }
     }
 
-    // Initialize Constraints exactly as in Chimes
+    // Initialize Constraints
     for (let i = 0; i < gridW; i++) {
       for (let j = 0; j < gridH; j++) {
         const id = getPointID(j, i, gridH)
@@ -321,8 +372,8 @@ export default function IndianDomeCloth() {
             p2: bottomP,
             length: cellHeight,
             id: id + gridW * gridH,
-            compressFactor: 0.02,
-            stretchFactor: 1.1,
+            compressFactor: curConfig.compressFactor,
+            stretchFactor: curConfig.stretchFactor,
           })
           constraints.push(constraint)
           p.downConstraint = constraint
@@ -345,18 +396,63 @@ export default function IndianDomeCloth() {
       }
     }
 
-    // Pointer Interaction class adapted from Chimes Input class
+    simRef.current = {
+      particles,
+      constraints,
+      charCanvases,
+      canvasW,
+      canvasH,
+      originX,
+      originY,
+      dpr,
+      rafId: simRef.current.rafId,
+    }
+  }, [])
+
+  // Control handlers
+  const handleConfigChange = (key, value) => {
+    setConfig((prev) => {
+      const next = { ...prev, [key]: value }
+      configRef.current = next
+
+      // Live constraint updates
+      if (key === 'compressFactor' || key === 'stretchFactor') {
+        simRef.current.constraints.forEach((c) => {
+          c.updateFactors(next.compressFactor, next.stretchFactor)
+        })
+      }
+      return next
+    })
+  }
+
+  const handleTogglePlay = () => {
+    setIsPlaying((prev) => {
+      const next = !prev
+      isPlayingRef.current = next
+      return next
+    })
+  }
+
+  const handleRebuildCloth = () => {
+    initSimulation()
+  }
+
+  useEffect(() => {
+    initSimulation()
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const ctx = canvas.getContext('2d')
     const mousePos = new Vec2()
     const grabRadius = 24
     let grabbedParticle = null
-    const mouseSize = 5000
-    const mouseStrength = 4
 
     const localPoint = (e) => {
+      const sim = simRef.current
       const rect = canvas.getBoundingClientRect()
       return {
-        x: ((e.clientX - rect.left) / rect.width) * canvasW - originX,
-        y: ((e.clientY - rect.top) / rect.height) * canvasH - originY,
+        x: ((e.clientX - rect.left) / rect.width) * sim.canvasW - sim.originX,
+        y: ((e.clientY - rect.top) / rect.height) * sim.canvasH - sim.originY,
       }
     }
 
@@ -364,12 +460,20 @@ export default function IndianDomeCloth() {
       if (synthRef.current) synthRef.current.init()
       const { x, y } = localPoint(e)
       mousePos.reset(x, y)
-      for (const p of particles) {
+      const sim = simRef.current
+      for (const p of sim.particles) {
         if (mousePos.subtractNew(p.pos).length < grabRadius) {
           grabbedParticle = p
           grabbedParticle.originalPinnedState = grabbedParticle.pinned
           grabbedParticle.pinned = true
-          if (synthRef.current) synthRef.current.strike(p.pos.x / AREA_W, 0.8)
+          if (synthRef.current) {
+            synthRef.current.strike(
+              p.pos.x / configRef.current.width,
+              0.8,
+              configRef.current.chimeVolume,
+              configRef.current.chimes
+            )
+          }
           break
         }
       }
@@ -391,23 +495,25 @@ export default function IndianDomeCloth() {
         grabbedParticle.oldPos.reset(x, y)
       }
 
+      const sim = simRef.current
+      const curConfig = configRef.current
       let disturbed = false
       let colHit = 0.5
 
-      for (const p of particles) {
+      for (const p of sim.particles) {
         const diff = mousePos.subtractNew(p.pos)
         const ls = diff.lengthSquared
-        if (ls < mouseSize) {
+        if (ls < curConfig.mouseSize) {
           const a = diff.angle - Math.PI
-          const strength = (smoothstep(mouseSize, -2000, ls) * mouseStrength) / 300
+          const strength = (smoothstep(curConfig.mouseSize, -2000, ls) * curConfig.mouseStrength) / 300
           p.applyForce(new Vec2(Math.cos(a) * strength, Math.sin(a) * strength))
           disturbed = true
-          colHit = p.pos.x / AREA_W
+          colHit = p.pos.x / curConfig.width
         }
       }
 
       if (disturbed && synthRef.current) {
-        synthRef.current.strike(colHit, 0.45)
+        synthRef.current.strike(colHit, 0.45, curConfig.chimeVolume, curConfig.chimes)
       }
     }
 
@@ -415,71 +521,94 @@ export default function IndianDomeCloth() {
     window.addEventListener('pointerup', onPointerUp)
     window.addEventListener('pointermove', onPointerMove)
 
-    // Rendering glyphs upright matching physical positions
     const drawCode = () => {
-      particles.forEach((p) => {
+      const sim = simRef.current
+      const dpr = sim.dpr
+      sim.particles.forEach((p) => {
         if (!p.char || p.char === ' ' || p.char === '　') return
-        const img = charCanvases[p.char]
+        const img = sim.charCanvases[p.char]
         if (!img) return
 
         const size = img._size
         const half = size / 2
-        const x = p.pos.x + originX
-        const y = p.pos.y + originY
+        const x = p.pos.x + sim.originX
+        const y = p.pos.y + sim.originY
 
         ctx.setTransform(dpr, 0, 0, dpr, x * dpr, y * dpr)
         ctx.drawImage(img, -half, -half, size, size)
       })
     }
 
-    // Physics Simulation Loop from Chimes runloop
-    let rafID
     let lastDelta = performance.now()
-
     const runloop = (delta) => {
-      rafID = requestAnimationFrame(runloop)
+      simRef.current.rafId = requestAnimationFrame(runloop)
       const dt = Math.min(32, Math.max(1, delta - lastDelta))
       lastDelta = delta
 
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      ctx.clearRect(0, 0, canvasW, canvasH)
+      const sim = simRef.current
+      const curConfig = configRef.current
 
-      particles.forEach((p) => p.update(dt, 0.99, 0.2))
-      for (let i = 0; i < 5; i++) {
-        for (let j = 0; j < constraints.length; j++) {
-          constraints[j].solve()
+      ctx.setTransform(sim.dpr, 0, 0, sim.dpr, 0, 0)
+      ctx.clearRect(0, 0, sim.canvasW, sim.canvasH)
+
+      if (isPlayingRef.current) {
+        sim.particles.forEach((p) => p.update(dt, curConfig.damping, curConfig.gravity))
+        for (let i = 0; i < curConfig.iterationsPerFrame; i++) {
+          for (let j = 0; j < sim.constraints.length; j++) {
+            sim.constraints[j].solve()
+          }
         }
       }
 
       drawCode()
     }
 
-    rafID = requestAnimationFrame(runloop)
+    simRef.current.rafId = requestAnimationFrame(runloop)
 
     return () => {
-      cancelAnimationFrame(rafID)
+      cancelAnimationFrame(simRef.current.rafId)
       canvas.removeEventListener('pointerdown', onPointerDown)
       window.removeEventListener('pointerup', onPointerUp)
       window.removeEventListener('pointermove', onPointerMove)
     }
-  }, [])
+  }, [initSimulation])
 
   return (
-    <div ref={containerRef} className={styles.area} data-country="india">
-      {/* Indian Architectural Dome (Pinned directly above the cloth chains) */}
-      <div className={styles.roof}>
-        <img
-          src="/roof-india.png"
-          alt="Indian Architectural Dome"
-          className={styles.roofImg}
-          draggable="false"
-        />
-      </div>
+    <>
+      {/* Floating Interactive Control Panel */}
+      <ChimesControlPanel
+        config={config}
+        isPlaying={isPlaying}
+        onTogglePlay={handleTogglePlay}
+        onConfigChange={handleConfigChange}
+        onRebuildCloth={handleRebuildCloth}
+      />
 
-      {/* Physics Canvas for Dense Devanagari Curtain */}
-      <div className={styles.strings}>
-        <canvas ref={canvasRef} className={styles.canvas} />
+      {/* Main Indian Dome + Devanagari Cloth Stage */}
+      <div
+        ref={containerRef}
+        className={styles.area}
+        data-country="india"
+        style={{
+          '--area-w': `${config.width}px`,
+          '--area-h': `${config.height}px`,
+        }}
+      >
+        {/* Indian Architectural Dome (Pinned directly above the cloth chains) */}
+        <div className={styles.roof}>
+          <img
+            src="/roof-india.png"
+            alt="Indian Architectural Dome"
+            className={styles.roofImg}
+            draggable="false"
+          />
+        </div>
+
+        {/* Physics Canvas for Dense Devanagari Curtain */}
+        <div className={styles.strings}>
+          <canvas ref={canvasRef} className={styles.canvas} />
+        </div>
       </div>
-    </div>
+    </>
   )
 }
