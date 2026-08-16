@@ -1,0 +1,88 @@
+/* Indian Architectural Dome & Physics Hanging Cloth Stage */
+.stage {
+  position: relative;
+  width: 492px;
+  height: 540px;
+  margin: 3vh auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+  touch-action: none;
+  z-index: 10;
+}
+
+/* Architectural Indian Dome Header */
+.roofContainer {
+  position: absolute;
+  top: -155px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 430px;
+  height: 220px;
+  z-index: 20;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.roofImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 14px 28px rgba(58, 45, 42, 0.18));
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Physics Hanging Cloth Canvas Wrapper */
+.canvasWrapper {
+  position: absolute;
+  top: 55px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 492px;
+  height: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 15;
+  overflow: visible;
+}
+
+.clothCanvas {
+  display: block;
+  cursor: grab;
+}
+
+.clothCanvas:active {
+  cursor: grabbing;
+}
+
+/* Tablet Scaling */
+@media (max-width: 1024px) {
+  .stage {
+    transform: scale(0.92);
+    transform-origin: top center;
+    margin-top: 2vh;
+  }
+}
+
+/* Mobile Scaling */
+@media (max-width: 768px) {
+  .stage {
+    transform: scale(0.75);
+    transform-origin: top center;
+    margin-top: 1vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .stage {
+    transform: scale(0.65);
+    transform-origin: top center;
+    margin-top: 0;
+  }
+}
