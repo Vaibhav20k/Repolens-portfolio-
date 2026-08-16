@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import styles from './IndianDomeCloth.module.css'
 
-// 2D Vector Class
+// 2D Vector Helper from Chimes source
 class Vec2 {
   constructor(x = 0, y = 0) {
     this.x = x
@@ -30,12 +30,15 @@ class Vec2 {
   get lengthSquared() {
     return this.x ** 2 + this.y ** 2
   }
+  get length() {
+    return Math.hypot(this.x, this.y)
+  }
   get angle() {
     return Math.atan2(this.y, this.x)
   }
 }
 
-// Particle Class matching Chimes Verlet physics
+// Particle Class from Chimes source
 class Particle {
   constructor({ x, y, pinned, id, char }) {
     this.pos = new Vec2(x, y)
@@ -71,12 +74,13 @@ class Particle {
   }
 }
 
-// Distance Constraint Class
+// Distance Constraint Class from Chimes source
 class Constraint {
-  constructor({ p1, p2, length, isSpacer = false, compressFactor = 0.02, stretchFactor = 1.1 }) {
+  constructor({ p1, p2, length, id, compressFactor = 0.02, stretchFactor = 1.1, isSpacer = false }) {
     this.p1 = p1
     this.p2 = p2
     this.length = length
+    this.id = id
     this.isSpacer = isSpacer
     this.minLength = length * (isSpacer ? 0.6 : compressFactor)
     this.maxLength = length * (isSpacer ? 4.0 : stretchFactor)
@@ -109,12 +113,65 @@ class Constraint {
 }
 
 // Smoothstep helper
-function smoothstep(min, max, value) {
-  const x = Math.max(0, Math.min(1, (value - min) / (max - min)))
-  return x * x * (3 - 2 * x)
+function smoothstep(edge0, edge1, x) {
+  const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)))
+  return t * t * (3 - 2 * t)
 }
 
-// Synthesized Indian Temple Bronze Chimes (Web Audio API)
+function getPointID(row, col, gridH) {
+  return col * gridH + row
+}
+
+// Grapheme extraction & character mapping from Chimes countries.js
+const graphemeSeg =
+  typeof Intl !== 'undefined' && Intl.Segmenter
+    ? new Intl.Segmenter(undefined, { granularity: 'grapheme' })
+    : null
+
+function graphemesOf(text, dense = false) {
+  let cells = graphemeSeg
+    ? Array.from(graphemeSeg.segment(text), (s) => s.segment)
+    : Array.from(text)
+  if (dense) cells = cells.filter((g) => g.trim() !== '')
+  return cells
+}
+
+function charForCell(text, i, j, gridW, gridH, writing = 'horizontal', dense = false) {
+  if (!text || !text.length) return ' '
+  const cells = graphemesOf(text, dense)
+  let index
+  if (writing === 'vertical') {
+    const colFromRight = gridW - 1 - i
+    index = colFromRight * gridH + j
+  } else {
+    index = j * gridW + i
+  }
+  return cells[index % cells.length] || ' '
+}
+
+// Exact India text from Chimes repository
+const INDIA_CLOTH_TEXT = [
+  "यात्रा अंत नहीं है — जो केवल मंज़िल देखता है वह राह का ज्ञान खो देता है",
+  "अतिथि देवो भव — मेहमान में देवता देखना सिखाता है कि घर दीवार नहीं हृदय है",
+  "वसुधैव कुटुम्बकम् — दुनिया एक परिवार है जब दृष्टि भय से बड़ी हो",
+  "धर्मो रक्षति रक्षितः — जो सत्य की रक्षा करता है सत्य उसकी रक्षा करता है",
+  "कर्मण्येवाधिकारस्ते — फल की चिंता छोड़ो कर्म में पूर्णता ढूँढो",
+  "सत्यमेव जयते — झूठ तेज़ दौड़ सकता है पर अंत में सत्य ही ठहरता है",
+  "दूर के ढोल सुहावने — पास आकर ही पता चलता है कि संगीत सच है या सिर्फ़ गूँज",
+  "जैसा बोओगे वैसा काटोगे — यात्रा भी एक बीज है जो भीतर उगता है",
+  "मन के हारे हार है — रास्ता वही आसान होता है जिसे हृदय ने स्वीकार किया",
+  "नदी कभी पीछे नहीं मुड़ती — प्रवाह सिखाता है कि वापसी दिशा नहीं साहस है",
+  "एकता में बल है — अकेला दीया हवा में बुझता है दीपमाला नहीं",
+  "ज्ञान से बड़ा कोई धन नहीं — पर बिना यात्रा का ज्ञान अधूरा रहता है",
+  "समय सबका इलाज है — धैर्य वह औषधि है जो जल्दी नहीं दिखती",
+  "आह्वान सुनो मंदिर की घंटी का — हर यात्रा एक प्रार्थना है अगर ध्यान हो",
+  "पर्वत ऊँचा दिखे तो भी चढ़ो — ऊँचाई आँख का भ्रम कदम सच्चा माप है",
+  "अंधेरे में भी दीया जलाओ — भय को रोशनी से जवाब दो शब्दों से नहीं",
+  "घर वही जहाँ स्वागत हो — पत्थर कहीं भी लगा सकते हो प्रतीक्षा अर्थ बनाती है",
+  "यात्रा दृष्टि बदलती है — और बदली दृष्टि से ही घर लौटना योग्य होता है"
+].join("　")
+
+// India Synthesized Chime profile from Chimes chimes.js
 class IndianChimesSynth {
   constructor() {
     this.ctx = null
@@ -136,8 +193,8 @@ class IndianChimesSynth {
 
   init() {
     if (!this.ctx && typeof window !== 'undefined') {
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext
-      if (AudioContextClass) this.ctx = new AudioContextClass()
+      const AudioCtx = window.AudioContext || window.webkitAudioContext
+      if (AudioCtx) this.ctx = new AudioCtx()
     }
     if (this.ctx && this.ctx.state === 'suspended') {
       this.ctx.resume()
@@ -164,7 +221,7 @@ class IndianChimesSynth {
       osc.type = 'sine'
       osc.frequency.setValueAtTime(baseFreq * part.ratio, startTime)
 
-      const peakGain = part.gain * Math.min(1, intensity) * 0.16
+      const peakGain = part.gain * Math.min(1, intensity) * 0.15
       gain.gain.setValueAtTime(0.0001, startTime)
       gain.gain.exponentialRampToValueAtTime(peakGain, startTime + this.profile.attack)
       gain.gain.exponentialRampToValueAtTime(0.0001, startTime + this.profile.duration)
@@ -176,36 +233,6 @@ class IndianChimesSynth {
       osc.stop(startTime + this.profile.duration)
     })
   }
-}
-
-// Authentic Indian Devanagari Wisdom Text
-const DEVANAGARI_TEXTS = [
-  "यात्रा अंत नहीं है — जो केवल मंज़िल देखता है वह राह का ज्ञान खो देता है",
-  "अतिथि देवो भव — मेहमान में देवता देखना सिखाता है कि घर दीवार नहीं हृदय है",
-  "वसुधैव कुटुम्बकम् — दुनिया एक परिवार है जब दृष्टि भय से बड़ी हो",
-  "धर्मो रक्षति रक्षितः — जो सत्य की रक्षा करता है सत्य उसकी रक्षा करता है",
-  "कर्मण्येवाधिकारस्ते — फल की चिंता छोड़ो कर्म में पूर्णता ढूँढो",
-  "सत्यमेव जयते — झूठ तेज़ दौड़ सकता है पर अंत में सत्य ही ठहरता है",
-  "दूर के ढोल सुहावने — पास आकर ही पता चलता है कि संगीत सच है या सिर्फ़ गूँज",
-  "जैसा बोओगे वैसा काटोगे — यात्रा भी एक बीज है जो भीतर उगता है",
-  "मन के हारे हार है — रास्ता वही आसान होता है जिसे हृदय ने स्वीकार किया",
-  "नदी कभी पीछे नहीं मुड़ती — प्रवाह सिखाता है कि वापसी दिशा नहीं साहस है",
-  "एकता में बल है — अकेला दीया हवा में बुझता है दीपमाला नहीं",
-  "ज्ञान से बड़ा कोई धन नहीं — पर बिना यात्रा का ज्ञान अधूरा रहता है",
-  "समय सबका इलाज है — धैर्य वह औषधि है जो जल्दी नहीं दिखती",
-  "आह्वान सुनो मंदिर की घंटी का — हर यात्रा एक प्रार्थना है अगर ध्यान हो",
-  "पर्वत ऊँचा दिखे तो भी चढ़ो — ऊँचाई आँख का भ्रम कदम सच्चा माप है",
-  "अंधेरे में भी दीया जलाओ — भय को रोशनी से जवाब दो शब्दों से नहीं",
-  "घर वही जहाँ स्वागत हो — पत्थर कहीं भी लगा सकते हो प्रतीक्षा अर्थ बनाती है",
-  "यात्रा दृष्टि बदलती है — और बदली दृष्टि से ही घर लौटना योग्य होता है"
-].join("　")
-
-function getGraphemes(text) {
-  if (typeof Intl !== 'undefined' && Intl.Segmenter) {
-    const segmenter = new Intl.Segmenter(undefined, { granularity: 'grapheme' })
-    return Array.from(segmenter.segment(text), (s) => s.segment).filter((g) => g.trim() !== '')
-  }
-  return Array.from(text).filter((g) => g.trim() !== '')
 }
 
 export default function IndianDomeCloth() {
@@ -222,7 +249,7 @@ export default function IndianDomeCloth() {
     ctx.imageSmoothingEnabled = true
     ctx.imageSmoothingQuality = 'high'
 
-    // Area & Strings Grid configuration matching Chimes
+    // Exact Chimes Area, Padding and Grid configuration for India
     const AREA_W = 492
     const AREA_H = 468
     const STRINGS_PAD = 420
@@ -243,56 +270,57 @@ export default function IndianDomeCloth() {
     const originX = STRINGS_PAD
     const originY = STRINGS_PAD + roofClearance
 
-    const graphemes = getGraphemes(DEVANAGARI_TEXTS)
+    const fullCode = INDIA_CLOTH_TEXT
+    const writing = 'horizontal'
+    const dense = true
 
-    // Pre-rendered offscreen character canvases for ultra-smooth 60fps
+    // Pre-rendered offscreen character canvases from Chimes source
     const charCanvases = {}
-    const uniqueChars = new Set(graphemes)
-    uniqueChars.forEach((ch) => {
-      const size = Math.ceil(fontSize * 1.45)
+    for (const ch of new Set(graphemesOf(fullCode, dense))) {
+      if (ch === ' ' || ch === '　') continue
+      const size = Math.ceil(fontSize * 1.35)
       const off = document.createElement('canvas')
       off.width = Math.ceil(size * dpr)
       off.height = Math.ceil(size * dpr)
       off._size = size
       const octx = off.getContext('2d')
       octx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      octx.font = `600 ${fontSize}px "Noto Sans Devanagari", "JetBrains Mono", serif`
+      octx.font = `600 ${fontSize}px "Noto Sans Devanagari", "Kohinoor Devanagari", "Noto Serif Devanagari", "JetBrains Mono", serif`
       octx.textAlign = 'center'
       octx.textBaseline = 'middle'
       octx.fillStyle = '#3a2d2a'
       octx.fillText(ch, size / 2, size / 2)
       charCanvases[ch] = off
-    })
+    }
 
-    // Particle Grid Initialization with Cascading Initial Drop
+    // Initialize Particles Grid exactly as in Chimes
     const particles = []
     const constraints = []
 
     for (let i = 0; i < gridW; i++) {
       for (let j = 0; j < gridH; j++) {
         const x = i * cellWidth
-        // Initial cascade wave drop: particles start gathered near top and fall under gravity
-        const y = j === 0 ? 0 : Math.min(j * cellHeight * 0.12, 24) + (j * 1.5) + Math.sin(i * 0.45) * 8
-        const id = j * gridW + i
+        const y = j * cellHeight
+        const id = getPointID(j, i, gridH)
         const pinned = j === 0
-        const charIdx = (j * gridW + i) % graphemes.length
-        const char = graphemes[charIdx] || ' '
+        const char = charForCell(fullCode, i, j, gridW, gridH, writing, dense)
         particles.push(new Particle({ x, y, pinned, id, char }))
       }
     }
 
-    // Constraints Setup (Vertical Chains + Lateral Spacers)
+    // Initialize Constraints exactly as in Chimes
     for (let i = 0; i < gridW; i++) {
       for (let j = 0; j < gridH; j++) {
-        const id = j * gridW + i
+        const id = getPointID(j, i, gridH)
         const p = particles[id]
 
         if (j < gridH - 1) {
-          const bottomP = particles[(j + 1) * gridW + i]
+          const bottomP = particles[getPointID(j + 1, i, gridH)]
           const constraint = new Constraint({
             p1: p,
             p2: bottomP,
             length: cellHeight,
+            id: id + gridW * gridH,
             compressFactor: 0.02,
             stretchFactor: 1.1,
           })
@@ -301,27 +329,30 @@ export default function IndianDomeCloth() {
         }
 
         if (i < gridW - 1) {
-          const rightP = particles[j * gridW + (i + 1)]
+          const rightP = particles[getPointID(j, i + 1, gridH)]
           constraints.push(
             new Constraint({
               p1: p,
               p2: rightP,
               length: cellWidth,
-              isSpacer: true,
+              id: id + gridW * gridH * 2,
               compressFactor: 0.6,
               stretchFactor: 4.0,
+              isSpacer: true,
             })
           )
         }
       }
     }
 
-    // Pointer Interaction Handling
-    const mousePos = new Vec2(-999, -999)
+    // Pointer Interaction class adapted from Chimes Input class
+    const mousePos = new Vec2()
+    const grabRadius = 24
+    let grabbedParticle = null
     const mouseSize = 5000
     const mouseStrength = 4
 
-    const getLocalPoint = (e) => {
+    const localPoint = (e) => {
       const rect = canvas.getBoundingClientRect()
       return {
         x: ((e.clientX - rect.left) / rect.width) * canvasW - originX,
@@ -329,112 +360,112 @@ export default function IndianDomeCloth() {
       }
     }
 
+    const onPointerDown = (e) => {
+      if (synthRef.current) synthRef.current.init()
+      const { x, y } = localPoint(e)
+      mousePos.reset(x, y)
+      for (const p of particles) {
+        if (mousePos.subtractNew(p.pos).length < grabRadius) {
+          grabbedParticle = p
+          grabbedParticle.originalPinnedState = grabbedParticle.pinned
+          grabbedParticle.pinned = true
+          if (synthRef.current) synthRef.current.strike(p.pos.x / AREA_W, 0.8)
+          break
+        }
+      }
+    }
+
+    const onPointerUp = () => {
+      if (grabbedParticle) {
+        grabbedParticle.pinned = grabbedParticle.originalPinnedState
+        grabbedParticle = null
+      }
+    }
+
     const onPointerMove = (e) => {
-      const { x, y } = getLocalPoint(e)
+      const { x, y } = localPoint(e)
       mousePos.reset(x, y)
 
+      if (grabbedParticle) {
+        grabbedParticle.pos.reset(x, y)
+        grabbedParticle.oldPos.reset(x, y)
+      }
+
       let disturbed = false
-      let nearestRatio = 0.5
+      let colHit = 0.5
 
       for (const p of particles) {
-        if (p.pinned) continue
         const diff = mousePos.subtractNew(p.pos)
         const ls = diff.lengthSquared
-        if (ls < mouseSize && ls > 0) {
-          const angle = diff.angle - Math.PI
+        if (ls < mouseSize) {
+          const a = diff.angle - Math.PI
           const strength = (smoothstep(mouseSize, -2000, ls) * mouseStrength) / 300
-          p.applyForce(new Vec2(Math.cos(angle) * strength, Math.sin(angle) * strength))
+          p.applyForce(new Vec2(Math.cos(a) * strength, Math.sin(a) * strength))
           disturbed = true
-          nearestRatio = p.pos.x / AREA_W
+          colHit = p.pos.x / AREA_W
         }
       }
 
       if (disturbed && synthRef.current) {
-        synthRef.current.strike(nearestRatio, 0.65)
+        synthRef.current.strike(colHit, 0.45)
       }
     }
 
-    const onPointerLeave = () => {
-      mousePos.reset(-999, -999)
-    }
-
-    const onUserInteraction = () => {
-      if (synthRef.current) synthRef.current.init()
-    }
-
+    canvas.addEventListener('pointerdown', onPointerDown)
+    window.addEventListener('pointerup', onPointerUp)
     window.addEventListener('pointermove', onPointerMove)
-    canvas.addEventListener('pointerleave', onPointerLeave)
-    window.addEventListener('pointerdown', onUserInteraction, { once: true })
 
-    // Render & Physics Loop
-    let rafId
-    let lastTime = performance.now()
-
-    const drawParticles = () => {
+    // Rendering glyphs upright matching physical positions
+    const drawCode = () => {
       particles.forEach((p) => {
         if (!p.char || p.char === ' ' || p.char === '　') return
         const img = charCanvases[p.char]
         if (!img) return
-
-        let cos = 1
-        let sin = 0
-        const constraint = p.downConstraint
-        if (constraint) {
-          const dx = constraint.p2.pos.x - constraint.p1.pos.x
-          const dy = constraint.p2.pos.y - constraint.p1.pos.y
-          const angle = Math.atan2(dy, dx) - Math.PI / 2
-          cos = Math.cos(angle)
-          sin = Math.sin(angle)
-        }
 
         const size = img._size
         const half = size / 2
         const x = p.pos.x + originX
         const y = p.pos.y + originY
 
-        ctx.setTransform(
-          cos * dpr,
-          sin * dpr,
-          -sin * dpr,
-          cos * dpr,
-          x * dpr,
-          y * dpr
-        )
+        ctx.setTransform(dpr, 0, 0, dpr, x * dpr, y * dpr)
         ctx.drawImage(img, -half, -half, size, size)
       })
     }
 
-    const runLoop = (now) => {
-      rafId = requestAnimationFrame(runLoop)
-      const dt = Math.min(32, Math.max(1, now - lastTime))
-      lastTime = now
+    // Physics Simulation Loop from Chimes runloop
+    let rafID
+    let lastDelta = performance.now()
+
+    const runloop = (delta) => {
+      rafID = requestAnimationFrame(runloop)
+      const dt = Math.min(32, Math.max(1, delta - lastDelta))
+      lastDelta = delta
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       ctx.clearRect(0, 0, canvasW, canvasH)
 
       particles.forEach((p) => p.update(dt, 0.99, 0.2))
-
-      for (let k = 0; k < 5; k++) {
-        for (let i = 0; i < constraints.length; i++) {
-          constraints[i].solve()
+      for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < constraints.length; j++) {
+          constraints[j].solve()
         }
       }
 
-      drawParticles()
+      drawCode()
     }
 
-    rafId = requestAnimationFrame(runLoop)
+    rafID = requestAnimationFrame(runloop)
 
     return () => {
-      cancelAnimationFrame(rafId)
+      cancelAnimationFrame(rafID)
+      canvas.removeEventListener('pointerdown', onPointerDown)
+      window.removeEventListener('pointerup', onPointerUp)
       window.removeEventListener('pointermove', onPointerMove)
-      canvas.removeEventListener('pointerleave', onPointerLeave)
-      window.removeEventListener('pointerdown', onUserInteraction)
     }
   }, [])
 
   return (
-    <div ref={containerRef} className={styles.stage} data-country="india">
+    <div ref={containerRef} className={styles.area} data-country="india">
       {/* Indian Architectural Dome (Pinned directly above the cloth chains) */}
       <div className={styles.roof}>
         <img
@@ -445,9 +476,9 @@ export default function IndianDomeCloth() {
         />
       </div>
 
-      {/* Physics Canvas for Hanging Devanagari Strings Curtain */}
-      <div className={styles.clothWrapper}>
-        <canvas ref={canvasRef} className={styles.clothCanvas} />
+      {/* Physics Canvas for Dense Devanagari Curtain */}
+      <div className={styles.strings}>
+        <canvas ref={canvasRef} className={styles.canvas} />
       </div>
     </div>
   )
