@@ -1,8 +1,8 @@
 /* Vintage Technical Parchment Control Panel Reference Design */
 .wrapper {
   position: fixed;
-  top: 22px;
-  right: 26px;
+  top: 24px;
+  right: 28px;
   z-index: 100;
   display: flex;
   flex-direction: column;
@@ -15,21 +15,21 @@
 .playButton {
   appearance: none;
   display: block;
-  width: 90px;
-  height: 28px;
-  margin-bottom: 8px;
+  width: 104px;
+  height: 30px;
+  margin-bottom: 9px;
   background: #3a2d2a;
   color: #f4efe6;
   border: 1px solid #281e1c;
   border-radius: 2px;
   font-family: "Times New Roman", Times, serif;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.04em;
   text-align: center;
-  line-height: 26px;
+  line-height: 28px;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(58, 45, 42, 0.2);
+  box-shadow: 0 2px 8px rgba(58, 45, 42, 0.22);
   transition: background 0.15s ease, transform 0.1s ease;
 }
 
@@ -44,11 +44,11 @@
 
 /* Main Parchment Control Panel */
 .panel {
-  width: 248px;
+  width: 282px;
   background: #ece4d7;
   border: 1px solid #7c6861;
   border-radius: 3px;
-  box-shadow: 0 6px 20px rgba(58, 45, 42, 0.16);
+  box-shadow: 0 8px 24px rgba(58, 45, 42, 0.18);
   color: #3a2d2a;
   overflow: hidden;
 }
@@ -58,23 +58,23 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 10px;
+  padding: 8px 12px;
   background: rgba(88, 66, 60, 0.08);
   border-bottom: 1px solid #7c6861;
   cursor: pointer;
 }
 
 .panelTitle {
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.09em;
   color: #58423c;
   text-transform: uppercase;
   font-family: "JetBrains Mono", monospace;
 }
 
 .collapseIndicator {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: bold;
   color: #58423c;
   line-height: 1;
@@ -82,11 +82,11 @@
 
 /* Panel Body */
 .panelBody {
-  padding: 8px 10px 10px;
+  padding: 10px 14px 14px;
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  max-height: calc(100vh - 120px);
+  gap: 8px;
+  max-height: calc(100vh - 130px);
   overflow-y: auto;
 }
 
@@ -106,11 +106,11 @@
 .section {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
 }
 
 .sectionHeader {
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.08em;
   color: #58423c;
@@ -122,22 +122,22 @@
 .divider {
   height: 1px;
   background: rgba(88, 66, 60, 0.22);
-  margin: 3px 0;
+  margin: 4px 0;
 }
 
-/* Tight Horizontal Control Rows */
+/* Clean Horizontal Control Rows */
 .controlRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
-  height: 20px;
+  gap: 8px;
+  height: 22px;
 }
 
 .rowLabel {
-  width: 68px;
+  width: 82px;
   flex-shrink: 0;
-  font-size: 11px;
+  font-size: 11.5px;
   color: #3a2d2a;
   font-weight: 500;
   white-space: nowrap;
@@ -156,13 +156,13 @@
   appearance: none;
   -webkit-appearance: none;
   cursor: ew-resize;
-  margin: 0 2px;
+  margin: 0 4px;
 }
 
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 8px;
-  height: 12px;
+  height: 13px;
   border-radius: 1px;
   background: #3a2d2a;
   border: 1px solid #1a1412;
@@ -177,16 +177,16 @@
 
 /* Small Cream Rectangular Value Box */
 .valueBox {
-  width: 38px;
-  height: 17px;
+  width: 44px;
+  height: 19px;
   flex-shrink: 0;
   background: #fdfbf7;
   border: 1px solid #7c6861;
   border-radius: 1px;
   font-family: "JetBrains Mono", monospace;
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 600;
-  line-height: 15px;
+  line-height: 17px;
   text-align: center;
   color: #3a2d2a;
   display: flex;
@@ -196,14 +196,14 @@
 
 .staticValueBox {
   flex: 1;
-  height: 17px;
+  height: 19px;
   background: #fdfbf7;
   border: 1px solid #7c6861;
   border-radius: 1px;
   font-family: "Times New Roman", Times, serif;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
-  line-height: 15px;
+  line-height: 17px;
   text-align: center;
   color: #3a2d2a;
   display: flex;
@@ -214,25 +214,25 @@
 /* Button Row for Rebuild Cloth + Reset */
 .buttonRow {
   display: flex;
-  gap: 5px;
-  margin-top: 4px;
+  gap: 6px;
+  margin-top: 5px;
   width: 100%;
 }
 
 .rebuildButton {
   appearance: none;
   flex: 1;
-  height: 24px;
+  height: 25px;
   background: #3a2d2a;
   color: #f4efe6;
   border: 1px solid #281e1c;
   border-radius: 2px;
   font-family: "Times New Roman", Times, serif;
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.02em;
   text-align: center;
-  line-height: 22px;
+  line-height: 23px;
   cursor: pointer;
   transition: background 0.15s ease, transform 0.1s ease;
 }
@@ -248,19 +248,19 @@
 
 .resetButton {
   appearance: none;
-  width: 54px;
+  width: 62px;
   flex-shrink: 0;
-  height: 24px;
+  height: 25px;
   background: #4a3b37;
   color: #f4efe6;
   border: 1px solid #281e1c;
   border-radius: 2px;
   font-family: "Times New Roman", Times, serif;
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.02em;
   text-align: center;
-  line-height: 22px;
+  line-height: 23px;
   cursor: pointer;
   transition: background 0.15s ease, transform 0.1s ease;
 }
@@ -286,8 +286,8 @@
 .squareCheckbox {
   appearance: none;
   -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
+  width: 15px;
+  height: 15px;
   background: #fdfbf7;
   border: 1px solid #7c6861;
   border-radius: 1px;
@@ -304,19 +304,29 @@
 
 .squareCheckbox:checked::before {
   content: "";
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   background: #fdfbf7;
 }
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .wrapper {
-    top: 12px;
-    right: 12px;
+    top: 14px;
+    right: 14px;
   }
 
   .panel {
-    width: 220px;
+    width: 245px;
+  }
+
+  .rowLabel {
+    width: 70px;
+    font-size: 10.5px;
+  }
+
+  .valueBox {
+    width: 38px;
+    font-size: 10px;
   }
 }
