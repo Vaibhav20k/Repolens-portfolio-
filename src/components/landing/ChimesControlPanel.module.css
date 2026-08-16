@@ -1,280 +1,288 @@
-/* Chimes-style Floating Interaction Control Panel */
-.panelContainer {
+/* Vintage Technical Parchment Control Panel Reference Design */
+.wrapper {
   position: fixed;
-  top: 24px;
-  right: 28px;
+  top: 22px;
+  right: 26px;
   z-index: 100;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  align-items: center;
   user-select: none;
+  font-family: "Times New Roman", Times, serif;
 }
 
-/* Floating Toggle Button */
-.toggleBtn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: rgba(248, 243, 235, 0.88);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(88, 66, 60, 0.22);
-  border-radius: 20px;
-  color: #3a2d2a;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  cursor: pointer;
-  box-shadow: 0 4px 14px rgba(58, 45, 42, 0.08);
-  transition: all 0.2s ease;
-}
-
-.toggleBtn:hover {
-  background: rgba(255, 252, 247, 0.98);
-  border-color: rgba(88, 66, 60, 0.4);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(58, 45, 42, 0.12);
-}
-
-.gearIcon {
-  font-size: 14px;
-  color: #7c533e;
-}
-
-.activeToggle {
-  background: #3a2d2a;
-  color: #f4efe6;
-  border-color: #3a2d2a;
-}
-
-.activeToggle .gearIcon {
-  color: #e8dfd0;
-}
-
-/* Floating Control Card */
-.controlCard {
-  width: 290px;
-  margin-top: 10px;
-  padding: 16px;
-  background: rgba(248, 243, 235, 0.94);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(88, 66, 60, 0.22);
-  border-radius: 14px;
-  box-shadow: 0 16px 36px rgba(58, 45, 42, 0.16);
-  animation: fadeIn 0.2s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-8px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Header */
-.cardHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(88, 66, 60, 0.12);
-  margin-bottom: 12px;
-}
-
-.headerTitle {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #3a2d2a;
-  letter-spacing: -0.04em;
-}
-
-.headerDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #7c533e;
-}
-
-/* Play/Pause Button */
-.playBtn {
-  padding: 4px 10px;
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  border-radius: 6px;
-  border: 1px solid rgba(88, 66, 60, 0.2);
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.isPlaying {
-  background: #3a2d2a;
-  color: #f4efe6;
-}
-
-.isPaused {
-  background: #c75a3a;
-  color: #ffffff;
-  border-color: #c75a3a;
-}
-
-/* Tab Navigation */
-.tabNav {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 14px;
-  background: rgba(88, 66, 60, 0.08);
-  padding: 3px;
-  border-radius: 8px;
-}
-
-.tabBtn {
-  flex: 1;
-  padding: 5px 0;
-  background: transparent;
-  border: none;
-  border-radius: 6px;
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 500;
-  color: #58423c;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.tabBtn:hover {
-  color: #3a2d2a;
-}
-
-.activeTab {
-  background: #ffffff;
-  color: #3a2d2a;
-  font-weight: 600;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-}
-
-/* Tab Content */
-.tabContent {
-  display: flex;
-  flex-direction: column;
-  gap: 11px;
-}
-
-.controlRow {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.labelRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 11.5px;
-  color: #58423c;
-}
-
-.labelRow label {
-  cursor: pointer;
-}
-
-.valueDisplay {
-  font-weight: 600;
-  color: #3a2d2a;
-}
-
-/* Range Sliders */
-.rangeSlider {
-  width: 100%;
-  height: 5px;
-  background: rgba(88, 66, 60, 0.15);
-  border-radius: 3px;
-  outline: none;
+/* Separate Dark Brown Rectangular Play Button Centered Above Panel */
+.playButton {
   appearance: none;
-  -webkit-appearance: none;
-  cursor: pointer;
-}
-
-.rangeSlider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  background: #3a2d2a;
-  cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-  transition: transform 0.1s ease;
-}
-
-.rangeSlider::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
-  background: #7c533e;
-}
-
-/* Rebuild Button */
-.rebuildBtn {
-  margin-top: 6px;
-  padding: 8px 12px;
+  display: block;
+  width: 90px;
+  height: 28px;
+  margin-bottom: 8px;
   background: #3a2d2a;
   color: #f4efe6;
-  border: none;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 600;
+  border: 1px solid #281e1c;
+  border-radius: 2px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-align: center;
+  line-height: 26px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  box-shadow: 0 2px 6px rgba(58, 45, 42, 0.2);
+  transition: background 0.15s ease, transform 0.1s ease;
 }
 
-.rebuildBtn:hover {
-  background: #523f3b;
+.playButton:hover {
+  background: #4a3b37;
   transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(58, 45, 42, 0.15);
 }
 
-.rebuildBtn:active {
+.playButton:active {
   transform: translateY(0);
 }
 
-/* Checkbox Row */
-.checkboxRow {
+/* Main Parchment Control Panel */
+.panel {
+  width: 240px;
+  background: #ece4d7;
+  border: 1px solid #7c6861;
+  border-radius: 3px;
+  box-shadow: 0 6px 20px rgba(58, 45, 42, 0.16);
+  color: #3a2d2a;
+  overflow: hidden;
+}
+
+/* Header Tab */
+.panelHeader {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 4px 0;
-}
-
-.checkbox {
-  width: 15px;
-  height: 15px;
-  accent-color: #3a2d2a;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: rgba(88, 66, 60, 0.08);
+  border-bottom: 1px solid #7c6861;
   cursor: pointer;
 }
 
-.checkboxLabel {
-  font-size: 12px;
+.panelTitle {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #58423c;
+  text-transform: uppercase;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.collapseIndicator {
+  font-size: 13px;
+  font-weight: bold;
+  color: #58423c;
+  line-height: 1;
+}
+
+/* Panel Body */
+.panelBody {
+  padding: 8px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+/* Custom Scrollbar for Panel */
+.panelBody::-webkit-scrollbar {
+  width: 4px;
+}
+.panelBody::-webkit-scrollbar-track {
+  background: #e2d8c9;
+}
+.panelBody::-webkit-scrollbar-thumb {
+  background: #7c6861;
+  border-radius: 2px;
+}
+
+/* Sections */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sectionHeader {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #58423c;
+  text-transform: uppercase;
+  font-family: "JetBrains Mono", monospace;
+  margin-bottom: 2px;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(88, 66, 60, 0.22);
+  margin: 3px 0;
+}
+
+/* Tight Horizontal Control Rows */
+.controlRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  height: 20px;
+}
+
+.rowLabel {
+  width: 68px;
+  flex-shrink: 0;
+  font-size: 11px;
   color: #3a2d2a;
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   cursor: pointer;
+}
+
+/* Sliders with Thin Dark-Brown Tracks and Square Handles */
+.slider {
+  flex: 1;
+  height: 3px;
+  background: #3a2d2a;
+  border-radius: 0;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: ew-resize;
+  margin: 0 2px;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 8px;
+  height: 12px;
+  border-radius: 1px;
+  background: #3a2d2a;
+  border: 1px solid #1a1412;
+  cursor: ew-resize;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: background 0.1s ease;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  background: #58423c;
+}
+
+/* Small Cream Rectangular Value Box */
+.valueBox {
+  width: 38px;
+  height: 17px;
+  flex-shrink: 0;
+  background: #fdfbf7;
+  border: 1px solid #7c6861;
+  border-radius: 1px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 15px;
+  text-align: center;
+  color: #3a2d2a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.staticValueBox {
+  flex: 1;
+  height: 17px;
+  background: #fdfbf7;
+  border: 1px solid #7c6861;
+  border-radius: 1px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 15px;
+  text-align: center;
+  color: #3a2d2a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Rebuild Cloth Full-Width Dark Brown Button */
+.rebuildButton {
+  appearance: none;
+  width: 100%;
+  height: 24px;
+  margin-top: 4px;
+  background: #3a2d2a;
+  color: #f4efe6;
+  border: 1px solid #281e1c;
+  border-radius: 2px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-align: center;
+  line-height: 22px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.rebuildButton:hover {
+  background: #4a3b37;
+  transform: translateY(-0.5px);
+}
+
+.rebuildButton:active {
+  transform: translateY(0);
+}
+
+/* Checkbox Container & Square Checkbox */
+.checkboxContainer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 4px;
+}
+
+.squareCheckbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  background: #fdfbf7;
+  border: 1px solid #7c6861;
+  border-radius: 1px;
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  outline: none;
+}
+
+.squareCheckbox:checked {
+  background: #3a2d2a;
+  border-color: #3a2d2a;
+}
+
+.squareCheckbox:checked::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: #fdfbf7;
 }
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
-  .panelContainer {
-    top: 14px;
-    right: 14px;
+  .wrapper {
+    top: 12px;
+    right: 12px;
   }
 
-  .controlCard {
-    width: 260px;
+  .panel {
+    width: 215px;
   }
 }
