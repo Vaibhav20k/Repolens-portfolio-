@@ -7,6 +7,7 @@ export default function ChimesControlPanel({
   onTogglePlay,
   onConfigChange,
   onRebuildCloth,
+  onReset,
 }) {
   const [isOpen, setIsOpen] = useState(true)
 
@@ -25,7 +26,13 @@ export default function ChimesControlPanel({
       {/* Main Technical Parchment Control Panel */}
       <div className={styles.panel}>
         {/* Toggle / Minimize Header Tab */}
-        <div className={styles.panelHeader} onClick={() => setIsOpen(!isOpen)} role="button" tabIndex={0}>
+        <div
+          className={styles.panelHeader}
+          onClick={() => setIsOpen(!isOpen)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setIsOpen(!isOpen) }}
+        >
           <span className={styles.panelTitle}>CONTROL PANE</span>
           <span className={styles.collapseIndicator}>{isOpen ? '–' : '+'}</span>
         </div>
@@ -111,14 +118,24 @@ export default function ChimesControlPanel({
                 <span className={styles.valueBox}>{config.gridH}</span>
               </div>
 
-              {/* Rebuild Cloth Button */}
-              <button
-                type="button"
-                className={styles.rebuildButton}
-                onClick={onRebuildCloth}
-              >
-                Rebuild cloth
-              </button>
+              {/* Rebuild Cloth + Reset Button Row */}
+              <div className={styles.buttonRow}>
+                <button
+                  type="button"
+                  className={styles.rebuildButton}
+                  onClick={onRebuildCloth}
+                >
+                  Rebuild cloth
+                </button>
+                <button
+                  type="button"
+                  className={styles.resetButton}
+                  onClick={onReset}
+                  title="Reset all settings to default"
+                >
+                  Reset
+                </button>
+              </div>
             </div>
 
             <div className={styles.divider} />

@@ -44,7 +44,7 @@
 
 /* Main Parchment Control Panel */
 .panel {
-  width: 240px;
+  width: 248px;
   background: #ece4d7;
   border: 1px solid #7c6861;
   border-radius: 3px;
@@ -211,18 +211,24 @@
   justify-content: center;
 }
 
-/* Rebuild Cloth Full-Width Dark Brown Button */
+/* Button Row for Rebuild Cloth + Reset */
+.buttonRow {
+  display: flex;
+  gap: 5px;
+  margin-top: 4px;
+  width: 100%;
+}
+
 .rebuildButton {
   appearance: none;
-  width: 100%;
+  flex: 1;
   height: 24px;
-  margin-top: 4px;
   background: #3a2d2a;
   color: #f4efe6;
   border: 1px solid #281e1c;
   border-radius: 2px;
   font-family: "Times New Roman", Times, serif;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 500;
   letter-spacing: 0.02em;
   text-align: center;
@@ -237,6 +243,34 @@
 }
 
 .rebuildButton:active {
+  transform: translateY(0);
+}
+
+.resetButton {
+  appearance: none;
+  width: 54px;
+  flex-shrink: 0;
+  height: 24px;
+  background: #4a3b37;
+  color: #f4efe6;
+  border: 1px solid #281e1c;
+  border-radius: 2px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-align: center;
+  line-height: 22px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.resetButton:hover {
+  background: #5e4c47;
+  transform: translateY(-0.5px);
+}
+
+.resetButton:active {
   transform: translateY(0);
 }
 
@@ -283,6 +317,6 @@
   }
 
   .panel {
-    width: 215px;
+    width: 220px;
   }
 }

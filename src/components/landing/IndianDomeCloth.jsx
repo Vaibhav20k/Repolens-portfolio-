@@ -183,6 +183,23 @@ const INDIA_CLOTH_TEXT = [
   "यात्रा दृष्टि बदलती है — और बदली दृष्टि से ही घर लौटना योग्य होता है"
 ].join("　")
 
+// Default configuration constants
+const DEFAULT_CONFIG = {
+  width: 492,
+  height: 468,
+  gridW: 40,
+  gridH: 40,
+  gravity: 0.2,
+  damping: 0.99,
+  iterationsPerFrame: 5,
+  compressFactor: 0.02,
+  stretchFactor: 1.1,
+  mouseSize: 5000,
+  mouseStrength: 4.0,
+  chimes: true,
+  chimeVolume: 0.28,
+}
+
 // India Synthesized Chime profile from Chimes chimes.js
 class IndianChimesSynth {
   constructor() {
@@ -254,21 +271,7 @@ export default function IndianDomeCloth() {
   const synthRef = useRef(new IndianChimesSynth())
 
   // Config State
-  const [config, setConfig] = useState({
-    width: 492,
-    height: 468,
-    gridW: 40,
-    gridH: 40,
-    gravity: 0.2,
-    damping: 0.99,
-    iterationsPerFrame: 5,
-    compressFactor: 0.02,
-    stretchFactor: 1.1,
-    mouseSize: 5000,
-    mouseStrength: 4.0,
-    chimes: true,
-    chimeVolume: 0.28,
-  })
+  const [config, setConfig] = useState(DEFAULT_CONFIG)
   const [isPlaying, setIsPlaying] = useState(true)
 
   // Simulation references
@@ -290,11 +293,11 @@ export default function IndianDomeCloth() {
   })
 
   // Initialize or Rebuild Simulation
-  const initSimulation = useCallback(() => {
+  const initSimulation = useCallback((overrideConfig = null) => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const curConfig = configRef.current
+    const curConfig = overrideConfig || configRef.current
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
     const ctx = canvas.getContext('2d')
     ctx.imageSmoothingEnabled = true
@@ -435,6 +438,12 @@ export default function IndianDomeCloth() {
 
   const handleRebuildCloth = () => {
     initSimulation()
+  }
+
+  const handleReset = () => {
+    setConfig(DEFAULT_CONFIG)
+    configRef.current = DEFAULT_CONFIG
+    initSimulation(DEFAULT_CONFIG)
   }
 
   useEffect(() => {
@@ -582,19 +591,12 @@ export default function IndianDomeCloth() {
         onTogglePlay={handleTogglePlay}
         onConfigChange={handleConfigChange}
         onRebuildCloth={handleRebuildCloth}
+        onReset={handleReset}
       />
 
-      {/* Main Indian Dome + Devanagari Cloth Stage */}
-      <div
-        ref={containerRef}
-        className={styles.area}
-        data-country="india"
-        style={{
-          '--area-w': `${config.width}px`,
-          '--area-h': `${config.height}px`,
-        }}
-      >
-        {/* Indian Architectural Dome (Pinned directly above the cloth chains) */}
+      {/* Main Indian Architectural Dome Stage & Dynamic Cloth Area */}
+      <div ref={containerRef} className={styles.stage} data-country="india">
+        {/* Fixed Center Indian Architectural Dome (Anchored to screen center independently of cloth width) */}
         <div className={styles.roof}>
           <img
             src="/roof-india.png"
@@ -604,9 +606,17 @@ export default function IndianDomeCloth() {
           />
         </div>
 
-        {/* Physics Canvas for Dense Devanagari Curtain */}
-        <div className={styles.strings}>
-          <canvas ref={canvasRef} className={styles.canvas} />
+        {/* Dynamic Cloth Area & Physics Canvas (Expands symmetrically under the fixed dome) */}
+        <div
+          className={styles.area}
+          style={{
+            '--area-w': `${config.width}px`,
+            '--area-h': `${config.height}px`,
+          }}
+        >
+          <div className={styles.strings}>
+            <canvas ref={canvasRef} className={styles.canvas} />
+          </div>
         </div>
       </div>
     </>
