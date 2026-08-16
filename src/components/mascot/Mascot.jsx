@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import styles from './Mascot.module.css'
 
-export default function Mascot({ resetExperience, isLoaderState = false }) {
+export default function Mascot({ isLoaderState = false }) {
   const [headRotation, setHeadRotation] = useState({ x: 0, y: 0 })
   const [eyeOffset, setEyeOffset] = useState({ x: 0, y: 0 })
   const [proximityScale, setProximityScale] = useState(1)
@@ -69,8 +69,7 @@ export default function Mascot({ resetExperience, isLoaderState = false }) {
       layoutId="mascot-avatar"
       className={`${isLoaderState ? styles.loaderMascot : styles.mascotContainer} clickable`} 
       ref={mascotRef}
-      onClick={isLoaderState ? undefined : resetExperience}
-      title={isLoaderState ? undefined : "Click to reboot experience"}
+      title="RepoLens Mascot"
       animate={{
         scale: isLoaderState ? 1 : proximityScale
       }}

@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useRef } from 'react'
+import React, { Suspense, useEffect, useRef, useState, useCallback, memo } from 'react'
 import { motion } from 'framer-motion'
 import styles from './HeroRobot.module.css'
 
@@ -13,16 +13,63 @@ function LoadingPlaceholder() {
   )
 }
 
-export default function HeroRobot() {
+function HeroRobotComponent() {
   const splineAppRef = useRef(null)
+  const containerRef = useRef(null)
+  const [shouldLoad, setShouldLoad] = useState(false)
+
+  // 1. Defer Spline import until element is in viewport and browser is idle
+  useEffect(() => {
+    let idleHandle = null
+    let rafHandle = null
+    let observer = null
+
+    const initiateLoad = () => {
+      if ('requestIdleCallback' in window) {
+        idleHandle = window.requestIdleCallback(
+          () => {
+            setShouldLoad(true)
+          },
+          { timeout: 2000 }
+        )
+      } else {
+        rafHandle = window.requestAnimationFrame(() => {
+          setShouldLoad(true)
+        })
+      }
+    }
+
+    if (containerRef.current && 'IntersectionObserver' in window) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          const [entry] = entries
+          if (entry.isIntersecting) {
+            initiateLoad()
+            if (observer) {
+              observer.disconnect()
+              observer = null
+            }
+          }
+        },
+        { rootMargin: '150px' }
+      )
+      observer.observe(containerRef.current)
+    } else {
+      initiateLoad()
+    }
+
+    return () => {
+      if (observer) observer.disconnect()
+      if (idleHandle && 'cancelIdleCallback' in window) window.cancelIdleCallback(idleHandle)
+      if (rafHandle) window.cancelAnimationFrame(rafHandle)
+    }
+  }, [])
 
   // Dynamically set zoom and camera position on the Spline runtime Application instance
-  const adjustCamera = (splineApp) => {
+  const adjustCamera = useCallback((splineApp) => {
     if (!splineApp || !splineApp.camera) return
 
     const width = window.innerWidth
-    // We scale the camera position vector outward to move the camera back.
-    // Setting larger distance factors scales down the model so that the entire robot fits comfortably.
     let distanceFactor = 1.9 // Default for large desktops
     let zoomFactor = 1.0
 
@@ -58,7 +105,6 @@ export default function HeroRobot() {
       // Move the camera back by multiplying its original coordinates
       if (camera.position) {
         camera.position.x = camera.userData.originalX * distanceFactor
-        // Keep the camera slightly lower/centered by removing the positive vertical offset
         camera.position.y = camera.userData.originalY * distanceFactor
         camera.position.z = camera.userData.originalZ * distanceFactor
       }
@@ -71,9 +117,9 @@ export default function HeroRobot() {
     } catch (err) {
       console.warn('Failed to adjust camera framing:', err)
     }
-  }
+  }, [])
 
-  const handleLoad = (splineApp) => {
+  const handleLoad = useCallback((splineApp) => {
     splineAppRef.current = splineApp
 
     try {
@@ -116,7 +162,7 @@ export default function HeroRobot() {
 
     // 3. Set camera framing distance and zoom level
     adjustCamera(splineApp)
-  }
+  }, [adjustCamera])
 
   // Adjust zoom dynamically on resize
   useEffect(() => {
@@ -130,16 +176,32 @@ export default function HeroRobot() {
     return () => {
       window.removeEventListener('resize', handleResize)
     }
+  }, [adjustCamera])
+
+  // Explicit cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (splineAppRef.current) {
+        try {
+          if (typeof splineAppRef.current.dispose === 'function') {
+            splineAppRef.current.dispose()
+          }
+        } catch {
+          // Ignore disposal errors on unmount
+        }
+        splineAppRef.current = null
+      }
+    }
   }, [])
 
   return (
     <motion.div
+      ref={containerRef}
       className={styles.robotWrapper}
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{
-        delay: 1.5,
-        duration: 1.2,
+        duration: 0.8,
         ease: [0.76, 0, 0.24, 1],
       }}
     >
@@ -149,16 +211,22 @@ export default function HeroRobot() {
       {/* Floating animation wrapper */}
       <div className={styles.floatingContainer}>
         <div className={styles.splineContainer}>
-          <Suspense fallback={<LoadingPlaceholder />}>
-            <Spline
-              scene="/scene.splinecode"
-              className={styles.splineCanvas}
-              style={{ background: 'transparent' }}
-              onLoad={handleLoad}
-            />
-          </Suspense>
+          {shouldLoad ? (
+            <Suspense fallback={<LoadingPlaceholder />}>
+              <Spline
+                scene="/scene.splinecode"
+                className={styles.splineCanvas}
+                style={{ background: 'transparent' }}
+                onLoad={handleLoad}
+              />
+            </Suspense>
+          ) : (
+            <LoadingPlaceholder />
+          )}
         </div>
       </div>
     </motion.div>
   )
 }
+
+export default memo(HeroRobotComponent)

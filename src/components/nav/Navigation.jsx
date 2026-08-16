@@ -58,7 +58,7 @@ export default function Navigation() {
         <span className={styles.text}>WORK</span>
       </button>
       <a
-        href="https://drive.google.com/file/d/1O3tDmx1khBc9mb6SnFSXTddC7LOBmsNs/view?usp=sharing"
+        href={resumeUrl !== '#' ? resumeUrl : 'https://drive.google.com/file/d/1O3tDmx1khBc9mb6SnFSXTddC7LOBmsNs/view?usp=sharing'}
         target="_blank"
         rel="noopener noreferrer"
         className={`${styles.navItem} clickable`}
@@ -75,7 +75,7 @@ export default function Navigation() {
       </button>
 
       <a
-        href="https://drive.google.com/file/d/1O3tDmx1khBc9mb6SnFSXTddC7LOBmsNs/view?usp=sharing"
+        href="https://vaibhav20k.github.io/blog/"
         target="_blank"
         rel="noopener noreferrer"
         className={`${styles.navItem} clickable`}
