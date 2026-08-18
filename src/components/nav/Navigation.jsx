@@ -58,7 +58,7 @@ export default function Navigation() {
         <span className={styles.text}>WORK</span>
       </button>
       <a
-        href={resumeUrl}
+        href={`${resumeUrl}?v=20260818`}
         target="_blank"
         rel="noopener noreferrer"
         className={`${styles.navItem} clickable`}
