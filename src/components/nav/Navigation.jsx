@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import styles from './Navigation.module.css'
 
 export default function Navigation() {
-  const resumeUrl = import.meta.env.VITE_RESUME_URL || '/resume.pdf'
   const [activeSection, setActiveSection] = useState('hero')
 
   useEffect(() => {
@@ -58,10 +57,11 @@ export default function Navigation() {
         <span className={styles.text}>WORK</span>
       </button>
       <a
-        href={`${resumeUrl}?v=20260818`}
+        href="/resume.pdf"
         target="_blank"
         rel="noopener noreferrer"
         className={`${styles.navItem} clickable`}
+        aria-label="View Resume"
       >
         <span className={styles.dot}></span>
         <span className={styles.text}>RESUME</span>
