@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useLenis } from './hooks/useLenis'
 import { useMousePosition } from './hooks/useMousePosition'
 import { useTerminalState } from './hooks/useTerminalState'
@@ -6,6 +7,7 @@ import { useGitHubData } from './hooks/useGitHubData'
 
 // Component imports
 import CustomCursor from './components/cursor/CustomCursor'
+import LoadingScreen from './components/loader/LoadingScreen'
 import Navigation from './components/nav/Navigation'
 import Mascot from './components/mascot/Mascot'
 import Hero from './components/hero/Hero'
@@ -25,52 +27,89 @@ function App() {
   const terminal = useTerminalState()
   const { repos, loading: reposLoading } = useGitHubData()
 
+  // 2. Global application state for Landing Boot Screen
+  const [hasLoaded, setHasLoaded] = useState(false)
+  const [hasStarted, setHasStarted] = useState(false)
+
+  const handleStart = () => {
+    setHasStarted(true)
+  }
+
   return (
     <>
       {/* Premium Cursor Orb */}
       <CustomCursor mousePos={mousePos} />
 
+      {/* Full-Screen Boot Loader Landing Screen */}
+      <AnimatePresence>
+        {!hasStarted && (
+          <motion.div
+            key="loader-container"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100vw',
+              height: '100vh',
+              zIndex: 99999,
+              pointerEvents: 'auto'
+            }}
+          >
+            <LoadingScreen 
+              onComplete={() => setHasLoaded(true)} 
+              isLoaded={hasLoaded} 
+              onStart={handleStart}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Main Experience Layout */}
-      <div style={{ backgroundColor: 'var(--color-bg)', minHeight: '100vh', position: 'relative' }}>
-        {/* Draggable/Animated Mascot - Persistent in top-left */}
-        <Mascot />
+      {hasStarted && (
+        <div style={{ backgroundColor: 'var(--color-bg)', minHeight: '100vh', position: 'relative' }}>
+          {/* Draggable/Animated Mascot - Persistent in top-left with reboot capability */}
+          <Mascot resetExperience={() => setHasStarted(false)} />
 
-        {/* Navigation stack */}
-        <Navigation />
+          {/* Navigation stack */}
+          <Navigation />
 
-        {/* Persistent left-side social icons sidebar */}
-        <SocialIcons />
+          {/* Persistent left-side social icons sidebar */}
+          <SocialIcons />
 
-        {/* 3D Scene Wrapper - coffee cup + mouse device lazy Canvas */}
-        <SceneContainer />
+          {/* 3D Scene Wrapper - coffee cup + mouse device lazy Canvas */}
+          <SceneContainer />
 
-        <main className="container">
-          {/* Hero Entry Section with Spline 3D Robot */}
-          <Hero openTerminal={terminal.openTerminal} />
+          <main className="container">
+            {/* Hero Entry Section with Spline 3D Robot */}
+            <Hero openTerminal={terminal.openTerminal} />
 
-          {/* Achievement Strip */}
-          <AchievementStrip />
+            {/* Achievement Strip */}
+            <AchievementStrip />
 
-          {/* About Section */}
-          <About />
+            {/* About Section */}
+            <About />
 
-          {/* Work Section with Draggable Cards */}
-          <Work repos={repos} reposLoading={reposLoading} openTerminal={terminal.openTerminal} />
+            {/* Work Section with Draggable Cards */}
+            <Work repos={repos} reposLoading={reposLoading} openTerminal={terminal.openTerminal} />
 
-          {/* Contact details */}
-          <Contact />
-        </main>
+            {/* Contact details */}
+            <Contact />
+          </main>
 
-        {/* Terminal Console Manager */}
-        {terminal.isOpen && !terminal.isMinimized && (
-          <TerminalWindow terminal={terminal} repos={repos} />
-        )}
+          {/* Terminal Console Manager */}
+          {terminal.isOpen && !terminal.isMinimized && (
+            <TerminalWindow terminal={terminal} repos={repos} />
+          )}
 
-        {/* Minimized Terminal state indicator */}
-        {terminal.isMinimized && (
-          <TerminalMinimized restore={terminal.restoreTerminal} />
-        )}
-      </div>
+          {/* Minimized Terminal state indicator */}
+          {terminal.isMinimized && (
+            <TerminalMinimized restore={terminal.restoreTerminal} />
+          )}
+        </div>
+      )}
     </>
   )
 }
