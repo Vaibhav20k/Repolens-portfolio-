@@ -31,71 +31,202 @@ export const portfolioData = {
     {
       id: "DualSentry",
       name: "DualSentry",
-      type: "Personal Project",
-      ownership: " Full-Stack & Machine Learning Engineer (Designed and developed the complete architecture, backend, ML pipeline, database, and infrastructure)",
-      description: " An enterprise-grade real-time financial transaction anomaly detection platform built to identify fraudulent payment behavior using machine learning and behavioral analytics. The system leverages an event-driven microservice architecture to ingest transaction streams, engineer user behavioral features, execute low-latency anomaly inference, persist audit trails, and expose scalable REST APIs for fraud investigation, analytics, and operational monitoring.",
-      tech: ["Go","Python","FastAPI","PostgreSQL","Redis","Apache Kafka","Docker","Prometheus","Grafana","Scikit-learn","XGBoost","GitHub Actions"],
+      image: "/DualSentry.png",
+      type: "Real-Time Financial Anomaly Detection",
+      overview: "An enterprise-grade financial transaction anomaly detection platform leveraging event-driven streaming, behavioral feature pipelines, and low-latency ML inference.",
+      description: "DualSentry is a production-oriented financial transaction fraud detection system with leakage-free stateful behavioral features, XGBoost inference, model lifecycle management, and real-time decisioning. The system leverages an event-driven architecture using Kafka, Redis caching, and FastAPI to score transaction streams in sub-milliseconds.",
+      problemSolves: "Identifies sophisticated financial fraud and payment anomalies in real-time while minimizing false positives using hybrid rule and ML risk scoring.",
+      architecture: "Distributed event-driven pipeline: Kafka message broker -> stateful behavioral feature engine -> XGBoost inference -> Redis cache -> PostgreSQL audit log -> FastAPI REST APIs & Prometheus monitoring.",
+      techStack: {
+        languages: ["Python", "Go", "SQL"],
+        frameworks: ["FastAPI", "Uvicorn"],
+        mlAi: ["XGBoost", "Scikit-Learn", "Behavioral Feature Engineering", "Statistical Baselines"],
+        databases: ["PostgreSQL", "Redis"],
+        tools: ["Apache Kafka", "Docker Compose", "Prometheus", "Grafana", "GitHub Actions"]
+      },
+      tech: ["Python", "Go", "FastAPI", "XGBoost", "PostgreSQL", "Redis", "Apache Kafka", "Docker"],
       github: "https://github.com/Vaibhav20k/DualSentry-model.git",
       highlights: [
-        "Architected and developed a distributed event-driven backend using Apache Kafka to decouple transaction ingestion, feature engineering, anomaly inference, and alert generation.",
-        "Engineered behavioral feature pipelines using transaction velocity, spending deviation, merchant patterns, temporal activity, device fingerprints, IP intelligence, and historical user baselines for anomaly detection.",
-        "Implemented machine learning-based fraud detection with configurable risk thresholds and hybrid rule-based validation to improve detection precision while minimizing false positives.",
-        "Designed a normalized PostgreSQL database with optimized indexing, audit logging, and relational data models for scalable financial transaction processing.",
-        "Built high-performance FastAPI services exposing secure REST endpoints for transaction ingestion, anomaly scoring, fraud investigation, and analytics dashboards.",
-        "Integrated Redis caching to accelerate feature retrieval and reduce inference latency for real-time fraud analysis.",
-        "Containerized the complete platform using Docker Compose and implemented observability with Prometheus and Grafana for monitoring service health and system performance.",
-        "Automated code quality and deployment validation through GitHub Actions CI/CD pipelines with linting, testing, and build verification."
+        "Architected distributed event-driven backend using Apache Kafka to decouple transaction ingestion, inference, and alerts.",
+        "Engineered stateful behavioral feature pipelines using spending deviation, velocity, device fingerprints, and IP intelligence.",
+        "Hybrid ML-based fraud detection with configurable risk thresholds and rule-based validation minimizing false positives.",
+        "Normalized PostgreSQL database with optimized indexing and Redis caching for sub-millisecond inference."
       ]
     },
     {
       id: "jarvis",
       name: "JARVIS",
-      type: "Personal Project",
-      ownership: " AI Systems Engineer (Designed and developed the complete architecture, voice pipeline, multimodal intelligence, and desktop automation framework)",
-      description: "A  Cross-platform multimodal AI assistant engineered to provide real-time voice interaction, desktop automation, visual understanding, and persistent contextual memory across Windows, macOS, and Linux. The system integrates large language models, speech recognition, computer vision, web intelligence, and system telemetry to execute natural language commands, automate complex workflows, monitor hardware resources, and deliver personalized contextual assistance through an adaptive real-time interface.",
-      tech: ["Python","Gemini API","Playwright","OpenCV","SpeechRecognition","PyAutoGUI","psutil","SQLite","AsyncIO","Docker"],
+      image: "/Jarvis.png",
+      type: "Cross-Platform Multimodal AI Assistant",
+      overview: "A cross-platform multimodal AI assistant providing real-time voice interaction, desktop automation, visual understanding, and persistent contextual memory.",
+      description: "JARVIS is an intelligent desktop assistant integrating large language models, speech recognition, computer vision, web intelligence, and system telemetry across Windows, macOS, and Linux to execute natural language workflows and monitor hardware vitals through an adaptive HUD interface.",
+      problemSolves: "Consolidates desktop automation, multi-step system workflows, research retrieval, and hardware telemetry into a unified voice-driven AI interface.",
+      architecture: "Asynchronous Python engine orchestrating Gemini API multimodal reasoning, SpeechRecognition voice pipelines, OpenCV visual processing, PyAutoGUI automation, and SQLite contextual memory.",
+      techStack: {
+        languages: ["Python", "SQL"],
+        frameworks: ["AsyncIO", "Playwright"],
+        mlAi: ["Gemini API", "Computer Vision (OpenCV)", "SpeechRecognition", "Multimodal Perception"],
+        databases: ["SQLite (Context Memory)"],
+        tools: ["PyAutoGUI", "psutil (Telemetry)", "Docker"]
+      },
+      tech: ["Python", "Gemini API", "OpenCV", "SpeechRecognition", "Playwright", "SQLite", "AsyncIO"],
       github: "https://github.com/Vaibhav20k/Personalized-Jarvis-",
       highlights: [
-        "Engineered a low-latency multimodal AI pipeline combining speech recognition, LLM reasoning, computer vision, and desktop automation for real-time conversational assistance.",
-        "Developed cross-platform system automation capable of launching applications, executing terminal commands, managing files, controlling browsers, and orchestrating multi-step workflows using natural language.",
-        "Implemented persistent contextual memory to retain user preferences, projects, language settings, and conversation history, enabling personalized long-term interactions.",
-        "Built a real-time hardware telemetry engine monitoring CPU, GPU, memory utilization, and system temperatures with intelligent threshold detection and proactive voice alerts.",
-        "Integrated advanced web intelligence using Gemini Grounded Search with automatic fallback mechanisms for news retrieval, research, product comparison, and real-time information aggregation.",
-        "Designed a dynamic adaptive HUD supporting voice interactions, multimodal content rendering, live search visualization, and contextual response streaming.",
-        "Implemented multimodal perception by combining screen understanding, webcam-based visual processing, and voice input to enable context-aware task execution.",
-        "Optimized asynchronous task orchestration using Python AsyncIO to support concurrent speech processing, web search, system monitoring, and AI inference with minimal response latency."
+        "Low-latency multimodal AI pipeline combining voice recognition, LLM reasoning, visual processing, and desktop automation.",
+        "Cross-platform system control launching applications, executing shell commands, and controlling browsers via natural language.",
+        "Persistent contextual memory retaining user preferences, projects, and conversation history across sessions.",
+        "Real-time hardware telemetry engine tracking CPU, GPU, memory, and thermals with proactive voice alerts."
       ]
     },
     {
       id: "orbitair",
       name: "OrbitAir",
-      type: "Group Project",
-      ownership: " Core Developer (Owned data scraping, backend, frontend, and database design)",
-      description: " An automated real-time aviation telemetry tracker developed for  analyzing flight routes, mapping density grids, and predicting airspace occupancy patterns. The system schedules data ingestion scripts to pull transponder feeds, parses them into a spatial database , and streams real-time maps via a responsive React web dashboard.",
-      tech: ["Python", "FastAPI", "React", "PostgreSQL", "TailwindCSS", "Mapbox GL", "Docker"],
+      image: "/Orbitair.png",
+      type: "Aviation Telemetry & Spatial Intelligence",
+      overview: "An automated real-time aviation telemetry tracker analyzing flight routes, mapping density grids, and predicting airspace occupancy patterns.",
+      description: "OrbitAir is an automated spatial telemetry platform developed for analyzing flight routes and density grids. The system schedules data ingestion scripts to pull transponder feeds, parses high-frequency JSON packets into an optimized PostgreSQL spatial database, and streams live route projections to a responsive React Mapbox dashboard.",
+      problemSolves: "Parses and visualizes dense transponder flight feeds in real time, delivering high-performance spatial queries under 50ms.",
+      architecture: "Python telemetry ingestion pipeline -> normalized spatial PostgreSQL store -> FastAPI REST services -> Mapbox GL vector map renderer.",
+      techStack: {
+        languages: ["Python", "TypeScript", "JavaScript", "SQL"],
+        frameworks: ["FastAPI", "React", "Tailwind CSS"],
+        mlAi: ["Spatial Route Prediction", "Density Grid Modeling"],
+        databases: ["PostgreSQL (Spatial Indexing)"],
+        tools: ["Mapbox GL", "Docker", "Vercel"]
+      },
+      tech: ["Python", "FastAPI", "React", "PostgreSQL", "Mapbox GL", "Tailwind CSS", "Docker"],
       github: "https://github.com/Vaibhav20k/OrbitAir",
       live: "https://orbitair-telemetry.vercel.app",
       highlights: [
         "NASA Space Apps Challenge Top 5 Finish (ranked among hundreds of competitive teams globally).",
-        "Developed python-based telemetry parser handling high-frequency JSON packets without dropping frames.",
-        "Designed PostgreSQL indexing filters optimization to query thousands of active flights under 50ms.",
-        "Built responsive Mapbox flight trail renderer drawing live route projections on user hover."
+        "Python telemetry parser handling high-frequency JSON packets without dropping frames.",
+        "Optimized PostgreSQL spatial indexing filters to query thousands of active flights under 50ms.",
+        "Interactive Mapbox flight trail renderer computing live route projections on user interaction."
       ]
     },
     {
-      id: "orbit-ops",
-      name: "ORBIT-OPS",
-      type: "Group Project",
-      ownership: " Lead Architect (Owned server administration scripts, system metrics, and UI components)",
-      description: " A centralized cloud  infrastructure  monitoring dashboard tailored for containerized  architectures and microservices. Orchestrates server status reporting , indexes system logs , aggregates error metrics , and provides real-time alerts through WebSockets. Features shell command triggers directly from the web console.",
-      tech: ["Node.js", "Express", "React", "Redis", "Docker", "WebSockets", "Chart.js"],
-      github: "https://github.com/Vaibhav20k/ORBIT-OPS",
-      live: "",
+      id: "leomeo",
+      name: "Leo-Meo",
+      image: "/leomeo.png",
+      type: "AI & Satellite Data Intelligence",
+      overview: "An automated satellite data scraping, processing, and RAG intelligence platform designed to ingest earth observation datasets and extract context-aware insights.",
+      description: "Leo-Meo automates the ingestion, normalization, and machine-learning analysis of large-scale satellite telemetry feeds (e.g., NASA data). It bridges raw geospatial data streams with context-aware Retrieval-Augmented Generation (RAG), allowing researchers to query spatial patterns and environmental observations in natural language.",
+      problemSolves: "Eliminates manual satellite data scraping and fragmented processing pipelines through an end-to-end automated async ingestion and vector search architecture.",
+      architecture: "Automated Selenium & BeautifulSoup scrapers feed an asynchronous FastAPI processing pipeline that extracts spatial features, generates vector embeddings, and serves RAG context lookups.",
+      techStack: {
+        languages: ["Python", "SQL"],
+        frameworks: ["FastAPI", "Uvicorn"],
+        mlAi: ["Scikit-Learn", "RAG Pipeline", "Pandas", "NumPy", "Vector Embeddings"],
+        databases: ["SQLite", "Vector Store"],
+        tools: ["Selenium", "BeautifulSoup4", "Requests", "Docker"]
+      },
+      tech: ["Python", "FastAPI", "RAG", "Scikit-Learn", "Selenium", "Pandas", "SQLite"],
+      github: "https://github.com/Vaibhav20k/Leo-Meo",
       highlights: [
-        "Smart India Hackathon Participant project, showcasing scalable remote telemetry monitoring.",
-        "Aggregates docker container states using backend system socket streams and aggregates into live charts.",
-        "Utilized Redis Pub/Sub architecture to broadcast status alerts to multiple connected web clients.",
-        "Designed secure CLI command executor in terminal to trigger container restarts remotely."
+        "Automated scraping and pipeline ingestion of NASA and public satellite observation datasets.",
+        "Built context-aware RAG pipeline for natural-language querying over processed spatial observations.",
+        "High-performance FastAPI asynchronous backend with lightweight database persistence.",
+        "Integrated ML-based spatial data transformation and numerical computing with Pandas & NumPy."
+      ]
+    },
+    {
+      id: "communityos",
+      name: "CommunityOS",
+      image: "/Communeos.png",
+      type: "Adaptive Multi-Agent Community Platform",
+      overview: "An AI-powered community operations platform deploying specialized agent swarms to personalize member onboarding, match mentors, and deliver real-time operational intelligence.",
+      description: "CommunityOS transforms static community servers into adaptive, intelligent environments. By observing member interactions, code queries, and engagement signals, specialized AI agents dynamically tailor welcome roadmaps, match mentors using semantic embeddings, and alert community leaders to churn risks.",
+      problemSolves: "Solves low member retention and generic onboarding in developer communities through automated, hyper-personalized AI workflows.",
+      architecture: "Next.js 15 App Router frontend paired with a modular FastAPI backend orchestrating multi-agent LLM workflows and vector search matching.",
+      techStack: {
+        languages: ["Python", "TypeScript", "JavaScript"],
+        frameworks: ["Next.js 15", "React", "FastAPI", "Tailwind CSS"],
+        mlAi: ["Multi-Agent Swarms", "OpenAI API", "OpenRouter", "LangChain", "Vector Embeddings"],
+        databases: ["SQLite", "PostgreSQL", "ChromaDB"],
+        tools: ["Docker", "Node.js", "Uvicorn", "Vercel"]
+      },
+      tech: ["Next.js 15", "FastAPI", "Multi-Agent AI", "Python", "TypeScript", "Tailwind CSS", "LangChain"],
+      github: "https://github.com/Vaibhav20k/CommuneOS",
+      highlights: [
+        "PAYTM AGENT{A}THON WINNER — Grabbed 1st place in Paytm office for autonomous community operations.",
+        "Engineered multi-agent orchestration for dynamic welcome roadmaps and mentor-mentee pairing.",
+        "Real-time operational dashboard with member engagement radar charts and churn risk telemetry.",
+        "Context-aware resource discovery using semantic vector embeddings."
+      ]
+    },
+    {
+      id: "behaviour-iq",
+      name: "BehaviourIQ",
+      image: "/BehaviouralIQ.png",
+      type: "Local-First Graph AI Behavioral Intelligence",
+      overview: "A local-first behavioral intelligence platform that constructs temporal behavior graphs from system audit logs and uses Graph Neural Networks and AI agents for explainable anomaly detection.",
+      description: "BehaviourIQ is a local-first security platform that transforms Linux auth logs, macOS syslogs, Docker event streams, and CloudTrail into universal Entity-Event-Context-Time temporal behavior graphs. It runs Graph Neural Networks (PyTorch Geometric) and local LangGraph investigation agents to identify multi-hop lateral movement and behavioral drift without leaking sensitive logs to cloud vendors.",
+      problemSolves: "Replaces noisy cloud SIEMs and privacy-compromising log uploads with 100% offline, explainable graph anomaly detection.",
+      architecture: "Multi-source log ingestion into an offline SQLite graph store, processed by GNN topological encoders, multi-horizon statistical baselines, and LangGraph agents.",
+      techStack: {
+        languages: ["Python", "Rust", "SQL"],
+        frameworks: ["PyTorch", "PyTorch Geometric", "FastAPI"],
+        mlAi: ["Graph Neural Networks (GNNs)", "LangGraph", "FAISS", "NetworkX", "Scikit-Learn"],
+        databases: ["SQLite (Local-First Engine)", "FAISS Vector Store"],
+        tools: ["Docker", "Pydantic", "AsyncIO", "Pytest"]
+      },
+      tech: ["PyTorch Geometric", "GNNs", "LangGraph", "Python", "Rust", "FAISS", "SQLite", "FastAPI"],
+      github: "https://github.com/Vaibhav20k/BehaviourIQ",
+      highlights: [
+        "100% local-first and offline-capable architecture preserving complete audit log privacy.",
+        "Universal Behavior Graph transforming heterogeneous OS, container, and cloud audit logs.",
+        "GNN topological embeddings detecting complex multi-hop lateral movement across entities.",
+        "Multi-layer temporal statistical baselines across short, medium, and long-term activity windows."
+      ]
+    },
+    {
+      id: "race",
+      name: "RACE",
+      image: "/RACE.png",
+      type: "Autonomous Closed-Loop Revenue Recovery Engine",
+      overview: "An intelligent, closed-loop revenue recovery decision engine that predicts payment failure recoverability, selects optimal intervention strategies via Expected Recovery Value, and enforces financial safety gates.",
+      description: "RACE (Revenue Adaptive Control Engine) is an autonomous revenue recovery engine that detects failed payment transactions, diagnoses root causes from failure telemetry, evaluates competing interventions using Expected Recovery Value (ERV) models, enforces deterministic financial safety constraints, and verifies real payment settlement.",
+      problemSolves: "Eliminates naive fixed-interval retry loops and aggressive dunning that spike gateway costs and customer churn, maximizing net incremental recovered revenue.",
+      architecture: "Event-driven decision pipeline combining ML classification, ERV optimization, deterministic safety policy gates, and reinforcement feedback loops with full CI test validation.",
+      techStack: {
+        languages: ["Python", "SQL"],
+        frameworks: ["FastAPI", "Pydantic v2", "Uvicorn"],
+        mlAi: ["Scikit-Learn", "XGBoost", "Expected Recovery Value (ERV) Models", "Bandit Policies"],
+        databases: ["PostgreSQL", "SQLite", "Redis"],
+        tools: ["Docker", "GitHub Actions CI/CD", "Pytest (63/63 Passing Tests)", "Cloudflare"]
+      },
+      tech: ["Python", "FastAPI", "XGBoost", "ERV Optimization", "PostgreSQL", "Redis", "Docker", "Pytest"],
+      github: "https://github.com/Vaibhav20k/RACE--Revenue-Adaptive-Control-Engine",
+      highlights: [
+        "Production-ready engine with 63/63 passing test suite across recovery decision tracks.",
+        "Dynamic Expected Recovery Value (ERV) ranking balancing recovery probability against gateway costs.",
+        "Deterministic financial safety gates enforcing velocity limits, cooldowns, and fee caps.",
+        "Closed-loop feedback updating decision policies upon authoritative payment settlement."
+      ]
+    },
+    {
+      id: "rcai",
+      name: "RCAI",
+      image: "/RCAI.png",
+      type: "Evidence-Driven Autonomous Root Cause Analysis",
+      overview: "An autonomous AI system that investigates software incidents by evaluating competing hypotheses, gathering diagnostic evidence with cryptographic provenance, and executing bounded remediations.",
+      description: "RCAI (Root Cause Analysis Intelligence) automates production incident investigation and SRE triage. It actively generates competing failure hypotheses from metric anomalies, executes targeted diagnostic tools to collect evidence, cryptographically signs evidence provenance, gates remediations with deterministic policies, and independently verifies live system recovery.",
+      problemSolves: "Eliminates high MTTR (Mean Time to Resolution) and human guesswork during complex distributed systems outages.",
+      architecture: "Modular autonomous investigation loop featuring hypothesis generation, information-gain evidence selection, cryptographic audit trails, policy gates, and verification probes.",
+      techStack: {
+        languages: ["Python", "TypeScript", "SQL"],
+        frameworks: ["FastAPI", "Next.js / React", "Pydantic", "Uvicorn"],
+        mlAi: ["Hypothesis Evaluation Engines", "Bayesian Confidence Scoring", "LLM Reasoning"],
+        databases: ["PostgreSQL", "SQLite", "Redis"],
+        tools: ["Docker", "Pytest (97/97 Passing Tests)", "Render", "Vercel", "Prometheus"]
+      },
+      tech: ["Python", "FastAPI", "Bayesian Inference", "Docker", "Next.js", "PostgreSQL", "Pytest"],
+      github: "https://github.com/Vaibhav20k/RCAI",
+      highlights: [
+        "Comprehensive frozen v2.0.0 release validated with 97/97 passing test suite.",
+        "Evidence-driven hypothesis evaluation ranking root causes by Bayesian confidence.",
+        "Cryptographic provenance ledger ensuring immutability of diagnostic evidence.",
+        "Deterministic policy gate executing bounded remediation with automated live outcome verification."
       ]
     }
   ],
