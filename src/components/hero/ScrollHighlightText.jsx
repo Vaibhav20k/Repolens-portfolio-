@@ -4,7 +4,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export default function ScrollHighlightText({ text, className, enableProximity = false }) {
+export default function ScrollHighlightText({ 
+  text, 
+  className, 
+  enableProximity = false,
+  start = 'top 90%',
+  end = 'bottom 65%',
+  baseOpacity = 0.35
+}) {
   const containerRef = useRef(null)
   const wordRefs = useRef([])
 
@@ -18,18 +25,18 @@ export default function ScrollHighlightText({ text, className, enableProximity =
       gsap.to(words, {
         color: 'var(--color-text-primary)',
         opacity: 1,
-        stagger: 0.1,
+        stagger: 0.04,
         scrollTrigger: {
           trigger: el,
-          start: 'top 85%',
-          end: 'bottom 45%',
-          scrub: true,
+          start: start,
+          end: end,
+          scrub: 0.5,
         }
       })
     }, el)
 
     return () => ctx.revert()
-  }, [text])
+  }, [text, start, end])
 
   // Proximity logic
   useEffect(() => {
@@ -53,7 +60,6 @@ export default function ScrollHighlightText({ text, className, enableProximity =
     }
 
     // Measure initially and on resize/scroll
-    // Delayed slightly to ensure rendering completes
     const timer = setTimeout(updateCoords, 200)
 
     window.addEventListener('resize', updateCoords)
@@ -105,7 +111,7 @@ export default function ScrollHighlightText({ text, className, enableProximity =
           className="word-highlight" 
           style={{ 
             color: 'var(--color-text-secondary)', 
-            opacity: 0.25, 
+            opacity: baseOpacity, 
             display: 'inline-block', 
             marginRight: '0.25em',
             transition: 'transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.25s ease, text-shadow 0.25s ease',

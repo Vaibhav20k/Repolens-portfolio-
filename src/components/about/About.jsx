@@ -63,11 +63,23 @@ export default function About() {
         <div className={styles.textBlock}>
           {/* Oversized Bold Text */}
           <h2 className={styles.oversizedTitle}>
-            <ScrollHighlightText text={about.heading} enableProximity={true} />
+            <ScrollHighlightText 
+              text={about.heading} 
+              enableProximity={true} 
+              start="top 92%" 
+              end="bottom 60%" 
+              baseOpacity={0.35}
+            />
           </h2>
           
           <p className={styles.bodyText}>
-            <ScrollHighlightText text={about.paragraph} enableProximity={true} />
+            <ScrollHighlightText 
+              text={about.paragraph} 
+              enableProximity={true} 
+              start="top 90%" 
+              end="top 45%" 
+              baseOpacity={0.4}
+            />
           </p>
         </div>
       </div>
