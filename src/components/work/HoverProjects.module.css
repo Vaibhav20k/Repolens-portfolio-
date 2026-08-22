@@ -1,0 +1,196 @@
+/* Full-Width Section Container (#0a0a0a) */
+.sectionContainer {
+  position: relative;
+  width: 100%;
+  background-color: #0a0a0a;
+  padding: 5rem 1.5rem 8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+/* Horizontal Centered Thumbnails Row */
+.thumbnailsRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 6rem;
+  z-index: 5;
+  min-height: 250px;
+}
+
+/* Thumbnail Wrapper (Relative container so sibling badge can overflow unclipped) */
+.thumbnailWrapper {
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Clipped Inner Image Box (Default 100x100 -> Hover 180x235) */
+.imageClippedBox {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+  transition: filter 0.25s ease, border-color 0.25s ease;
+  background-color: #141414;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.imageDimmed {
+  filter: grayscale(60%) brightness(0.55);
+}
+
+.imageActive {
+  filter: grayscale(0%) brightness(1);
+  border-color: #ff2e2e;
+}
+
+.thumbnailImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.fallbackPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #181818 0%, #262626 100%);
+}
+
+.placeholderChar {
+  font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", sans-serif;
+  font-size: 2.25rem;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+}
+
+/* Sibling Circle Arrow Badge (Popping out past right edge) */
+.circleArrowBadge {
+  position: absolute;
+  top: 50%;
+  right: -80px;
+  transform: translateY(-50%);
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background-color: #ff2e2e;
+  box-shadow: 0 10px 32px rgba(255, 46, 46, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+  transform-origin: center center;
+}
+
+.arrowIcon {
+  width: 50px;
+  height: 50px;
+  color: #ffffff;
+}
+
+/* Giant Title Container (True Dominant Hero Element) */
+.giantTitleContainer {
+  width: 100%;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+  pointer-events: none;
+}
+
+.giantTitle {
+  font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", sans-serif;
+  font-size: clamp(5rem, 16vw, 13rem);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #ff2e2e;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Responsive Scaling */
+@media (max-width: 1024px) {
+  .thumbnailsRow {
+    gap: 1.25rem;
+    margin-bottom: 4.5rem;
+    min-height: 200px;
+  }
+
+  .circleArrowBadge {
+    width: 120px;
+    height: 120px;
+    right: -60px;
+  }
+
+  .arrowIcon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .giantTitleContainer {
+    min-height: 160px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sectionContainer {
+    padding: 3.5rem 1rem 5rem;
+  }
+
+  .thumbnailsRow {
+    gap: 1rem;
+    min-height: 160px;
+    margin-bottom: 3.5rem;
+  }
+
+  .circleArrowBadge {
+    width: 90px;
+    height: 90px;
+    right: -45px;
+  }
+
+  .arrowIcon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .giantTitleContainer {
+    min-height: 130px;
+  }
+}
+
+@media (max-width: 480px) {
+  .circleArrowBadge {
+    width: 70px;
+    height: 70px;
+    right: -35px;
+  }
+
+  .arrowIcon {
+    width: 22px;
+    height: 22px;
+  }
+}
