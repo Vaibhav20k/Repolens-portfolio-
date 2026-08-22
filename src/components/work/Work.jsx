@@ -1,55 +1,54 @@
 import React, { useState } from 'react'
 import styles from './Work.module.css'
-import ProjectInfo from './ProjectInfo'
-import StackCards from './StackCards'
+import HoverProjects from './HoverProjects'
+import ProjectDetailsModal from './ProjectDetailsModal'
 import { portfolioData } from '../../data/portfolioData'
 
-export default function Work({ repos, reposLoading, openTerminal }) {
-  const [activeIndex, setActiveIndex] = useState(0)
+export default function Work({ openTerminal }) {
   const projects = portfolioData.projects
+  const [selectedProject, setSelectedProject] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleCardSelect = (index) => {
-    setActiveIndex(index)
+  const handleSelectProject = (project) => {
+    // Open the emerging physical card overlay (NO terminal, NO scroll, NO navigation)
+    setSelectedProject(project)
+    setIsModalOpen(true)
   }
 
-  const handleAskClick = () => {
-    // Open terminal and pre-fill input with prompt
-    openTerminal()
-    // Find matching project
-    const activeProject = projects[activeIndex]
-    // Small delay to let terminal mount, then dispatch event or update terminal state
-    setTimeout(() => {
-      const event = new CustomEvent('terminal-query', { 
-        detail: `ask How does ${activeProject.name} work?` 
-      })
-      window.dispatchEvent(event)
-    }, 200)
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+  }
+
+  const handleKnowMore = (project) => {
+    // The ONLY place where the terminal is triggered
+    setIsModalOpen(false)
+    if (openTerminal) {
+      openTerminal()
+      setTimeout(() => {
+        const event = new CustomEvent('terminal-query', { 
+          detail: `ask How does ${project.name} work?` 
+        })
+        window.dispatchEvent(event)
+      }, 200)
+    }
   }
 
   return (
     <section id="work" className={styles.workSection}>
-      <div className={styles.sectionHeader}>
-        <div className="uppercase-spaced">F E A T U R E D   W O R K</div>
-      </div>
+      {/* Centered HoverProjects Hero Showcase */}
+      <HoverProjects 
+        projects={projects}
+        defaultName="PROJECTS"
+        onSelectProject={handleSelectProject}
+      />
 
-      <div className={styles.workGrid}>
-        {/* Left Side: Dynamic Project Info details */}
-        <div className={styles.infoColumn}>
-          <ProjectInfo 
-            project={projects[activeIndex]} 
-            onAskClick={handleAskClick} 
-          />
-        </div>
-
-        {/* Right Side: Draggable/Selectable Cards Stack */}
-        <div className={styles.cardsColumn}>
-          <StackCards 
-            projects={projects} 
-            activeIndex={activeIndex} 
-            onSelectCard={handleCardSelect} 
-          />
-        </div>
-      </div>
+      {/* Large Project Information Emerging Card Overlay */}
+      <ProjectDetailsModal
+        project={selectedProject}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onKnowMoreClick={handleKnowMore}
+      />
     </section>
   )
 }

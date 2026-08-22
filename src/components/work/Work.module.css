@@ -5,7 +5,12 @@
 }
 
 .sectionHeader {
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
+}
+
+.hoverMemberWrapper {
+  width: 100%;
+  position: relative;
 }
 
 .workGrid {
