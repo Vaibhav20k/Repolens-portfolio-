@@ -1,0 +1,368 @@
+/* Fullscreen Overlay Root */
+.overlayRoot {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+/* Atmospheric Frosted Glass Backdrop */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(5, 5, 5, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 1;
+}
+
+/* Physical Emerging Card */
+.cardContainer {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1050px;
+  max-height: 88vh;
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 2.75rem 2.5rem;
+  box-shadow: 
+    0 30px 90px rgba(0, 0, 0, 0.9),
+    0 0 50px rgba(255, 46, 46, 0.12);
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+/* Custom Scrollbar for Card */
+.cardContainer::-webkit-scrollbar {
+  width: 6px;
+}
+.cardContainer::-webkit-scrollbar-track {
+  background: #111111;
+}
+.cardContainer::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+.cardContainer::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent, #ff2e2e);
+}
+
+/* Close Button (Top-Right) */
+.closeBtn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #a0a0a0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  z-index: 5;
+}
+
+.closeBtn:hover {
+  background: rgba(255, 46, 46, 0.18);
+  color: #ff2e2e;
+  border-color: rgba(255, 46, 46, 0.4);
+  transform: rotate(90deg);
+}
+
+/* 2-Column Content Grid */
+.cardContentGrid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 3.5rem;
+  align-items: start;
+}
+
+/* Left Column: Info & Action */
+.infoColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.1rem;
+}
+
+.typeBadge {
+  font-family: var(--font-terminal, monospace);
+  font-size: 0.72rem;
+  color: var(--color-accent, #ff2e2e);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: rgba(255, 46, 46, 0.08);
+  border: 1px solid rgba(255, 46, 46, 0.25);
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+.projectTitle {
+  font-family: var(--font-primary, "Space Grotesk", sans-serif);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary, #f5f0e8);
+  margin: 0;
+}
+
+.projectOverview {
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary, #b8b8b8);
+  margin: 0;
+}
+
+/* Problem Solved & Architecture Highlights Box */
+.technicalDetailBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  width: 100%;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.detailLabel {
+  font-family: var(--font-terminal, monospace);
+  font-size: 0.68rem;
+  color: var(--color-accent, #ff2e2e);
+  letter-spacing: 1.5px;
+  font-weight: 600;
+}
+
+.detailText {
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #e0e0e0;
+  margin: 0;
+}
+
+/* Tech Stack Section */
+.techStackSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.techStackHeader {
+  font-family: var(--font-terminal, monospace);
+  font-size: 0.72rem;
+  color: var(--color-accent, #ff2e2e);
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.techChipsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.techChip {
+  font-family: var(--font-primary, sans-serif);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #f5f0e8;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 4px 10px;
+  border-radius: 16px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.techChip:hover {
+  border-color: var(--color-accent, #ff2e2e);
+  background: rgba(255, 46, 46, 0.08);
+}
+
+/* Grouped Stack Breakdown */
+.groupedStackGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  border-left: 2px solid var(--color-accent, #ff2e2e);
+}
+
+.groupItem {
+  display: flex;
+  font-size: 0.82rem;
+  gap: 0.5rem;
+  line-height: 1.4;
+}
+
+.groupCategory {
+  font-family: var(--font-primary, sans-serif);
+  font-weight: 600;
+  color: #ffffff;
+  min-width: 100px;
+}
+
+.groupValues {
+  font-family: var(--font-body, sans-serif);
+  color: #a8a8a8;
+}
+
+/* "Know More About It" CTA Button (Exclusive terminal trigger) */
+.knowMoreButton {
+  margin-top: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 2.25rem;
+  background-color: var(--color-accent, #ff2e2e);
+  color: #ffffff;
+  font-family: var(--font-primary, sans-serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 6px 22px rgba(255, 46, 46, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  user-select: none;
+  outline: none;
+}
+
+.knowMoreButton:hover {
+  background-color: #e02424;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 46, 46, 0.5);
+}
+
+.knowMoreButton:active {
+  transform: translateY(0);
+}
+
+.buttonArrow {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
+}
+
+.knowMoreButton:hover .buttonArrow {
+  transform: translateX(3px);
+}
+
+/* Right Column: Visual Media & GitHub Link */
+.mediaColumn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.mediaFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #181818;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8);
+}
+
+.mediaImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mediaGlowOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.45) 100%);
+  pointer-events: none;
+}
+
+.mediaFallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #181818 0%, #262626 100%);
+}
+
+.fallbackLetter {
+  font-family: Impact, sans-serif;
+  font-size: 3.5rem;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+/* GitHub Repository Link Button */
+.githubRepoLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  justify-content: center;
+  padding: 0.7rem 1.25rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  color: #cfcfcf;
+  font-family: var(--font-primary, sans-serif);
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.githubRepoLink:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.githubIcon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 900px) {
+  .cardContainer {
+    padding: 2.25rem 1.5rem;
+    max-height: 90vh;
+  }
+
+  .cardContentGrid {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+
+  .mediaFrame {
+    max-height: 260px;
+  }
+}
