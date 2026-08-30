@@ -1,11 +1,35 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useLayoutEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import styles from './HoverProjects.module.css'
 
 /**
+ * Measure text width accurately using an offscreen canvas.
+ * Falls back to character count heuristic if canvas is not available.
+ */
+function getMeasuredTextWidth(text, fontFamily = 'Impact, Haettenschweiler, "Franklin Gothic Bold", sans-serif') {
+  if (!text) return 100
+  if (typeof document !== 'undefined') {
+    try {
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      if (ctx) {
+        ctx.font = `900 100px ${fontFamily}`
+        const metrics = ctx.measureText(text.toUpperCase())
+        if (metrics && metrics.width > 0) {
+          return metrics.width
+        }
+      }
+    } catch {
+      // Fallback below
+    }
+  }
+  return text.length * 56
+}
+
+/**
  * HoverProjects
  * Scaled Hero Projects Section with expanded spring thumbnails (100px -> 180x235px),
- * pop-out circle arrow badge, and dominant giant kinetic title (clamp(5rem, 16vw, 13rem)).
+ * pop-out circle arrow badge, and dynamic responsive giant kinetic title.
  */
 export function HoverProjects({ 
   projects = [], 
@@ -13,12 +37,68 @@ export function HoverProjects({
   onSelectProject 
 }) {
   const [hoveredIndex, setHoveredIndex] = useState(null)
+  const containerRef = useRef(null)
+  const titleContainerRef = useRef(null)
 
   const activeProject = hoveredIndex !== null ? projects[hoveredIndex] : null
   const currentTitle = activeProject ? activeProject.name : defaultName
 
+  // Responsive font size state
+  const [fontSize, setFontSize] = useState(null)
+
+  // Recalculate font size whenever title or container size changes
+  useLayoutEffect(() => {
+    const calculateSize = () => {
+      if (!titleContainerRef.current) return
+
+      const containerWidth = titleContainerRef.current.clientWidth || window.innerWidth
+      // Safe available width leaves comfortable padding on left/right
+      const safeWidth = Math.max(containerWidth - 24, 100)
+
+      // Measure string width at reference 100px font-size
+      const textWidthAt100 = getMeasuredTextWidth(currentTitle)
+
+      // Viewport-aware maximum font size cap
+      const vw = window.innerWidth
+      let maxCap = 208 // 13rem
+      if (vw < 480) {
+        maxCap = Math.min(96, vw * 0.22)
+      } else if (vw < 768) {
+        maxCap = Math.min(130, vw * 0.2)
+      } else if (vw < 1024) {
+        maxCap = Math.min(160, vw * 0.18)
+      } else {
+        maxCap = Math.min(208, vw * 0.16)
+      }
+
+      // Calculate the exact font size that fits safeWidth
+      const idealSize = (safeWidth / textWidthAt100) * 100
+      const finalSize = Math.max(14, Math.min(maxCap, idealSize))
+
+      setFontSize(finalSize)
+    }
+
+    calculateSize()
+
+    // ResizeObserver for robust layout changes
+    let observer
+    if (typeof ResizeObserver !== 'undefined' && titleContainerRef.current) {
+      observer = new ResizeObserver(() => {
+        calculateSize()
+      })
+      observer.observe(titleContainerRef.current)
+    }
+
+    window.addEventListener('resize', calculateSize)
+
+    return () => {
+      if (observer) observer.disconnect()
+      window.removeEventListener('resize', calculateSize)
+    }
+  }, [currentTitle])
+
   return (
-    <div className={styles.sectionContainer}>
+    <div ref={containerRef} className={styles.sectionContainer}>
       {/* Horizontal Centered Thumbnails Row */}
       <div className={styles.thumbnailsRow} onMouseLeave={() => setHoveredIndex(null)}>
         {projects.map((project, idx) => {
@@ -98,11 +178,16 @@ export function HoverProjects({
       </div>
 
       {/* Giant Dominant Kinetic Title */}
-      <div className={styles.giantTitleContainer}>
+      <div 
+        ref={titleContainerRef} 
+        className={styles.giantTitleContainer}
+        style={fontSize ? { '--title-font-size': `${fontSize}px` } : undefined}
+      >
         <AnimatePresence mode="wait">
           <motion.h2
             key={currentTitle}
             className={styles.giantTitle}
+            style={fontSize ? { fontSize: `${fontSize}px` } : undefined}
             initial={{ y: 90, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -90, opacity: 0 }}
